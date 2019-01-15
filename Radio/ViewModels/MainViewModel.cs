@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using Radio.Models;
 using Radio.Workers;
+using Un4seen.Bass;
 
 namespace Radio.ViewModels
 {

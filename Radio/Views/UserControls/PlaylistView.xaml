@@ -3,9 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:gif="clr-namespace:WpfAnimatedGif;assembly=WpfAnimatedGif"
-             xmlns:local="clr-namespace:Radio.Views.UserControls"
-             xmlns:object="clr-namespace:Radio.Models"
              xmlns:viewModels="clr-namespace:Radio.ViewModels"
              mc:Ignorable="d"
              d:DesignHeight="400"
@@ -33,9 +30,7 @@
                                      RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type ScrollContentPresenter}}" />
                         </Grid.Width>
                         <Grid Grid.Column="0">
-                            <Image gif:ImageBehavior.AnimatedSource="{Binding ImagePath}" 
-                                   gif:ImageBehavior.AutoStart="True"  
-                                   Source="{Binding ImagePath , UpdateSourceTrigger=PropertyChanged}"/>
+                            <Image Source="{Binding ImagePath,UpdateSourceTrigger=PropertyChanged}"/>
                         </Grid>
                         <Grid Grid.Column="1">
                             <StackPanel Margin="5,0,0,0" VerticalAlignment="Center">

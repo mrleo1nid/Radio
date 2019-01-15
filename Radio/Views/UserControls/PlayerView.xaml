@@ -3,9 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:gif="clr-namespace:WpfAnimatedGif;assembly=WpfAnimatedGif"
-             xmlns:local="clr-namespace:Radio.Views.UserControls"
-             xmlns:object="clr-namespace:Radio.Models"
              xmlns:viewModels="clr-namespace:Radio.ViewModels"
              mc:Ignorable="d"
              d:DesignHeight="400"
@@ -27,10 +24,12 @@
                 <RowDefinition Height="173*"/>
                 <RowDefinition Height="27*"/>
             </Grid.RowDefinitions>
-            <Image Margin="50,50,50,50" Grid.Row="0" gif:ImageBehavior.AnimatedSource="{Binding SelectedPlaylist.PlayedGif}" 
-                   gif:ImageBehavior.AutoStart="True"  
-                   Opacity="100"
-                   Source="{Binding SelectedPlaylist.PlayedGif, UpdateSourceTrigger=PropertyChanged}"/>
+            <MediaElement Grid.Row="0" Margin="50,50,50,50" 
+                          Source="{Binding SelectedPlaylist.PlayedGif, UpdateSourceTrigger=PropertyChanged}" 
+                          LoadedBehavior="Manual"
+                          MediaEnded="MediaElement_OnMediaEnded"
+                          Initialized="FrameworkElement_OnInitialized">
+            </MediaElement>
             <Button Grid.Row="0"  Margin="50,50,50,50" Command="{Binding PlayCommand}" Opacity="0">
             </Button>
             <Grid Grid.Row="1">

@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Un4seen.Bass;
+
 
 namespace Radio.Views.UserControls
 {
@@ -22,6 +24,19 @@ namespace Radio.Views.UserControls
         public PlayerView()
         {
             InitializeComponent();
+        }
+
+        private void FrameworkElement_OnInitialized(object sender, EventArgs e)
+        {
+            MediaElement media = (MediaElement) sender;
+            media.Play();
+        }
+
+        private void MediaElement_OnMediaEnded(object sender, RoutedEventArgs e)
+        {
+            MediaElement media = (MediaElement)sender;
+            media.Position = TimeSpan.MinValue;
+            media.Play();
         }
     }
 }

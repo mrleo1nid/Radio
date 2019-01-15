@@ -9,19 +9,19 @@ using System.Threading.Tasks;
 using System.Windows;
 using Radio.Models;
 using Radio.Workers;
+using Un4seen.Bass;
 
 namespace Radio.ViewModels
 {
     public class PlaylistsViewModel : ViewModel
     {
-        private MusicPlayer player = new MusicPlayer();
+        private readonly MusicPlayer player = new MusicPlayer();
 
         public PlaylistsViewModel()
         {
             var downloader = new PlaylistDownloader();
             Volume = 50;
             Playlists = downloader.LoadPlaylists();
-            SelectedPlaylist = Playlists.FirstOrDefault();
             Action calledMethod = LoadIconsFromUIThread;
             Application.Current.Dispatcher.BeginInvoke(calledMethod);
         }
@@ -58,6 +58,8 @@ namespace Radio.ViewModels
             {
                 Playlists[i] = downloader.LoadIcon(Playlists[i]);
             }
+
+            SelectedPlaylist = Playlists[0];
         }
 
 

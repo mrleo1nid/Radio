@@ -11,6 +11,9 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Radio.Models;
 using Radio.ViewModels;
+using System.Drawing;
+using System.Drawing.Imaging;
+using ImageMagick;
 
 namespace Radio.Workers
 {
@@ -55,6 +58,7 @@ namespace Radio.Workers
             if (!fileCover.Exists)
             {
                 DownloadFile(playlist.ImagePath, fileCover);
+                ChangeImageResolution(fileCover.FullName);
                 playlist.ImagePath = fileCover.FullName;
             }
             else
@@ -109,6 +113,14 @@ namespace Radio.Workers
             playlist.PlayedGif = siteUrl + playlist.GifList[gifind];
             playlist.PlayedTrack = siteUrl + playlist.MusicList[trackind];
             return playlist;
+        }
+
+        private static void ChangeImageResolution(string filepath)
+        {
+            FileInfo file = new FileInfo(filepath);
+            MagickImage image = new MagickImage(file);
+            image.Resize(128,128);
+            image.Write(file);
         }
 
     }
