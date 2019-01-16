@@ -59,7 +59,7 @@ namespace Radio.ViewModels
                 Playlists[i] = downloader.LoadIcon(Playlists[i]);
             }
 
-            SelectedPlaylist = Playlists[0];
+            SelectedPlaylist = Playlists.FirstOrDefault();
         }
 
 

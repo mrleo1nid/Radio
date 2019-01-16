@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using Radio.Models;
+using Radio.Views;
 using Radio.Workers;
 using Un4seen.Bass;
 
@@ -32,6 +33,17 @@ namespace Radio.ViewModels
         private void AddPlaylist()
         {
             throw new NotImplementedException();
+        }
+
+        private RelayCommand _openDopWindow;
+        public RelayCommand OpenDopWindowCommand => _openDopWindow ?? (_openDopWindow = new RelayCommand(OpenDopWindow));
+
+
+        private void OpenDopWindow()
+        {
+            // var track = PlaylistsVM.SelectedPlaylist.PlayedTrack;
+            DopWindow wind = new DopWindow();
+            wind.Show();
         }
     }
 }

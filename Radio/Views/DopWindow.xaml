@@ -1,0 +1,26 @@
+﻿<Window x:Class="Radio.Views.DopWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Radio.Views"
+        xmlns:sound="clr-namespace:WPFSoundVisualizationLib;assembly=WPFSoundVisualizationLib"
+        mc:Ignorable="d"
+        Title="DopWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="77*"/>
+            <RowDefinition Height="280*"/>
+            <RowDefinition Height="62*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="116*"/>
+            <ColumnDefinition Width="569*"/>
+            <ColumnDefinition Width="107*"/>
+        </Grid.ColumnDefinitions>
+        <sound:AlbumArtDisplay x:Name="albumArtPanel" Grid.Row="1" Grid.Column="1"/>
+        <sound:WaveformTimeline x:Name="linetime"   Grid.Row="2" Grid.Column="1"/>
+        <sound:SpectrumAnalyzer Grid.Row="0" Grid.Column="1" x:Name="spectrumAnalyzer"  Margin="5" BarCount="16" />
+        <sound:DigitalClock x:Name="DigitalClock"></sound:DigitalClock>
+    </Grid>
+</Window>

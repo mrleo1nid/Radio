@@ -87,9 +87,15 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="taglib-sharp">
+      <HintPath>.\taglib-sharp.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WPFSoundVisualizationLib, Version=0.3.4442.43191, Culture=neutral, PublicKeyToken=eb44ed7102b4fcc1, processorArchitecture=MSIL">
+      <HintPath>..\packages\WPFSVL.1.0.0\lib\net40\WPFSoundVisualizationLib.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -99,14 +105,23 @@
     <Compile Include="Models\ViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\PlaylistsViewModel.cs" />
+    <Compile Include="Views\DopWindow.xaml.cs">
+      <DependentUpon>DopWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\UserControls\PlayerView.xaml.cs">
       <DependentUpon>PlayerView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UserControls\PlaylistView.xaml.cs">
       <DependentUpon>PlaylistView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Workers\BassEngine.cs" />
+    <Compile Include="Helper\UIHelper.cs" />
     <Compile Include="Workers\MusicPlayer.cs" />
     <Compile Include="Workers\PlaylistDownloader.cs" />
+    <Page Include="Views\DopWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

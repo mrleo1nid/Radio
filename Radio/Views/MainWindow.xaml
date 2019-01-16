@@ -21,10 +21,21 @@
             <ColumnDefinition Width="2*" />
             <ColumnDefinition Width="7*" />
         </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20*"/>
+            <RowDefinition Height="399*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Grid.ColumnSpan="2">
+            <ComboBox HorizontalAlignment="Left" Width="120">
+             <ComboBoxItem Width="120">
+                 <Button Command="{Binding OpenDopWindowCommand}" Content="Дополнительно"></Button>
+             </ComboBoxItem>
+            </ComboBox>
+        </StackPanel>
+        <Grid Grid.Column="0" Grid.Row="1">
             <user:PlaylistView DataContext="{Binding PlaylistsVM}"/>
         </Grid>
-        <Grid Grid.Column="1">
+        <Grid Grid.Column="1" Grid.Row="1">
             <user:PlayerView DataContext="{Binding PlaylistsVM}"/>
         </Grid>
     </Grid>
