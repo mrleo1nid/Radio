@@ -56,6 +56,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\favicon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Bass.Net, Version=2.4.10.3, Culture=neutral, PublicKeyToken=b7566c273e6ef480, processorArchitecture=MSIL">
       <HintPath>..\packages\Bass.Net.1.0.0\lib\Bass.Net.dll</HintPath>
@@ -75,6 +78,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\ControlzEx.3.0.2.4\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -104,6 +108,7 @@
     </ApplicationDefinition>
     <Compile Include="Behaviors\EqualizerBehavior.cs" />
     <Compile Include="Behaviors\GifPlayerBehavior.cs" />
+    <Compile Include="Behaviors\MainWindowBehavior.cs" />
     <Compile Include="Behaviors\SpectrumAnalyzerBehavior.cs" />
     <Compile Include="Models\ViewModel.cs" />
     <Compile Include="ViewModels\EqualizerViewModel.cs" />
@@ -178,6 +183,7 @@
     <Content Include="bass.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\favicon.ico" />
     <Content Include="WPFSoundVisualizationLib.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -9,6 +9,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using Radio.Behaviors;
 using Radio.Models;
 using Radio.Views;
 using Radio.Workers;
@@ -27,6 +29,21 @@ namespace Radio.ViewModels
         public static PlaylistsViewModel PlaylistsVM { get; set; }
         public static BassEngine  BassEngine { get; set; }
 
+        public static bool canClose;
+        public static bool CanClose
+        { // флаг, позволяющий или запрещающий выход из приложения
+            get { return canClose; }
+            set { canClose = value; }
+        }
+
+        private static WindowState currentWindowState = WindowState.Normal;
+        public static WindowState CurrentWindowState
+        {
+            get { return currentWindowState; }
+            set { currentWindowState = value; }
+        }
+        public static System.Windows.Forms.NotifyIcon TrayIcon = null;
+        public static ContextMenu TrayMenu = null;
 
         private RelayCommand _addCommand;
         public RelayCommand AddCommand => _addCommand ?? (_addCommand = new RelayCommand(AddPlaylist));
@@ -40,6 +57,11 @@ namespace Radio.ViewModels
         private RelayCommand _openDopWindow;
         public RelayCommand OpenDopWindowCommand => _openDopWindow ?? (_openDopWindow = new RelayCommand(OpenDopWindow));
 
+        private RelayCommand _menuExitWindowCommand;
+        public RelayCommand MenuExitWindowComman => _menuExitWindowCommand ?? (_menuExitWindowCommand = new RelayCommand(MainWindowBehavior.MenuExitClick));
+
+        private RelayCommand _showHideWindowCommand;
+        public RelayCommand ShowHideWindowCommand => _showHideWindowCommand ?? (_showHideWindowCommand = new RelayCommand(MainWindowBehavior.MenuExitClick));
 
         private void OpenDopWindow()
         {
