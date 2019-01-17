@@ -23,8 +23,8 @@ namespace Radio.ViewModels
             BassEngine = BassEngine.Instance;
             PlaylistsVM = new PlaylistsViewModel();
         }
-
-        public PlaylistsViewModel PlaylistsVM { get; set; }
+       
+        public static PlaylistsViewModel PlaylistsVM { get; set; }
         public static BassEngine  BassEngine { get; set; }
 
 
@@ -43,8 +43,10 @@ namespace Radio.ViewModels
 
         private void OpenDopWindow()
         {
-            DopWindow wind = new DopWindow ();
+            EqualizerWindow wind = new EqualizerWindow { DataContext = new EqualizerViewModel()};
             wind.Show();
         }
+
+       
     }
 }

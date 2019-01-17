@@ -16,16 +16,15 @@ using System.Windows.Shapes;
 using Microsoft.Win32;
 using Radio.ViewModels;
 using Radio.Workers;
-using WPFSoundVisualizationLib;
 
 namespace Radio.Views
 {
     /// <summary>
     /// Логика взаимодействия для DopWindow.xaml
     /// </summary>
-    public partial class DopWindow : Window
+    public partial class EqualizerWindow : Window
     {
-        public DopWindow()
+        public EqualizerWindow()
         {
             InitializeComponent();
 

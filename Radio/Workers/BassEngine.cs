@@ -219,9 +219,9 @@ namespace Radio.Workers
         {
             Bass.BASS_ChannelSetAttribute(ActiveStreamHandle, BASSAttribute.BASS_ATTRIB_VOL, value);
         }
-        public void ChangeEqualizer(float value)
+        public void ChangeEqualizer(float[] value)
         {
-            Bass.BASS_ChannelSetAttribute(ActiveStreamHandle, BASSAttribute.BASS_ATTRIB_EAXMIX, value);
+            Bass.BASS_ChannelSetAttribute(ActiveStreamHandle, BASSAttribute.BASS_ATTRIB_EAXMIX, value[0]);
         }
 
         public bool OpenFile(string path)

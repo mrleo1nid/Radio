@@ -8,7 +8,6 @@ using System.Windows.Controls;
 using System.Windows.Interactivity;
 using System.Windows.Media;
 using Radio.ViewModels;
-using WPFSoundVisualizationLib;
 
 namespace Radio.Behaviors
 {

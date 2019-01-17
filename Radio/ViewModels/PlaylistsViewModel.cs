@@ -60,6 +60,7 @@ namespace Radio.ViewModels
                 VolumeChanged();
             }
         }
+        
 
         private void LoadIconsFromUIThread()
         {

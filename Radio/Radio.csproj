@@ -93,8 +93,8 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="WPFSoundVisualizationLib, Version=0.3.4442.43191, Culture=neutral, PublicKeyToken=eb44ed7102b4fcc1, processorArchitecture=MSIL">
-      <HintPath>..\packages\WPFSVL.1.0.0\lib\net40\WPFSoundVisualizationLib.dll</HintPath>
+    <Reference Include="WPFSoundVisualizationLib">
+      <HintPath>.\WPFSoundVisualizationLib.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -102,6 +102,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Behaviors\EqualizerBehavior.cs" />
     <Compile Include="Behaviors\GifPlayerBehavior.cs" />
     <Compile Include="Behaviors\SpectrumAnalyzerBehavior.cs" />
     <Compile Include="Models\ViewModel.cs" />
