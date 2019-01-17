@@ -13,6 +13,7 @@ using Radio.Models;
 using Radio.ViewModels;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Windows;
 using ImageMagick;
 
 namespace Radio.Workers
@@ -84,9 +85,9 @@ namespace Radio.Workers
 
         private static string[] GetUrlArrayFromRequest(string targetUrl)
         {
-            var req = (HttpWebRequest) WebRequest.Create(targetUrl);
             string[] result;
-            using (var resp = (HttpWebResponse) req.GetResponse())
+            var req = (HttpWebRequest)WebRequest.Create(targetUrl);
+            using (var resp = (HttpWebResponse)req.GetResponse())
             {
                 string response;
                 using (var stream = new StreamReader(resp.GetResponseStream(), Encoding.UTF8))
@@ -95,7 +96,7 @@ namespace Radio.Workers
                 }
                 result = JsonConvert.DeserializeObject<string[]>(response);
             }
-        
+
             return result;
         }
 
@@ -122,6 +123,20 @@ namespace Radio.Workers
             image.Resize(128,128);
             image.Write(file);
         }
-
+        public static bool CheckForInternetConnection()
+        {
+            try
+            {
+                using (var client = new WebClient())
+                using (client.OpenRead("http://www.theradio.ml"))
+                {
+                    return true;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }

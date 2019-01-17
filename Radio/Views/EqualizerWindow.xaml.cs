@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,19 +13,22 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using Un4seen.Bass;
+using Microsoft.Win32;
+using Radio.ViewModels;
+using Radio.Workers;
+using WPFSoundVisualizationLib;
 
-
-namespace Radio.Views.UserControls
+namespace Radio.Views
 {
     /// <summary>
-    /// Логика взаимодействия для PlayerView.xaml
+    /// Логика взаимодействия для DopWindow.xaml
     /// </summary>
-    public partial class PlayerView : UserControl
+    public partial class DopWindow : Window
     {
-        public PlayerView()
+        public DopWindow()
         {
             InitializeComponent();
+
         }
     }
 }

@@ -4,7 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Radio.Views"
+        xmlns:viewModels="clr-namespace:Radio.ViewModels"
+        xmlns:behaviors="clr-namespace:Radio.Behaviors"
         xmlns:sound="clr-namespace:WPFSoundVisualizationLib;assembly=WPFSoundVisualizationLib"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         Title="DopWindow" Height="450" Width="800">
     <Grid>
@@ -18,9 +21,11 @@
             <ColumnDefinition Width="569*"/>
             <ColumnDefinition Width="107*"/>
         </Grid.ColumnDefinitions>
-        <sound:AlbumArtDisplay x:Name="albumArtPanel" Grid.Row="1" Grid.Column="1"/>
-        <sound:WaveformTimeline x:Name="linetime"   Grid.Row="2" Grid.Column="1"/>
-        <sound:SpectrumAnalyzer Grid.Row="0" Grid.Column="1" x:Name="spectrumAnalyzer"  Margin="5" BarCount="16" />
-        <sound:DigitalClock x:Name="DigitalClock"></sound:DigitalClock>
+        <sound:Equalizer x:Name="Equalizer" Grid.Row="1" Grid.Column="1"/>
+        <sound:SpectrumAnalyzer Grid.Row="0" Grid.Column="1" Name="spectrumAnalyzer"  Margin="5" BarCount="15" AveragePeaks="True" >
+            <i:Interaction.Behaviors>
+                <behaviors:SpectrumAnalyzerBehavior />
+            </i:Interaction.Behaviors>
+        </sound:SpectrumAnalyzer>
     </Grid>
 </Window>

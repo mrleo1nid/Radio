@@ -102,11 +102,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Behaviors\GifPlayerBehavior.cs" />
+    <Compile Include="Behaviors\SpectrumAnalyzerBehavior.cs" />
     <Compile Include="Models\ViewModel.cs" />
+    <Compile Include="ViewModels\EqualizerViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\PlaylistsViewModel.cs" />
-    <Compile Include="Views\DopWindow.xaml.cs">
-      <DependentUpon>DopWindow.xaml</DependentUpon>
+    <Compile Include="Views\EqualizerWindow.xaml.cs">
+      <DependentUpon>EqualizerWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UserControls\PlayerView.xaml.cs">
       <DependentUpon>PlayerView.xaml</DependentUpon>
@@ -115,10 +118,8 @@
       <DependentUpon>PlaylistView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Workers\BassEngine.cs" />
-    <Compile Include="Helper\UIHelper.cs" />
-    <Compile Include="Workers\MusicPlayer.cs" />
     <Compile Include="Workers\PlaylistDownloader.cs" />
-    <Page Include="Views\DopWindow.xaml">
+    <Page Include="Views\EqualizerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

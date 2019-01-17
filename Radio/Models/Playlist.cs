@@ -111,7 +111,17 @@ namespace Radio.Models
                 OnPropertyChanged("PlayedGif");
             }
         }
-       
+        private List<string> previousGif = new List<string>();
+        public List<string> PreviousGif
+        {
+            get { return previousGif; }
+            set
+            {
+                previousGif = value;
+                OnPropertyChanged("PreviousGif");
+            }
+        }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")

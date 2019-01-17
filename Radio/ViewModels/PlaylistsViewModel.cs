@@ -15,15 +15,25 @@ namespace Radio.ViewModels
 {
     public class PlaylistsViewModel : ViewModel
     {
-        private readonly MusicPlayer player = new MusicPlayer();
+        private BassEngine bassEngine;
+        private string PlayedTrack;
+
 
         public PlaylistsViewModel()
         {
-            var downloader = new PlaylistDownloader();
-            Volume = 50;
-            Playlists = downloader.LoadPlaylists();
-            Action calledMethod = LoadIconsFromUIThread;
-            Application.Current.Dispatcher.BeginInvoke(calledMethod);
+            if (!PlaylistDownloader.CheckForInternetConnection())
+            {
+               var res = MessageBox.Show("Отсуствует соединение с сервером. Попробывать ещё раз?", "Ошибка");
+            }
+            else
+            {
+                bassEngine = MainViewModel.BassEngine;
+                var downloader = new PlaylistDownloader();
+                Playlists = downloader.LoadPlaylists();
+                Action calledMethod = LoadIconsFromUIThread;
+                Application.Current.Dispatcher.BeginInvoke(calledMethod);
+                Volume = 50;
+            }
         }
 
         private Playlist _selectedPlaylist;
@@ -66,30 +76,54 @@ namespace Radio.ViewModels
         #region Actions
         private void Play()
         {
-            player.PlayOrPause(SelectedPlaylist.PlayedTrack);
+            if (PlayedTrack!=SelectedPlaylist.PlayedTrack)
+            {
+                bassEngine.OpenUrl(SelectedPlaylist.PlayedTrack);
+                PlayedTrack = SelectedPlaylist.PlayedTrack;
+                bassEngine.Play();
+            }
+            else
+            {
+                if (bassEngine.IsPlaying)
+                {
+                    bassEngine.Pause();
+                }
+                else
+                {
+                    bassEngine.Play();
+                }
+            }
         }
         private void Next()
         {
             SelectedPlaylist.PreviousTracks.Add(SelectedPlaylist.PlayedTrack);
+            SelectedPlaylist.PreviousGif.Add(SelectedPlaylist.PlayedGif);
             SelectedPlaylist = PlaylistDownloader.GenerateNewPlayed(SelectedPlaylist);
-            player.StartPlay(SelectedPlaylist.PlayedTrack);
+            bassEngine.OpenUrl(SelectedPlaylist.PlayedTrack);
+            PlayedTrack = SelectedPlaylist.PlayedTrack;
+            bassEngine.Play();
         }
         private void Previous()
         {
-            var prev = SelectedPlaylist.PreviousTracks.LastOrDefault();
-            if (prev != null)
+            var prevTrack = SelectedPlaylist.PreviousTracks.LastOrDefault();
+            var prevGif = SelectedPlaylist.PreviousGif.LastOrDefault();
+            if (prevTrack != null && prevGif != null)
             {
                 SelectedPlaylist = PlaylistDownloader.GenerateNewPlayed(SelectedPlaylist);
-                SelectedPlaylist.PlayedTrack = prev;
-                SelectedPlaylist.PreviousTracks.Remove(prev);
-                player.StartPlay(SelectedPlaylist.PlayedTrack);
+                SelectedPlaylist.PlayedTrack = prevTrack;
+                SelectedPlaylist.PlayedGif = prevGif;
+                SelectedPlaylist.PreviousTracks.Remove(prevTrack);
+                SelectedPlaylist.PreviousGif.Remove(prevGif);
+                bassEngine.OpenUrl(SelectedPlaylist.PlayedTrack);
+                PlayedTrack = SelectedPlaylist.PlayedTrack;
+                bassEngine.Play();
             }   
         }
 
         private void VolumeChanged()
         {
             float newvalue = (float) Volume / 100;
-            player.ChangeValue(newvalue);
+            bassEngine.ChangeValue(newvalue);
         }
         #endregion
 

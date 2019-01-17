@@ -39,6 +39,7 @@ namespace Radio.Workers
         private TimeSpan repeatStart;
         private TimeSpan repeatStop;
         private bool inRepeatSet;
+
         #endregion
 
         #region Constants
@@ -214,6 +215,14 @@ namespace Radio.Workers
                 CanStop = true;
             }
         }
+        public void ChangeValue(float value)
+        {
+            Bass.BASS_ChannelSetAttribute(ActiveStreamHandle, BASSAttribute.BASS_ATTRIB_VOL, value);
+        }
+        public void ChangeEqualizer(float value)
+        {
+            Bass.BASS_ChannelSetAttribute(ActiveStreamHandle, BASSAttribute.BASS_ATTRIB_EAXMIX, value);
+        }
 
         public bool OpenFile(string path)
         {
@@ -232,7 +241,7 @@ namespace Radio.Workers
                 FileStreamHandle = ActiveStreamHandle = Bass.BASS_StreamCreateFile(path, 0, 0, BASSFlag.BASS_SAMPLE_FLOAT | BASSFlag.BASS_STREAM_PRESCAN);
                 ChannelLength = Bass.BASS_ChannelBytes2Seconds(FileStreamHandle, Bass.BASS_ChannelGetLength(FileStreamHandle, 0));
                 FileTag = TagLib.File.Create(path);
-                GenerateWaveformData(path);
+                GenerateWaveformData(path,true);
                 if (ActiveStreamHandle != 0)
                 {
                     // Obtain the sample rate of the stream
@@ -249,6 +258,50 @@ namespace Radio.Workers
 
                     if (syncHandle == 0)
                         throw new ArgumentException("Error establishing End Sync on file stream.", "path");
+
+                    CanPlay = true;
+                    return true;
+                }
+                else
+                {
+                    ActiveStreamHandle = 0;
+                    FileTag = null;
+                    CanPlay = false;
+                }
+            }
+            return false;
+        }
+        public bool OpenUrl(string url)
+        {
+            Stop();
+
+            if (ActiveStreamHandle != 0)
+            {
+                ClearRepeatRange();
+                ChannelPosition = 0;
+                Bass.BASS_StreamFree(ActiveStreamHandle);
+            }
+
+            if (true)
+            {
+                FileStreamHandle = ActiveStreamHandle = Bass.BASS_StreamCreateURL(url,0, BASSFlag.BASS_SAMPLE_FLOAT | BASSFlag.BASS_STREAM_PRESCAN, null, new IntPtr(0));
+                ChannelLength = Bass.BASS_ChannelBytes2Seconds(FileStreamHandle, Bass.BASS_ChannelGetLength(FileStreamHandle));
+                if (ActiveStreamHandle != 0)
+                {
+                    // Obtain the sample rate of the stream
+                    BASS_CHANNELINFO info = new BASS_CHANNELINFO();
+                    Bass.BASS_ChannelGetInfo(ActiveStreamHandle, info);
+                    sampleFrequency = info.freq;
+
+                    // Set the stream to call Stop() when it ends.
+                    int syncHandle = Bass.BASS_ChannelSetSync(ActiveStreamHandle,
+                        BASSSync.BASS_SYNC_END,
+                        0,
+                        endTrackSyncProc,
+                        IntPtr.Zero);
+
+                    if (syncHandle == 0)
+                        throw new ArgumentException("Error establishing End Sync on file stream.", "url");
 
                     CanPlay = true;
                     return true;
@@ -293,7 +346,7 @@ namespace Radio.Workers
             public string Path { get; protected set; }
         }
 
-        private void GenerateWaveformData(string path)
+        private void GenerateWaveformData(string path, bool isfile)
         {
             if (waveformGenerateWorker.IsBusy)
             {
@@ -318,9 +371,9 @@ namespace Radio.Workers
         private void waveformGenerateWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             WaveformGenerationParams waveformParams = e.Argument as WaveformGenerationParams;
-            int stream = Bass.BASS_StreamCreateFile(waveformParams.Path, 0, 0, BASSFlag.BASS_STREAM_DECODE | BASSFlag.BASS_SAMPLE_FLOAT | BASSFlag.BASS_STREAM_PRESCAN);
+            int stream = Bass.BASS_StreamCreateFile(waveformParams.Path, 0, 0, BASSFlag.BASS_STREAM_DECODE | BASSFlag.BASS_SAMPLE_FLOAT | BASSFlag.BASS_STREAM_PRESCAN);  
             int frameLength = (int)Bass.BASS_ChannelSeconds2Bytes(stream, 0.02);
-            long streamLength = Bass.BASS_ChannelGetLength(stream, 0);
+            long streamLength = Bass.BASS_ChannelGetLength(stream);
             int frameCount = (int)((double)streamLength / (double)frameLength);
             int waveformLength = frameCount * 2;
             float[] waveformData = new float[waveformLength];
@@ -555,6 +608,7 @@ namespace Radio.Workers
                 positionTimer.IsEnabled = value;
             }
         }
+
         #endregion
     }
 }

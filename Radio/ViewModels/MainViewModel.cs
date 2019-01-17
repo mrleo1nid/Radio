@@ -16,15 +16,17 @@ using Un4seen.Bass;
 
 namespace Radio.ViewModels
 {
-    class MainViewModel : ViewModel
+   public class MainViewModel : ViewModel
     {
         public MainViewModel()
         {
+            BassEngine = BassEngine.Instance;
             PlaylistsVM = new PlaylistsViewModel();
         }
 
         public PlaylistsViewModel PlaylistsVM { get; set; }
-            
+        public static BassEngine  BassEngine { get; set; }
+
 
         private RelayCommand _addCommand;
         public RelayCommand AddCommand => _addCommand ?? (_addCommand = new RelayCommand(AddPlaylist));
@@ -41,8 +43,7 @@ namespace Radio.ViewModels
 
         private void OpenDopWindow()
         {
-            // var track = PlaylistsVM.SelectedPlaylist.PlayedTrack;
-            DopWindow wind = new DopWindow();
+            DopWindow wind = new DopWindow ();
             wind.Show();
         }
     }

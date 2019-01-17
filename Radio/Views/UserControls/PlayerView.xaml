@@ -3,7 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:behaviors="clr-namespace:Radio.Behaviors"
              xmlns:viewModels="clr-namespace:Radio.ViewModels"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d"
              d:DesignHeight="400"
              d:DesignWidth="600">
@@ -26,9 +28,10 @@
             </Grid.RowDefinitions>
             <MediaElement Grid.Row="0" Margin="50,50,50,50" 
                           Source="{Binding SelectedPlaylist.PlayedGif, UpdateSourceTrigger=PropertyChanged}" 
-                          LoadedBehavior="Manual"
-                          MediaEnded="MediaElement_OnMediaEnded"
-                          Initialized="FrameworkElement_OnInitialized">
+                          LoadedBehavior="Manual">
+                <i:Interaction.Behaviors>
+                    <behaviors:GifPlayerBehavior />
+                </i:Interaction.Behaviors>
             </MediaElement>
             <Button Grid.Row="0"  Margin="50,50,50,50" Command="{Binding PlayCommand}" Opacity="0">
             </Button>
