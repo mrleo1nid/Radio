@@ -4,11 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Radio.Views"
-        xmlns:equlize="clr-namespace:Radio.Views.UserControls.Equalizer"
         xmlns:viewModels="clr-namespace:Radio.ViewModels"
         xmlns:behaviors="clr-namespace:Radio.Behaviors"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-        xmlns:spectrumAnalyzer="clr-namespace:Radio.Views.SoundVisualisation.SpectrumAnalyzer"
+        xmlns:wpfSoundVisualizationLib="clr-namespace:WPFSoundVisualizationLib;assembly=WPFSoundVisualizationLib"
         mc:Ignorable="d"
         Title="DopWindow" Height="450" Width="800">
     <Grid>
@@ -22,16 +21,16 @@
             <ColumnDefinition Width="569*"/>
             <ColumnDefinition Width="107*"/>
         </Grid.ColumnDefinitions>
-        <equlize:Equalizer Grid.Row="1" Grid.Column="1" NumberOfBands="7" EqualizerValues="{Binding EqualizerValues, Mode=TwoWay}">
+        <wpfSoundVisualizationLib:Equalizer Grid.Row="1" Grid.Column="1" NumberOfBands="7" EqualizerValues="{Binding EqualizerValues, Mode=TwoWay}">
             <i:Interaction.Behaviors>
                 <behaviors:EqualizerBehavior />
             </i:Interaction.Behaviors>
-        </equlize:Equalizer>
-        <spectrumAnalyzer:SpectrumAnalyzer Grid.Row="0" Grid.Column="1"  Margin="5" BarCount="30" AveragePeaks="True" >
+        </wpfSoundVisualizationLib:Equalizer>
+        <wpfSoundVisualizationLib:SpectrumAnalyzer Grid.Row="0" Grid.Column="1"  Margin="5" BarCount="30" AveragePeaks="True" >
             <i:Interaction.Behaviors>
                 <behaviors:SpectrumAnalyzerBehavior />
             </i:Interaction.Behaviors>
-        </spectrumAnalyzer:SpectrumAnalyzer>
+        </wpfSoundVisualizationLib:SpectrumAnalyzer>
     </Grid>
 </Window>
 
