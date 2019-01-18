@@ -66,6 +66,7 @@
                     Background="White"
                     BorderBrush="Orange"
                     BorderThickness="2"
+                    Visibility="{Binding PlaylistsVM.PopupVisibility}"
                     CornerRadius="4"
                     Width="200">
                     <StackPanel>

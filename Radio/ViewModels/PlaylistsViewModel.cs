@@ -75,6 +75,16 @@ namespace Radio.ViewModels
                 OnPropertyChanged(nameof(SpectrumVisibility));
             }
         }
+        private Visibility popupVisibility = Visibility.Collapsed;
+        public Visibility PopupVisibility
+        {
+            get { return popupVisibility; }
+            set
+            {
+                popupVisibility = value;
+                OnPropertyChanged(nameof(PopupVisibility));
+            }
+        }
 
         private void LoadIconsFromUIThread()
         {
@@ -96,6 +106,14 @@ namespace Radio.ViewModels
             else
             {
                 SpectrumVisibility = Visibility.Collapsed;
+            }
+            if (MainViewModel.Settings.ShowPoppup)
+            {
+                PopupVisibility = Visibility.Visible;
+            }
+            else
+            {
+                PopupVisibility = Visibility.Collapsed;
             }
         }
 

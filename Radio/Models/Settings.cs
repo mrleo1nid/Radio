@@ -47,6 +47,15 @@ namespace Radio.Models
                 autoPlayTracks = value;
             }
         }
+        private bool showPoppup;
+        public bool ShowPoppup
+        {
+            get { return showPoppup; }
+            set
+            {
+                showPoppup = value;
+            }
+        }
 
         public static Settings LoadSettings()
         {
@@ -55,6 +64,7 @@ namespace Radio.Models
             settings.MinimizeToTrayOnClose = Properties.Settings.Default.MinimizeToTrayOnClose;
             settings.ShovSpectumAnalizer = Properties.Settings.Default.ShovSpectumAnalizer;
             settings.AutoPlayTracks = Properties.Settings.Default.AutoPlayTracks;
+            settings.ShowPoppup = Properties.Settings.Default.ShowPoppup;
             return settings;
         }
 
@@ -64,6 +74,7 @@ namespace Radio.Models
             Properties.Settings.Default.MinimizeToTrayOnClose = settings.MinimizeToTrayOnClose;
             Properties.Settings.Default.ShovSpectumAnalizer = settings.ShovSpectumAnalizer;
             Properties.Settings.Default.AutoPlayTracks = settings.AutoPlayTracks;
+            Properties.Settings.Default.ShowPoppup = settings.ShowPoppup;
             Properties.Settings.Default.Save();
         }
     }

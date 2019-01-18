@@ -70,5 +70,17 @@ namespace Radio.Properties {
                 this["AutoPlayTracks"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ShowPoppup {
+            get {
+                return ((bool)(this["ShowPoppup"]));
+            }
+            set {
+                this["ShowPoppup"] = value;
+            }
+        }
     }
 }

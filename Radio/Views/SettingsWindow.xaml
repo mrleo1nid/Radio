@@ -31,10 +31,12 @@
         <TextBlock Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center" Text="Сворачивать в трей при закрытии" Margin="-7,0,0,0" Width="189"></TextBlock>
         <TextBlock Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Center" Text="Скачивать музыку на диск" Width="144"></TextBlock>
         <TextBlock Grid.Column="0" Grid.Row="3" HorizontalAlignment="Right" VerticalAlignment="Center" Text="Автоматически запускать музыку" Width="144"></TextBlock>
+        <TextBlock Grid.Column="0" Grid.Row="4" HorizontalAlignment="Right" VerticalAlignment="Center" Text="Показывать poppup" Width="144"></TextBlock>
         <CheckBox Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" IsChecked="{Binding Settings.ShovSpectumAnalizer, Mode=TwoWay}" Margin="6,0,2,0" Width="24"/>
         <CheckBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" IsChecked="{Binding Settings.MinimizeToTrayOnClose, Mode=TwoWay}" Margin="6,0,2,0" Width="24"/>
         <CheckBox Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" IsChecked="{Binding Settings.DownoloadTrackLocal, Mode=TwoWay}" Margin="6,0,2,0" Width="24"/>
         <CheckBox Grid.Column="1" Grid.Row="3" HorizontalAlignment="Center" IsChecked="{Binding Settings.AutoPlayTracks, Mode=TwoWay}" Margin="6,0,2,0" Width="24"/>
+        <CheckBox Grid.Column="1" Grid.Row="4" HorizontalAlignment="Center" IsChecked="{Binding Settings.ShowPoppup, Mode=TwoWay}" Margin="6,0,2,0" Width="24"/>
         <Button Content="Сохранить" Command="{Binding SaveSettingsCommand}" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="5"></Button>
         <Button Content="Отмена" Command="{Binding CancelSettingsWindowCommand}" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="5"></Button>
     </Grid>
