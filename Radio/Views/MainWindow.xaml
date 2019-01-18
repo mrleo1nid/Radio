@@ -85,6 +85,10 @@
                                     <behaviors:GifPlayerBehavior />
                                 </i:Interaction.Behaviors>
                             </MediaElement>
+                            <Button Grid.Row="0"
+                                    Margin="5,10,5,10"
+                                    Opacity="0"
+                                    Command="{Binding PlaylistsVM.PlayCommand}"></Button>
                             <Slider
                                 Maximum="100"
                                 Grid.Row="2"
