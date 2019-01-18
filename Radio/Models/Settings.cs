@@ -38,6 +38,15 @@ namespace Radio.Models
                 downoloadTrackLocal = value;
             }
         }
+        private bool autoPlayTracks;
+        public bool AutoPlayTracks
+        {
+            get { return autoPlayTracks; }
+            set
+            {
+                autoPlayTracks = value;
+            }
+        }
 
         public static Settings LoadSettings()
         {
@@ -45,6 +54,7 @@ namespace Radio.Models
             settings.DownoloadTrackLocal = Properties.Settings.Default.DownoloadTrackLocal;
             settings.MinimizeToTrayOnClose = Properties.Settings.Default.MinimizeToTrayOnClose;
             settings.ShovSpectumAnalizer = Properties.Settings.Default.ShovSpectumAnalizer;
+            settings.AutoPlayTracks = Properties.Settings.Default.AutoPlayTracks;
             return settings;
         }
 
@@ -53,6 +63,7 @@ namespace Radio.Models
             Properties.Settings.Default.DownoloadTrackLocal = settings.DownoloadTrackLocal;
             Properties.Settings.Default.MinimizeToTrayOnClose = settings.MinimizeToTrayOnClose;
             Properties.Settings.Default.ShovSpectumAnalizer = settings.ShovSpectumAnalizer;
+            Properties.Settings.Default.AutoPlayTracks = settings.AutoPlayTracks;
             Properties.Settings.Default.Save();
         }
     }

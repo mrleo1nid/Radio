@@ -63,6 +63,7 @@ namespace Radio.ViewModels
         private void OpenSettingsWindow()
         {
             SettingsWindow = new SettingsWindow();
+            SettingsWindow.Owner = MainWindow;
             SettingsWindow.Show();
         }
 

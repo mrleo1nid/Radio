@@ -46,6 +46,11 @@ namespace Radio.ViewModels
             set
             {
                 _selectedPlaylist = value;
+                if (MainViewModel.Settings.AutoPlayTracks)
+                {
+                    bassEngine.OpenUrl(SelectedPlaylist.PlayedTrack);
+                    bassEngine.Play();
+                }
                 OnPropertyChanged(nameof(SelectedPlaylist));
             }
         }

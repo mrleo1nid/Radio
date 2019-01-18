@@ -58,5 +58,17 @@ namespace Radio.Properties {
                 this["DownoloadTrackLocal"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool AutoPlayTracks {
+            get {
+                return ((bool)(this["AutoPlayTracks"]));
+            }
+            set {
+                this["AutoPlayTracks"] = value;
+            }
+        }
     }
 }
