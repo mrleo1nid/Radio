@@ -8,7 +8,7 @@
         xmlns:behaviors="clr-namespace:Radio.Behaviors"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
-        Title="Settings" Height="296.365" Width="527.807">
+        Title="Настройки" Height="300" Width="530">
     <Window.DataContext>
         <viewModels:MainViewModel/>
     </Window.DataContext>

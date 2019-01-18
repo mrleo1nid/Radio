@@ -27,8 +27,8 @@
             <ColumnDefinition Width="7*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="20*"/>
-            <RowDefinition Height="399*"/>
+            <RowDefinition Height="28*"/>
+            <RowDefinition Height="391*"/>
         </Grid.RowDefinitions>
         <tb:TaskbarIcon  ToolTipText="Radio">
             <i:Interaction.Behaviors>
@@ -62,11 +62,7 @@
             </tb:TaskbarIcon.ContextMenu>
         </tb:TaskbarIcon>
         <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
-            <ComboBox HorizontalAlignment="Left" Width="120" Text="Дополнительно" SelectedIndex="0">
-             <ComboBoxItem Width="120">
-                    <Button Width="120" Command="{Binding OpenDopWindowCommand}" Content="Настройки"></Button>
-             </ComboBoxItem>
-            </ComboBox>
+            <Button Width="120" Command="{Binding OpenDopWindowCommand}" Content="Настройки" HorizontalAlignment="Left"></Button>
         </StackPanel>
         <Grid Grid.Column="0" Grid.Row="1">
             <user:PlaylistView DataContext="{Binding PlaylistsVM}"/>
