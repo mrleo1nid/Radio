@@ -6,6 +6,7 @@
              xmlns:behaviors="clr-namespace:Radio.Behaviors"
              xmlns:viewModels="clr-namespace:Radio.ViewModels"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:wpfSoundVisualizationLib="clr-namespace:WPFSoundVisualizationLib;assembly=WPFSoundVisualizationLib"
              mc:Ignorable="d"
              d:DesignHeight="400"
              d:DesignWidth="600">
@@ -23,19 +24,25 @@
         </Grid.Height>
         <Grid Margin="5,5,5,5">
             <Grid.RowDefinitions>
-                <RowDefinition Height="173*"/>
-                <RowDefinition Height="27*"/>
+                <RowDefinition Height="312*"/>
+                <RowDefinition Height="41*"/>
+                <RowDefinition Height="37*"/>
             </Grid.RowDefinitions>
-            <MediaElement Grid.Row="0" Margin="50,50,50,50" 
+            <MediaElement Grid.Row="0" Margin="30,30,30,30" 
                           Source="{Binding SelectedPlaylist.PlayedGif, UpdateSourceTrigger=PropertyChanged}" 
                           LoadedBehavior="Manual">
                 <i:Interaction.Behaviors>
                     <behaviors:GifPlayerBehavior />
                 </i:Interaction.Behaviors>
             </MediaElement>
-            <Button Grid.Row="0"  Margin="50,50,50,50" Command="{Binding PlayCommand}" Opacity="0">
+            <Button Grid.Row="0"  Margin="30,30,30,30" Command="{Binding PlayCommand}" Opacity="0">
             </Button>
-            <Grid Grid.Row="1">
+            <wpfSoundVisualizationLib:SpectrumAnalyzer Grid.Row="1" Margin="5" BarCount="30" Visibility="{Binding SpectrumVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                <i:Interaction.Behaviors>
+                    <behaviors:SpectrumAnalyzerBehavior />
+                </i:Interaction.Behaviors>
+            </wpfSoundVisualizationLib:SpectrumAnalyzer>
+            <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>

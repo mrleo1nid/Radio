@@ -60,7 +60,16 @@ namespace Radio.ViewModels
                 VolumeChanged();
             }
         }
-        
+        private Visibility spectrumVisibility = Visibility.Collapsed;
+        public Visibility SpectrumVisibility
+        {
+            get { return spectrumVisibility; }
+            set
+            {
+                spectrumVisibility = value;
+                OnPropertyChanged(nameof(SpectrumVisibility));
+            }
+        }
 
         private void LoadIconsFromUIThread()
         {
@@ -73,6 +82,17 @@ namespace Radio.ViewModels
             SelectedPlaylist = Playlists.FirstOrDefault();
         }
 
+        public void ChangeElementsVisibility()
+        {
+            if (MainViewModel.Settings.ShovSpectumAnalizer)
+            {
+                SpectrumVisibility = Visibility.Visible;
+            }
+            else
+            {
+                SpectrumVisibility = Visibility.Collapsed;
+            }
+        }
 
         #region Actions
         private void Play()

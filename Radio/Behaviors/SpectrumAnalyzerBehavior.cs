@@ -35,7 +35,6 @@ namespace Radio.Behaviors
         {
             base.OnAttached();
             AssociatedObject.Initialized += AssociatedObject_Initialized;
-
         }
 
         protected override void OnDetaching()

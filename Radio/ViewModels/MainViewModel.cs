@@ -25,43 +25,74 @@ namespace Radio.ViewModels
         {
             BassEngine = BassEngine.Instance;
             PlaylistsVM = new PlaylistsViewModel();
-            icon = Properties.Resources.icon;
+            Settings = Settings.LoadSettings();
+            PlaylistsVM.ChangeElementsVisibility();
+            CanClose = !Settings.MinimizeToTrayOnClose;
         }
 
-        private  Icon icon;
 
-        public  Icon Icon
+        public static MainWindow MainWindow { get; set; }
+        public static PlaylistsViewModel PlaylistsVM { get; set; }
+        public static BassEngine  BassEngine { get; set; }
+        public static SettingsWindow SettingsWindow { get; set; }
+        public static bool CanClose { get; set; }
+
+        private static Settings settings;
+        public static Settings Settings
         {
-            get { return icon; }
+            get { return settings; }
             set
             {
-                icon = value;
-                OnPropertyChanged(nameof(Icon));
+                settings = value;
             }
         }
 
-        public static PlaylistsViewModel PlaylistsVM { get; set; }
-        public static BassEngine  BassEngine { get; set; }
-
-        private RelayCommand _addCommand;
-        public RelayCommand AddCommand => _addCommand ?? (_addCommand = new RelayCommand(AddPlaylist));
-       
-       
-        private void AddPlaylist()
-        {
-            throw new NotImplementedException();
-        }
-
         private RelayCommand _openDopWindow;
-        public RelayCommand OpenDopWindowCommand => _openDopWindow ?? (_openDopWindow = new RelayCommand(OpenDopWindow));
+        public RelayCommand OpenDopWindowCommand => _openDopWindow ?? (_openDopWindow = new RelayCommand(OpenSettingsWindow));
+        private RelayCommand _saveSettingsCommand;
+        public RelayCommand SaveSettingsCommand => _saveSettingsCommand ?? (_saveSettingsCommand = new RelayCommand(SaveSettingsFunc));
+        private RelayCommand _cancelSettingsWindowCommand;
+        public RelayCommand CancelSettingsWindowCommand => _cancelSettingsWindowCommand ?? (_cancelSettingsWindowCommand = new RelayCommand(CancelSettingsWindowFunc));
+        private RelayCommand _closeProgrammCommand;
+        public RelayCommand CloseProgrammCommand => _closeProgrammCommand ?? (_closeProgrammCommand = new RelayCommand(CloseProgrammFunc));
+        private RelayCommand _showHideMainWindCommand;
+        public RelayCommand ShowHideMainWindCommand => _showHideMainWindCommand ?? (_showHideMainWindCommand = new RelayCommand(ShowHideMainWindFunc));
 
-        private void OpenDopWindow()
+        private void OpenSettingsWindow()
         {
-            var ico = Properties.Resources.icon;
-            EqualizerWindow wind = new EqualizerWindow { DataContext = new EqualizerViewModel()};
-            wind.Show();
+            SettingsWindow = new SettingsWindow();
+            SettingsWindow.Show();
         }
 
-       
+        private void SaveSettingsFunc()
+        {
+            PlaylistsVM.ChangeElementsVisibility();
+            Models.Settings.SaveSettings(Settings);
+            SettingsWindow.Close();
+        }
+        private void CancelSettingsWindowFunc()
+        {
+            PlaylistsVM.ChangeElementsVisibility();
+            SettingsWindow.Close();
+        }
+
+        private void CloseProgrammFunc()
+        {
+            CanClose = true;
+            MainWindow.Close();
+        }
+        private void ShowHideMainWindFunc()
+        {
+            if (MainWindow.IsVisible)
+            {
+                    MainWindow.Hide();
+            }
+            else
+            {
+                MainWindow.Show();
+                MainWindow.Activate();
+            }
+        }
+
     }
 }

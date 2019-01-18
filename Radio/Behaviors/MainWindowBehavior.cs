@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interactivity;
+using Radio.Models;
 using Radio.ViewModels;
 using WPFSoundVisualizationLib;
 
@@ -14,7 +15,6 @@ namespace Radio.Behaviors
 {
     class MainWindowBehavior : Behavior<MainWindow>
     {
-        private static MainWindow window;
 
         public static readonly DependencyProperty MainWindowBehaviorProperty =
             DependencyProperty.Register(
@@ -25,6 +25,7 @@ namespace Radio.Behaviors
         private void AssociatedObject_Initialized(object sender, EventArgs e)
         {
             MainWindow wind = sender as MainWindow;
+            MainViewModel.MainWindow = wind;
         }
 
         protected override void OnAttached()
@@ -36,9 +37,11 @@ namespace Radio.Behaviors
 
         private void AssociatedObjectOnClosing(object sender, CancelEventArgs e)
         {
-            MyNotifyIcon.Dispose();
-
-            base.OnClosing(e);
+            if (!MainViewModel.CanClose)
+            {
+                MainViewModel.MainWindow.Hide();
+                e.Cancel = true;
+            }
         }
 
         protected override void OnDetaching()

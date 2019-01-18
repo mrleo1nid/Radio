@@ -22,12 +22,11 @@ namespace Radio.Views
     /// <summary>
     /// Логика взаимодействия для DopWindow.xaml
     /// </summary>
-    public partial class EqualizerWindow : Window
+    public partial class SettingsWindow : Window
     {
-        public EqualizerWindow()
+        public SettingsWindow()
         {
             InitializeComponent();
-
         }
     }
 }
