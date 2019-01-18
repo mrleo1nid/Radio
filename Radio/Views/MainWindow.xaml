@@ -10,6 +10,7 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:behaviors="clr-namespace:Radio.Behaviors"
         xmlns:tb="clr-namespace:Hardcodet.Wpf.TaskbarNotification;assembly=Hardcodet.Wpf.TaskbarNotification"
+        xmlns:wpfSoundVisualizationLib="clr-namespace:WPFSoundVisualizationLib;assembly=WPFSoundVisualizationLib"
         mc:Ignorable="d"
         Title="Radio" Height="450" Width="800">
     <Window.DataContext>
@@ -60,6 +61,46 @@
                     </MenuItem>
                 </ContextMenu>
             </tb:TaskbarIcon.ContextMenu>
+            <tb:TaskbarIcon.TrayPopup>
+                <Border
+                    Background="White"
+                    BorderBrush="Orange"
+                    BorderThickness="2"
+                    CornerRadius="4"
+                    Width="200">
+                    <StackPanel>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="200*"/>
+                                <RowDefinition Height="50*"/>
+                                <RowDefinition Height="50*"/>
+                            </Grid.RowDefinitions>
+                            <MediaElement
+                                Grid.Row="0"
+                                Margin="5,10,5,10"
+                                LoadedBehavior="Manual"
+                                Source="{Binding PlaylistsVM.SelectedPlaylist.PlayedGif}">
+                                <i:Interaction.Behaviors>
+                                    <behaviors:GifPlayerBehavior />
+                                </i:Interaction.Behaviors>
+                            </MediaElement>
+                            <Slider
+                                Maximum="100"
+                                Grid.Row="2"
+                                Value="{Binding PlaylistsVM.Volume, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                Margin="5,0,5,10"
+                                Width="180"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center" />
+                            <wpfSoundVisualizationLib:SpectrumAnalyzer Grid.Row="1" Margin="5" BarCount="30" Visibility="{Binding PlaylistsVM.SpectrumVisibility, UpdateSourceTrigger=PropertyChanged}">
+                                <i:Interaction.Behaviors>
+                                    <behaviors:SpectrumAnalyzerBehavior />
+                                </i:Interaction.Behaviors>
+                            </wpfSoundVisualizationLib:SpectrumAnalyzer>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+            </tb:TaskbarIcon.TrayPopup>
         </tb:TaskbarIcon>
         <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
             <Button Width="120" Command="{Binding OpenDopWindowCommand}" Content="Настройки" HorizontalAlignment="Left"></Button>

@@ -37,7 +37,7 @@
             </MediaElement>
             <Button Grid.Row="0"  Margin="30,30,30,30" Command="{Binding PlayCommand}" Opacity="0">
             </Button>
-            <wpfSoundVisualizationLib:SpectrumAnalyzer Grid.Row="1" Margin="5" BarCount="30" Visibility="{Binding SpectrumVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+            <wpfSoundVisualizationLib:SpectrumAnalyzer Grid.Row="1" Margin="5" BarCount="30" Visibility="{Binding SpectrumVisibility, UpdateSourceTrigger=PropertyChanged}">
                 <i:Interaction.Behaviors>
                     <behaviors:SpectrumAnalyzerBehavior />
                 </i:Interaction.Behaviors>
