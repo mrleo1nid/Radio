@@ -22,17 +22,9 @@ namespace Radio.Behaviors
                 typeof(string),
                 typeof(MainWindowBehavior));
 
-        public string MainWindowFieldBehavior
-        {
-            get { return (string)GetValue(MainWindowBehaviorProperty); }
-            set { SetValue(MainWindowBehaviorProperty, value); }
-        }
-
         private void AssociatedObject_Initialized(object sender, EventArgs e)
         {
             MainWindow wind = sender as MainWindow;
-            window = wind;
-            createTrayIcon();
         }
 
         protected override void OnAttached()
@@ -44,75 +36,14 @@ namespace Radio.Behaviors
 
         private void AssociatedObjectOnClosing(object sender, CancelEventArgs e)
         {
-            if (!MainViewModel.CanClose)
-            { 
-                e.Cancel = true; 
-                MainViewModel.CurrentWindowState = window.WindowState;
-                (MainViewModel.TrayMenu.Items[0] as MenuItem).Header = "Show";
-               window.Hide();
-            }
-            else
-            {
-                MainViewModel.TrayIcon.Visible = false;
-            }
+            MyNotifyIcon.Dispose();
+
+            base.OnClosing(e);
         }
 
         protected override void OnDetaching()
         {
             base.OnDetaching();
         }
-
-        private bool createTrayIcon()
-        {
-            bool result = false;
-            if (MainViewModel.TrayIcon == null)
-            { 
-                MainViewModel.TrayIcon = new System.Windows.Forms.NotifyIcon(); 
-                MainViewModel.TrayIcon.Icon = Radio.Properties.Resources.favicon;
-                MainViewModel.TrayIcon.Text = "Here is tray icon text.";
-                MainViewModel.TrayMenu = window.Resources["TrayMenu"] as ContextMenu;
-                MainViewModel.TrayIcon.Click += delegate (object sender, EventArgs e) {
-                    if ((e as System.Windows.Forms.MouseEventArgs).Button == System.Windows.Forms.MouseButtons.Left)
-                    {
-                        ShowHideMainWindow();
-                    }
-                    else
-                    {
-                        MainViewModel.TrayMenu.IsOpen = true;
-                        window.Activate();
-                    }
-                };
-                result = true;
-            }
-            else
-            { 
-                result = true;
-            }
-            MainViewModel.TrayIcon.Visible = true; 
-            return result;
-        }
-
-        private void ShowHideMainWindow()
-        {
-            MainViewModel.TrayMenu.IsOpen = false; 
-            if (window.IsVisible)
-            {
-                window.Hide();
-                (MainViewModel.TrayMenu.Items[0] as MenuItem).Header = "Show";
-            }
-            else
-            {
-                window.Show();
-                (MainViewModel.TrayMenu.Items[0] as MenuItem).Header = "Hide";
-                window.WindowState = MainViewModel.CurrentWindowState;
-                window.Activate(); 
-            }
-        }
-        public static void MenuExitClick()
-        {
-            MainViewModel.CanClose = true;
-            window.Close();
-        }
-
     }
 }

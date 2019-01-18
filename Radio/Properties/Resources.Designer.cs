@@ -63,9 +63,9 @@ namespace Radio.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Icon, аналогичного (Значок).
         /// </summary>
-        internal static System.Drawing.Icon favicon {
+        internal static System.Drawing.Icon icon {
             get {
-                object obj = ResourceManager.GetObject("favicon", resourceCulture);
+                object obj = ResourceManager.GetObject("icon", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }

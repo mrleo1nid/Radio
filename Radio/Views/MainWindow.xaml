@@ -7,8 +7,10 @@
         xmlns:vm="clr-namespace:Radio.ViewModels"
         xmlns:user="clr-namespace:Radio.Views.UserControls"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:res="clr-namespace:Radio.Properties" 
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:behaviors="clr-namespace:Radio.Behaviors"
+        xmlns:tb="http://www.hardcodet.net/taskbar"
         mc:Ignorable="d"
         Title="Radio" Height="450" Width="800">
     <Window.DataContext>
@@ -20,14 +22,6 @@
     <i:Interaction.Behaviors>
         <behaviors:MainWindowBehavior />
     </i:Interaction.Behaviors>
-    <Window.Resources>
-        <ContextMenu x:Key="TrayMenu">
-            <MenuItem Header="Hide" Command="{Binding ShowHideWindowCommand}" />
-            <MenuItem Header="Item2" />
-            <Separator />
-            <MenuItem Header="Exit" Command="{Binding MenuExitWindowComman}" />
-        </ContextMenu>
-    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*" />
@@ -37,7 +31,39 @@
             <RowDefinition Height="20*"/>
             <RowDefinition Height="399*"/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Grid.ColumnSpan="2">
+        <tb:TaskbarIcon x:Name="MyNotifyIcon"
+                        IconSource=""
+                        ToolTipText="hello world"
+                        TrayContextMenuOpen=""
+                        PreviewTrayContextMenuOpen="">
+
+            <!-- Set a simple context menu  -->
+            <!-- the data context of the context menu is the NotifyIcon itself (see more about this in DataBinding samples) -->
+            <tb:TaskbarIcon.ContextMenu>
+                <ContextMenu>
+                    <TextBlock Text="Hiding the sample window will not close it!" />
+                    <MenuItem Header="_Show Sample Window [S]"
+                              Command="{Binding OpenDopWindowCommand}"
+                              CommandParameter="{Binding}">
+                        <MenuItem.Icon>
+                            
+                        </MenuItem.Icon>
+                    </MenuItem>
+
+                    <Separator />
+
+                    <MenuItem Header="_Hide Sample Window [H]"
+                              Command="{Binding OpenDopWindowCommand}"
+                              CommandParameter="{Binding}">
+                        <MenuItem.Icon>
+                           
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </tb:TaskbarIcon.ContextMenu>
+
+        </tb:TaskbarIcon>
+        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
             <ComboBox HorizontalAlignment="Left" Width="120">
              <ComboBoxItem Width="120">
                  <Button Command="{Binding OpenDopWindowCommand}" Content="Дополнительно"></Button>
