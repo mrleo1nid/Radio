@@ -44,6 +44,8 @@ namespace Radio.ViewModels
             set
             {
                 settings = value;
+                CanClose = !settings.MinimizeToTrayOnClose;
+                PlaylistsVM.ChangeElementsVisibility();
             }
         }
 
@@ -68,11 +70,11 @@ namespace Radio.ViewModels
         {
             PlaylistsVM.ChangeElementsVisibility();
             Models.Settings.SaveSettings(Settings);
+            Settings = Settings.LoadSettings();
             SettingsWindow.Close();
         }
         private void CancelSettingsWindowFunc()
         {
-            PlaylistsVM.ChangeElementsVisibility();
             SettingsWindow.Close();
         }
 
