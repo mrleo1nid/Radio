@@ -51,10 +51,6 @@ namespace Radio.ViewModels
 
         private RelayCommand _openDopWindow;
         public RelayCommand OpenDopWindowCommand => _openDopWindow ?? (_openDopWindow = new RelayCommand(OpenSettingsWindow));
-        private RelayCommand _saveSettingsCommand;
-        public RelayCommand SaveSettingsCommand => _saveSettingsCommand ?? (_saveSettingsCommand = new RelayCommand(SaveSettingsFunc));
-        private RelayCommand _cancelSettingsWindowCommand;
-        public RelayCommand CancelSettingsWindowCommand => _cancelSettingsWindowCommand ?? (_cancelSettingsWindowCommand = new RelayCommand(CancelSettingsWindowFunc));
         private RelayCommand _closeProgrammCommand;
         public RelayCommand CloseProgrammCommand => _closeProgrammCommand ?? (_closeProgrammCommand = new RelayCommand(CloseProgrammFunc));
         private RelayCommand _showHideMainWindCommand;
@@ -64,21 +60,11 @@ namespace Radio.ViewModels
         {
             SettingsWindow = new SettingsWindow();
             SettingsWindow.Owner = MainWindow;
+            SettingsViewModel.Window = SettingsWindow;
             SettingsWindow.Show();
         }
 
-        private void SaveSettingsFunc()
-        {
-            PlaylistsVM.ChangeElementsVisibility();
-            Models.Settings.SaveSettings(Settings);
-            Settings = Settings.LoadSettings();
-            SettingsWindow.Close();
-        }
-        private void CancelSettingsWindowFunc()
-        {
-            SettingsWindow.Close();
-        }
-
+    
         private void CloseProgrammFunc()
         {
             CanClose = true;
