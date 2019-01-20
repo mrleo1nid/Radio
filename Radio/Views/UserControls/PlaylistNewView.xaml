@@ -28,19 +28,11 @@
                             <ColumnDefinition Width="2*" />
                             <ColumnDefinition Width="4*" />
                         </Grid.ColumnDefinitions>
-                        <Grid.Width>
-                            <Binding Path="ActualWidth" 
-                                     RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type ScrollContentPresenter}}" />
-                        </Grid.Width>
-                        <Grid Grid.Column="0">
-                            <Image Source="{Binding ImagePath,UpdateSourceTrigger=PropertyChanged}"/>
+                        <Image Width="50" Height="50" Source="{Binding ImagePath , UpdateSourceTrigger=PropertyChanged}"
+                                      Grid.Column="0"
+                                      HorizontalAlignment="Left"/>
+                        <TextBlock FontSize="18" Text="{Binding Path=Name}" Grid.Column="1" />
                         </Grid>
-                        <Grid Grid.Column="1">
-                            <StackPanel Margin="5,0,0,0" VerticalAlignment="Center">
-                                <TextBlock FontSize="18" Text="{Binding Path=Name}" />
-                            </StackPanel>
-                        </Grid>
-                    </Grid>
                 </DataTemplate>
             </mah:HamburgerMenu.ItemTemplate>
         </mah:HamburgerMenu>

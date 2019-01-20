@@ -25,8 +25,8 @@
     </i:Interaction.Behaviors>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="150*" />
+            <ColumnDefinition Width="600*" />
         </Grid.ColumnDefinitions>
         <tb:TaskbarIcon  ToolTipText="Radio">
             <i:Interaction.Behaviors>

@@ -59,7 +59,7 @@ namespace Radio.Workers
             if (!fileCover.Exists)
             {
                 DownloadFile(playlist.ImagePath, fileCover);
-                ChangeImageResolution(fileCover.FullName);
+                //  ChangeImageResolution(fileCover.FullName);
                 playlist.ImagePath = fileCover.FullName;
             }
             else
