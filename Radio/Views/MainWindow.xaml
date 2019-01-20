@@ -11,6 +11,7 @@
         xmlns:behaviors="clr-namespace:Radio.Behaviors"
         xmlns:tb="clr-namespace:Hardcodet.Wpf.TaskbarNotification;assembly=Hardcodet.Wpf.TaskbarNotification"
         xmlns:wpfSoundVisualizationLib="clr-namespace:WPFSoundVisualizationLib;assembly=WPFSoundVisualizationLib"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         mc:Ignorable="d"
         Title="Radio" Height="450" Width="800">
     <Window.DataContext>
@@ -24,13 +25,9 @@
     </i:Interaction.Behaviors>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*" />
-            <ColumnDefinition Width="7*" />
+            <ColumnDefinition/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="28*"/>
-            <RowDefinition Height="391*"/>
-        </Grid.RowDefinitions>
         <tb:TaskbarIcon  ToolTipText="Radio">
             <i:Interaction.Behaviors>
                 <behaviors:NotifyIconBehavior />
@@ -55,6 +52,10 @@
                               CommandParameter="{Binding}">
                     </MenuItem>
                     <Separator />
+                    <MenuItem Header="Настройки"
+                              Command="{Binding OpenDopWindowCommand}"
+                              CommandParameter="{Binding}">
+                    </MenuItem>
                     <MenuItem Header="Выход"
                               Command="{Binding CloseProgrammCommand}"
                               CommandParameter="{Binding}">
@@ -107,11 +108,8 @@
                 </Border>
             </tb:TaskbarIcon.TrayPopup>
         </tb:TaskbarIcon>
-        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
-            <Button Width="120" Command="{Binding OpenDopWindowCommand}" Content="Настройки" HorizontalAlignment="Left"></Button>
-        </StackPanel>
         <Grid Grid.Column="0" Grid.Row="1">
-            <user:PlaylistView DataContext="{Binding PlaylistsVM}"/>
+            <user:PlaylistNewView DataContext="{Binding PlaylistsVM}"/>
         </Grid>
         <Grid Grid.Column="1" Grid.Row="1">
             <user:PlayerView DataContext="{Binding PlaylistsVM}"/>

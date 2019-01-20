@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Radio.Views.UserControls.PlaylistView"
+﻿<UserControl x:Class="Radio.Views.UserControls.PlaylistNewView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,24 +6,22 @@
              xmlns:viewModels="clr-namespace:Radio.ViewModels"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:behaviors="clr-namespace:Radio.Behaviors"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d"
              d:DesignHeight="400"
              d:DesignWidth="300">
     <UserControl.DataContext>
         <viewModels:PlaylistsViewModel/>
     </UserControl.DataContext>
-    <i:Interaction.Behaviors>
-        <behaviors:PlaylistBehavior />
-    </i:Interaction.Behaviors>
     <Grid>
         <Grid.Width>
             <Binding Path="ActualWidth" 
                      RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type ScrollContentPresenter}}" />
         </Grid.Width>
-        <ListBox Name="ListBoxPlaylists" ItemsSource="{Binding Playlists}"
+        <mah:HamburgerMenu Name="ListBoxPlaylists" ItemsSource="{Binding Playlists}"
                  SelectedItem="{Binding SelectedPlaylist,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-            <ListBox.ItemTemplate>
+            <mah:HamburgerMenu.ItemTemplate>
                 <DataTemplate>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -44,7 +42,7 @@
                         </Grid>
                     </Grid>
                 </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+            </mah:HamburgerMenu.ItemTemplate>
+        </mah:HamburgerMenu>
     </Grid>
 </UserControl>
