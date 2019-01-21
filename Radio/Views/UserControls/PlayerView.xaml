@@ -8,6 +8,7 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:mah="clr-namespace:MahApps;assembly=MahApps.Metro.IconPacks.Material"
              xmlns:wpfSoundVisualizationLib="clr-namespace:WPFSoundVisualizationLib;assembly=WPFSoundVisualizationLib"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d"
              d:DesignHeight="400"
              d:DesignWidth="600">
@@ -49,8 +50,12 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" Content="" Command="{Binding PreviousCommand}" ></Button>
-                <Button Grid.Column="2" Content="Вперёд" Command="{Binding NextCommand}"></Button>
+                <Button Grid.Column="0" Command="{Binding PreviousCommand}" Background="Transparent">
+                    <iconPacks:PackIconMaterial Kind="ArrowLeft" />
+                </Button>
+                <Button Grid.Column="2" Command="{Binding NextCommand}" Background="Transparent">
+                    <iconPacks:PackIconMaterial Kind="ArrowRight"/>
+                </Button>
                 <Slider  Grid.Column="1"  Maximum="100" Value="{Binding Volume, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </Grid>
         </Grid>

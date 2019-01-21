@@ -9,7 +9,7 @@
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d"
              d:DesignHeight="400"
-             d:DesignWidth="300">
+             d:DesignWidth="150">
     <UserControl.DataContext>
         <viewModels:PlaylistsViewModel/>
     </UserControl.DataContext>
@@ -25,14 +25,14 @@
                 <DataTemplate>
                     <Grid>
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
                             <ColumnDefinition Width="2*" />
-                            <ColumnDefinition Width="4*" />
                         </Grid.ColumnDefinitions>
                         <Image Width="50" Height="50" Source="{Binding ImagePath , UpdateSourceTrigger=PropertyChanged}"
                                       Grid.Column="0"
                                       HorizontalAlignment="Left"/>
-                        <TextBlock FontSize="18" Text="{Binding Path=Name}" Grid.Column="1" />
-                        </Grid>
+                        <TextBlock Width="50" Height="50" FontSize="18" Text="{Binding Path=Name}" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                    </Grid>
                 </DataTemplate>
             </mah:HamburgerMenu.ItemTemplate>
         </mah:HamburgerMenu>
