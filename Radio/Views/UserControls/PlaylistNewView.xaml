@@ -12,7 +12,7 @@
         <viewModels:PlaylistsViewModel/>
     </UserControl.DataContext>
     <Grid>
-        <mah:HamburgerMenu Name="ListBoxPlaylists" ItemsSource="{Binding Playlists}"
+        <mah:HamburgerMenu ItemsSource="{Binding Playlists}"
                  SelectedItem="{Binding SelectedPlaylist,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <i:Interaction.Behaviors>

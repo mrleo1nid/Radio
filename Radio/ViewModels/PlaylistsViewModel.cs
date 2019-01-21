@@ -46,11 +46,6 @@ namespace Radio.ViewModels
             set
             {
                 _selectedPlaylist = value;
-                if (MainViewModel.Settings.AutoPlayTracks)
-                {
-                    bassEngine.OpenUrl(SelectedPlaylist.PlayedTrack);
-                    bassEngine.Play();
-                }
                 OnPropertyChanged(nameof(SelectedPlaylist));
             }
         }
@@ -65,37 +60,6 @@ namespace Radio.ViewModels
                 VolumeChanged();
             }
         }
-        private int gridWidth;
-        public int GridWidth
-        {
-            get { return gridWidth; }
-            set
-            {
-                gridWidth = value;
-                OnPropertyChanged(nameof(GridWidth));
-            }
-        }
-        private Visibility spectrumVisibility = Visibility.Collapsed;
-        public Visibility SpectrumVisibility
-        {
-            get { return spectrumVisibility; }
-            set
-            {
-                spectrumVisibility = value;
-                OnPropertyChanged(nameof(SpectrumVisibility));
-            }
-        }
-        private Visibility popupVisibility = Visibility.Collapsed;
-        public Visibility PopupVisibility
-        {
-            get { return popupVisibility; }
-            set
-            {
-                popupVisibility = value;
-                OnPropertyChanged(nameof(PopupVisibility));
-            }
-        }
-
         private void LoadIconsFromUIThread()
         {
             var downloader = new PlaylistDownloader();
@@ -105,26 +69,6 @@ namespace Radio.ViewModels
             }
 
             SelectedPlaylist = Playlists.FirstOrDefault();
-        }
-
-        public void ChangeElementsVisibility()
-        {
-            if (MainViewModel.Settings.ShovSpectumAnalizer)
-            {
-                SpectrumVisibility = Visibility.Visible;
-            }
-            else
-            {
-                SpectrumVisibility = Visibility.Collapsed;
-            }
-            if (MainViewModel.Settings.ShowPoppup)
-            {
-                PopupVisibility = Visibility.Visible;
-            }
-            else
-            {
-                PopupVisibility = Visibility.Collapsed;
-            }
         }
 
         #region Actions

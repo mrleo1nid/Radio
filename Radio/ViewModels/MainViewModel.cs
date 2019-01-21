@@ -26,7 +26,6 @@ namespace Radio.ViewModels
             BassEngine = BassEngine.Instance;
             PlaylistsVM = new PlaylistsViewModel();
             Settings = Settings.LoadSettings();
-            PlaylistsVM.ChangeElementsVisibility();
             CanClose = !Settings.MinimizeToTrayOnClose;
         }
 
@@ -45,7 +44,6 @@ namespace Radio.ViewModels
             {
                 settings = value;
                 CanClose = !settings.MinimizeToTrayOnClose;
-                PlaylistsVM.ChangeElementsVisibility();
             }
         }
 

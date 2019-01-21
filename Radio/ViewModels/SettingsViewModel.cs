@@ -28,6 +28,7 @@ namespace Radio.ViewModels
         {
             Models.Settings.SaveSettings(Settings);
             Settings = Settings.LoadSettings();
+            MainViewModel.Settings = Settings;
             Window.Close();
         }
         private void CancelSettingsWindowFunc()

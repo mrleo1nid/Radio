@@ -10,7 +10,7 @@ using MahApps.Metro.Controls;
 
 namespace Radio.Behaviors
 {
-    class HamburgerBehavior : Behavior<MahApps.Metro.Controls.HamburgerMenu>
+    class HamburgerBehavior : Behavior<HamburgerMenu>
     {
 
         public static readonly DependencyProperty HamburgerBehaviorProperty =
@@ -27,7 +27,7 @@ namespace Radio.Behaviors
 
         private void AssociatedObject_Initialized(object sender, EventArgs e)
         {
-            var associatedObject = sender as MahApps.Metro.Controls.HamburgerMenu;
+            var associatedObject = sender as HamburgerMenu;
         }
 
         protected override void OnAttached()
