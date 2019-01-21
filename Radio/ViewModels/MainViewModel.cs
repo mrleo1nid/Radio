@@ -34,8 +34,9 @@ namespace Radio.ViewModels
         public static PlaylistsViewModel PlaylistsVM { get; set; }
         public static BassEngine  BassEngine { get; set; }
         public static SettingsWindow SettingsWindow { get; set; }
-        public static bool CanClose { get; set; }
 
+
+        public static bool CanClose { get; set; }
         private static Settings settings;
         public static Settings Settings
         {
@@ -58,7 +59,6 @@ namespace Radio.ViewModels
         {
             SettingsWindow = new SettingsWindow();
             SettingsWindow.Owner = MainWindow;
-            SettingsViewModel.Window = SettingsWindow;
             SettingsWindow.Show();
         }
 

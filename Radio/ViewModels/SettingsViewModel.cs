@@ -10,13 +10,9 @@ namespace Radio.ViewModels
 {
     class SettingsViewModel : ViewModel
     {
-        public static Settings Settings { get; set; }
-        public static SettingsWindow Window { get; set; }
-
         public SettingsViewModel()
         {
-           Settings = Settings.LoadSettings();
-           Window = MainViewModel.SettingsWindow;
+           MainViewModel.Settings = Settings.LoadSettings();
         }
 
         private RelayCommand _saveSettingsCommand;
@@ -26,14 +22,13 @@ namespace Radio.ViewModels
 
         private void SaveSettingsFunc()
         {
-            Models.Settings.SaveSettings(Settings);
-            Settings = Settings.LoadSettings();
-            MainViewModel.Settings = Settings;
-            Window.Close();
+            Models.Settings.SaveSettings(MainViewModel.Settings);
+            MainViewModel.Settings = Settings.LoadSettings();
+            MainViewModel.SettingsWindow.Close();
         }
         private void CancelSettingsWindowFunc()
         {
-            Window.Close();
+            MainViewModel.SettingsWindow.Close();
         }
 
     }
