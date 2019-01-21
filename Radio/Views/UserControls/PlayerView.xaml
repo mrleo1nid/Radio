@@ -50,11 +50,11 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" Command="{Binding PreviousCommand}" Background="Transparent">
-                    <iconPacks:PackIconMaterial Kind="ArrowLeft" />
+                <Button Grid.Column="0" Command="{Binding PreviousCommand}" Background="Transparent" BorderThickness="0">
+                    <iconPacks:PackIconMaterial Kind="ArrowLeft" Foreground="Red" />
                 </Button>
-                <Button Grid.Column="2" Command="{Binding NextCommand}" Background="Transparent">
-                    <iconPacks:PackIconMaterial Kind="ArrowRight"/>
+                <Button Grid.Column="2" Command="{Binding NextCommand}" Background="Transparent" BorderThickness="0" >
+                    <iconPacks:PackIconMaterial Kind="ArrowRight" Foreground="Red"/>
                 </Button>
                 <Slider  Grid.Column="1"  Maximum="100" Value="{Binding Volume, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </Grid>

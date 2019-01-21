@@ -10,18 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using MahApps.Metro.Controls;
 
 namespace Radio.Views.UserControls
 {
     /// <summary>
-    /// Interaction logic for PlaylistView.xaml
+    /// Логика взаимодействия для TaskbarView.xaml
     /// </summary>
-    public partial class PlaylistView : UserControl
+    public partial class TaskbarView : UserControl
     {
-        public PlaylistView()
+        public TaskbarView()
         {
             InitializeComponent();
         }

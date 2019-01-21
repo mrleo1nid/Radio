@@ -28,90 +28,11 @@
             <ColumnDefinition Width="150*" />
             <ColumnDefinition Width="600*" />
         </Grid.ColumnDefinitions>
-        <tb:TaskbarIcon  ToolTipText="Radio">
-            <i:Interaction.Behaviors>
-                <behaviors:NotifyIconBehavior />
-            </i:Interaction.Behaviors>
-            <tb:TaskbarIcon.ContextMenu>
-                <ContextMenu>
-                    <MenuItem Header="Показать/Скрыть"
-                              Command="{Binding ShowHideMainWindCommand}"
-                              CommandParameter="{Binding}">
-                    </MenuItem>
-                    <Separator />
-                    <MenuItem Header="Play/Pause"
-                              Command="{Binding PlaylistsVM.PlayCommand}"
-                              CommandParameter="{Binding}">
-                    </MenuItem>
-                    <MenuItem Header="Следующий"
-                              Command="{Binding PlaylistsVM.NextCommand}"
-                              CommandParameter="{Binding}">
-                    </MenuItem>
-                    <MenuItem Header="Предыдущий"
-                              Command="{Binding PlaylistsVM.PreviousCommand}"
-                              CommandParameter="{Binding}">
-                    </MenuItem>
-                    <Separator />
-                    <MenuItem Header="Настройки"
-                              Command="{Binding OpenDopWindowCommand}"
-                              CommandParameter="{Binding}">
-                    </MenuItem>
-                    <MenuItem Header="Выход"
-                              Command="{Binding CloseProgrammCommand}"
-                              CommandParameter="{Binding}">
-                    </MenuItem>
-                </ContextMenu>
-            </tb:TaskbarIcon.ContextMenu>
-            <tb:TaskbarIcon.TrayPopup>
-                <Border
-                    Background="White"
-                    BorderBrush="Orange"
-                    BorderThickness="2"
-                    Visibility="{Binding PlaylistsVM.PopupVisibility}"
-                    CornerRadius="4"
-                    Width="200">
-                    <StackPanel>
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="200*"/>
-                                <RowDefinition Height="50*"/>
-                                <RowDefinition Height="50*"/>
-                            </Grid.RowDefinitions>
-                            <MediaElement
-                                Grid.Row="0"
-                                Margin="5,10,5,10"
-                                LoadedBehavior="Manual"
-                                Source="{Binding PlaylistsVM.SelectedPlaylist.PlayedGif}">
-                                <i:Interaction.Behaviors>
-                                    <behaviors:GifPlayerBehavior />
-                                </i:Interaction.Behaviors>
-                            </MediaElement>
-                            <Button Grid.Row="0"
-                                    Margin="5,10,5,10"
-                                    Opacity="0"
-                                    Command="{Binding PlaylistsVM.PlayCommand}"></Button>
-                            <Slider
-                                Maximum="100"
-                                Grid.Row="2"
-                                Value="{Binding PlaylistsVM.Volume, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                Margin="5,0,5,10"
-                                Width="180"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center" />
-                            <wpfSoundVisualizationLib:SpectrumAnalyzer Grid.Row="1" Margin="5" BarCount="30" Visibility="{Binding PlaylistsVM.SpectrumVisibility, UpdateSourceTrigger=PropertyChanged}">
-                                <i:Interaction.Behaviors>
-                                    <behaviors:SpectrumAnalyzerBehavior />
-                                </i:Interaction.Behaviors>
-                            </wpfSoundVisualizationLib:SpectrumAnalyzer>
-                        </Grid>
-                    </StackPanel>
-                </Border>
-            </tb:TaskbarIcon.TrayPopup>
-        </tb:TaskbarIcon>
-        <Grid Grid.Column="0" Grid.Row="1">
+        <user:TaskbarView/>
+        <Grid Grid.Column="0">
             <user:PlaylistNewView DataContext="{Binding PlaylistsVM}"/>
         </Grid>
-        <Grid Grid.Column="1" Grid.Row="1">
+        <Grid Grid.Column="1">
             <user:PlayerView DataContext="{Binding PlaylistsVM}"/>
         </Grid>
     </Grid>

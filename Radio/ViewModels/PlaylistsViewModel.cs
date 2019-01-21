@@ -65,6 +65,16 @@ namespace Radio.ViewModels
                 VolumeChanged();
             }
         }
+        private int gridWidth;
+        public int GridWidth
+        {
+            get { return gridWidth; }
+            set
+            {
+                gridWidth = value;
+                OnPropertyChanged(nameof(GridWidth));
+            }
+        }
         private Visibility spectrumVisibility = Visibility.Collapsed;
         public Visibility SpectrumVisibility
         {

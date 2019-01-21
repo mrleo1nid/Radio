@@ -12,7 +12,7 @@ using WPFSoundVisualizationLib;
 
 namespace Radio.Behaviors
 {
-    class PlaylistBehavior : Behavior<PlaylistView>
+    class PlaylistBehavior : Behavior<PlaylistNewView>
     {
 
 
@@ -30,7 +30,7 @@ namespace Radio.Behaviors
 
         private void AssociatedObject_Initialized(object sender, EventArgs e)
         {
-            var associatedObject = sender as PlaylistView;
+            var associatedObject = sender as PlaylistNewView;
         }
 
         protected override void OnAttached()
@@ -43,7 +43,7 @@ namespace Radio.Behaviors
 
         private void AssociatedObjectOnMouseDown(object sender, MouseButtonEventArgs e)
         {
-            var playlist = sender as PlaylistView;
+            var playlist = sender as PlaylistNewView;
             if (playlist.Visibility == Visibility.Visible)
             {
                 playlist.Visibility = Visibility.Hidden;
@@ -52,7 +52,7 @@ namespace Radio.Behaviors
 
         private void AssociatedObjectOnMouseEnter(object sender, MouseEventArgs e)
         {
-            var playlist = sender as PlaylistView;
+            var playlist = sender as PlaylistNewView;
             if (playlist.Visibility == Visibility.Hidden)
             {
                 playlist.Visibility = Visibility.Visible;

@@ -7,26 +7,23 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:behaviors="clr-namespace:Radio.Behaviors"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-             mc:Ignorable="d"
-             d:DesignHeight="400"
-             d:DesignWidth="150">
+             mc:Ignorable="d">
     <UserControl.DataContext>
         <viewModels:PlaylistsViewModel/>
     </UserControl.DataContext>
     <Grid>
-        <Grid.Width>
-            <Binding Path="ActualWidth" 
-                     RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type ScrollContentPresenter}}" />
-        </Grid.Width>
         <mah:HamburgerMenu Name="ListBoxPlaylists" ItemsSource="{Binding Playlists}"
                  SelectedItem="{Binding SelectedPlaylist,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <i:Interaction.Behaviors>
+                <behaviors:HamburgerBehavior />
+            </i:Interaction.Behaviors>
             <mah:HamburgerMenu.ItemTemplate>
                 <DataTemplate>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*" />
-                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="3*" />
                         </Grid.ColumnDefinitions>
                         <Image Width="50" Height="50" Source="{Binding ImagePath , UpdateSourceTrigger=PropertyChanged}"
                                       Grid.Column="0"
