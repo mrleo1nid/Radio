@@ -11,7 +11,7 @@ using WPFSoundVisualizationLib;
 
 namespace Radio.Workers
 {
-    public class BassEngine : IWaveformPlayer, ISpectrumPlayer
+    public class BassEngine : ISpectrumPlayer
     {
         #region Fields
         private static BassEngine instance;
@@ -31,7 +31,6 @@ namespace Radio.Workers
         private double channelLength;
         private double currentChannelPosition;
         private float[] fullLevelData;
-        private float[] waveformData;
         private bool inChannelSet;
         private bool inChannelTimerUpdate;
         private int repeatSyncId;
@@ -43,7 +42,6 @@ namespace Radio.Workers
         #endregion
 
         #region Constants
-        private const int waveformCompressedPointCount = 2000;
         private const int repeatThreshold = 200;
         #endregion
 
@@ -53,10 +51,6 @@ namespace Radio.Workers
             Initialize();
             endTrackSyncProc = EndTrack;
             repeatSyncProc = RepeatCallback;
-
-            waveformGenerateWorker.DoWork += waveformGenerateWorker_DoWork;
-            waveformGenerateWorker.RunWorkerCompleted += waveformGenerateWorker_RunWorkerCompleted;
-            waveformGenerateWorker.WorkerSupportsCancellation = true;
         }
         #endregion
 
@@ -140,18 +134,6 @@ namespace Radio.Workers
                 }
             }
         }
-
-        public float[] WaveformData
-        {
-            get { return waveformData; }
-            protected set
-            {
-                float[] oldValue = waveformData;
-                waveformData = value;
-                if (oldValue != waveformData)
-                    NotifyPropertyChanged("WaveformData");
-            }
-        }
         #endregion
 
         #region INotifyPropertyChanged
@@ -223,54 +205,6 @@ namespace Radio.Workers
         {
             Bass.BASS_ChannelSetAttribute(ActiveStreamHandle, BASSAttribute.BASS_ATTRIB_EAXMIX, value[0]);
         }
-
-        public bool OpenFile(string path)
-        {
-            Stop();
-
-            if (ActiveStreamHandle != 0)
-            {
-                ClearRepeatRange();
-                ChannelPosition = 0;
-                Bass.BASS_StreamFree(ActiveStreamHandle);
-            }
-
-            if (System.IO.File.Exists(path))
-            {
-                // Create Stream
-                FileStreamHandle = ActiveStreamHandle = Bass.BASS_StreamCreateFile(path, 0, 0, BASSFlag.BASS_SAMPLE_FLOAT | BASSFlag.BASS_STREAM_PRESCAN);
-                ChannelLength = Bass.BASS_ChannelBytes2Seconds(FileStreamHandle, Bass.BASS_ChannelGetLength(FileStreamHandle, 0));
-                FileTag = TagLib.File.Create(path);
-                GenerateWaveformData(path,true);
-                if (ActiveStreamHandle != 0)
-                {
-                    // Obtain the sample rate of the stream
-                    BASS_CHANNELINFO info = new BASS_CHANNELINFO();
-                    Bass.BASS_ChannelGetInfo(ActiveStreamHandle, info);
-                    sampleFrequency = info.freq;
-
-                    // Set the stream to call Stop() when it ends.
-                    int syncHandle = Bass.BASS_ChannelSetSync(ActiveStreamHandle,
-                         BASSSync.BASS_SYNC_END,
-                         0,
-                         endTrackSyncProc,
-                         IntPtr.Zero);
-
-                    if (syncHandle == 0)
-                        throw new ArgumentException("Error establishing End Sync on file stream.", "path");
-
-                    CanPlay = true;
-                    return true;
-                }
-                else
-                {
-                    ActiveStreamHandle = 0;
-                    FileTag = null;
-                    CanPlay = false;
-                }
-            }
-            return false;
-        }
         public bool OpenUrl(string url)
         {
             Stop();
@@ -332,110 +266,6 @@ namespace Radio.Workers
             }
         }
         #endregion
-
-        #region Waveform Generation
-        private class WaveformGenerationParams
-        {
-            public WaveformGenerationParams(int points, string path)
-            {
-                Points = points;
-                Path = path;
-            }
-
-            public int Points { get; protected set; }
-            public string Path { get; protected set; }
-        }
-
-        private void GenerateWaveformData(string path, bool isfile)
-        {
-            if (waveformGenerateWorker.IsBusy)
-            {
-                pendingWaveformPath = path;
-                waveformGenerateWorker.CancelAsync();
-                return;
-            }
-
-            if (!waveformGenerateWorker.IsBusy && waveformCompressedPointCount != 0)
-                waveformGenerateWorker.RunWorkerAsync(new WaveformGenerationParams(waveformCompressedPointCount, path));
-        }
-
-        private void waveformGenerateWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            if (e.Cancelled)
-            {
-                if (!waveformGenerateWorker.IsBusy && waveformCompressedPointCount != 0)
-                    waveformGenerateWorker.RunWorkerAsync(new WaveformGenerationParams(waveformCompressedPointCount, pendingWaveformPath));
-            }
-        }
-
-        private void waveformGenerateWorker_DoWork(object sender, DoWorkEventArgs e)
-        {
-            WaveformGenerationParams waveformParams = e.Argument as WaveformGenerationParams;
-            int stream = Bass.BASS_StreamCreateFile(waveformParams.Path, 0, 0, BASSFlag.BASS_STREAM_DECODE | BASSFlag.BASS_SAMPLE_FLOAT | BASSFlag.BASS_STREAM_PRESCAN);  
-            int frameLength = (int)Bass.BASS_ChannelSeconds2Bytes(stream, 0.02);
-            long streamLength = Bass.BASS_ChannelGetLength(stream);
-            int frameCount = (int)((double)streamLength / (double)frameLength);
-            int waveformLength = frameCount * 2;
-            float[] waveformData = new float[waveformLength];
-            float[] levels = new float[2];
-
-            int actualPoints = Math.Min(waveformParams.Points, frameCount);
-
-            int compressedPointCount = actualPoints * 2;
-            float[] waveformCompressedPoints = new float[compressedPointCount];
-            List<int> waveMaxPointIndexes = new List<int>();
-            for (int i = 1; i <= actualPoints; i++)
-            {
-                waveMaxPointIndexes.Add((int)Math.Round(waveformLength * ((double)i / (double)actualPoints), 0));
-            }
-
-            float maxLeftPointLevel = float.MinValue;
-            float maxRightPointLevel = float.MinValue;
-            int currentPointIndex = 0;
-            for (int i = 0; i < waveformLength; i += 2)
-            {
-                Bass.BASS_ChannelGetLevel(stream, levels);
-                waveformData[i] = levels[0];
-                waveformData[i + 1] = levels[1];
-
-                if (levels[0] > maxLeftPointLevel)
-                    maxLeftPointLevel = levels[0];
-                if (levels[1] > maxRightPointLevel)
-                    maxRightPointLevel = levels[1];
-
-                if (i > waveMaxPointIndexes[currentPointIndex])
-                {
-                    waveformCompressedPoints[(currentPointIndex * 2)] = maxLeftPointLevel;
-                    waveformCompressedPoints[(currentPointIndex * 2) + 1] = maxRightPointLevel;
-                    maxLeftPointLevel = float.MinValue;
-                    maxRightPointLevel = float.MinValue;
-                    currentPointIndex++;
-                }
-                if (i % 3000 == 0)
-                {
-                    float[] clonedData = (float[])waveformCompressedPoints.Clone();
-                    App.Current.Dispatcher.Invoke(new Action(() =>
-                    {
-                        WaveformData = clonedData;
-                    }));
-                }
-
-                if (waveformGenerateWorker.CancellationPending)
-                {
-                    e.Cancel = true;
-                    break; ;
-                }
-            }
-            float[] finalClonedData = (float[])waveformCompressedPoints.Clone();
-            App.Current.Dispatcher.Invoke(new Action(() =>
-            {
-                fullLevelData = waveformData;
-                WaveformData = finalClonedData;
-            }));
-            Bass.BASS_StreamFree(stream);
-        }
-        #endregion
-
         #region Private Utility Methods
         private void Initialize()
         {
