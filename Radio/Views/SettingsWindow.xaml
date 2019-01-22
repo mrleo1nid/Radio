@@ -9,9 +9,6 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         Title="Настройки" Height="300" Width="530">
-    <Window.DataContext>
-        <viewModels:SettingsViewModel/>
-    </Window.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="91*"/>

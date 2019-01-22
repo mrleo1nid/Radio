@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Interactivity;
 using Radio.Models;
 using Radio.ViewModels;
+using Radio.Workers;
 using WPFSoundVisualizationLib;
 
 namespace Radio.Behaviors
@@ -25,7 +26,6 @@ namespace Radio.Behaviors
         private void AssociatedObject_Initialized(object sender, EventArgs e)
         {
             MainWindow wind = sender as MainWindow;
-            MainViewModel.MainWindow = wind;
         }
 
         protected override void OnAttached()
@@ -37,11 +37,7 @@ namespace Radio.Behaviors
 
         private void AssociatedObjectOnClosing(object sender, CancelEventArgs e)
         {
-            if (!MainViewModel.CanClose)
-            {
-                MainViewModel.MainWindow.Hide();
-                e.Cancel = true;
-            }
+           
         }
 
         protected override void OnDetaching()

@@ -40,15 +40,6 @@ namespace Radio.Behaviors
 
         private void AssociatedObjectOnTrayMouseDoubleClick(object sender, RoutedEventArgs routedEventArgs)
         {
-            if (MainViewModel.MainWindow.IsVisible)
-            {
-                MainViewModel.MainWindow.Hide();
-            }
-            else
-            {
-                MainViewModel.MainWindow.Show();
-                MainViewModel.MainWindow.Activate();
-            }
         }
 
         protected override void OnDetaching()

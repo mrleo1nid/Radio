@@ -1,21 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using Radio.Behaviors;
-using Radio.Models;
+﻿using Radio.Models;
 using Radio.Views;
 using Radio.Workers;
-using Un4seen.Bass;
 
 namespace Radio.ViewModels
 {
@@ -23,28 +8,28 @@ namespace Radio.ViewModels
     {
         public MainViewModel()
         {
-            BassEngine = BassEngine.Instance;
-            PlaylistsVM = new PlaylistsViewModel();
-            Settings = Settings.LoadSettings();
-            CanClose = !Settings.MinimizeToTrayOnClose;
+            PlaylistsVM = new PlaylistsViewModel(this);
+            SettingsVM = new SettingsViewModel(this);
         }
 
 
-        public static MainWindow MainWindow { get; set; }
-        public static PlaylistsViewModel PlaylistsVM { get; set; }
-        public static BassEngine  BassEngine { get; set; }
-        public static SettingsWindow SettingsWindow { get; set; }
+        public  MainWindow MainWindow { get; set; }
+        public  PlaylistsViewModel PlaylistsVM { get; set; }
+        public SettingsViewModel SettingsVM { get; set; }
+        public  BassEngine  BassEngine { get; set; }
+        public  SettingsWindow SettingsWindow { get; set; }
 
 
-        public static bool CanClose { get; set; }
-        private static Settings settings;
-        public static Settings Settings
+        public  bool CanClose { get; set; }
+        private  Settings settings;
+        public Settings Settings
         {
             get { return settings; }
             set
             {
                 settings = value;
                 CanClose = !settings.MinimizeToTrayOnClose;
+                OnPropertyChanged(nameof(Settings));
             }
         }
 

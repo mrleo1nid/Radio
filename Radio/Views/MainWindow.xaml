@@ -7,6 +7,7 @@
         xmlns:vm="clr-namespace:Radio.ViewModels"
         xmlns:user="clr-namespace:Radio.Views.UserControls"
         xmlns:res="clr-namespace:Radio.Properties" 
+        xmlns:view="clr-namespace:Radio.ViewModels"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:behaviors="clr-namespace:Radio.Behaviors"
         xmlns:tb="clr-namespace:Hardcodet.Wpf.TaskbarNotification;assembly=Hardcodet.Wpf.TaskbarNotification"
@@ -14,12 +15,12 @@
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         mc:Ignorable="d"
         Title="Radio" Height="450" Width="800">
-    <Window.DataContext>
-        <vm:MainViewModel />
-    </Window.DataContext>
     <Window.Background>
         <ImageBrush ImageSource="{Binding PlaylistsVM.SelectedPlaylist.BackgroundImagePath}"/>
     </Window.Background>
+    <Window.DataContext>
+        <view:MainViewModel/>
+    </Window.DataContext>
     <i:Interaction.Behaviors>
         <behaviors:MainWindowBehavior />
     </i:Interaction.Behaviors>

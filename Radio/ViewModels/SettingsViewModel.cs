@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Radio.Models;
-using Radio.Views;
+﻿using Radio.Models;
 
 namespace Radio.ViewModels
 {
-    class SettingsViewModel : ViewModel
+    public class SettingsViewModel : ViewModel
     {
-        public SettingsViewModel()
+        private MainViewModel mainViewModel;
+        public SettingsViewModel(MainViewModel mainViewModel)
         {
-           MainViewModel.Settings = Settings.LoadSettings();
+           this.mainViewModel = mainViewModel;
+           this.mainViewModel.Settings = Settings.LoadSettings();
         }
 
         private RelayCommand _saveSettingsCommand;
@@ -22,13 +18,13 @@ namespace Radio.ViewModels
 
         private void SaveSettingsFunc()
         {
-            Models.Settings.SaveSettings(MainViewModel.Settings);
-            MainViewModel.Settings = Settings.LoadSettings();
-            MainViewModel.SettingsWindow.Close();
+            Models.Settings.SaveSettings(this.mainViewModel.Settings);
+            this.mainViewModel.Settings = Settings.LoadSettings();
+            this.mainViewModel.SettingsWindow.Close();
         }
         private void CancelSettingsWindowFunc()
         {
-            MainViewModel.SettingsWindow.Close();
+            this.mainViewModel.SettingsWindow.Close();
         }
 
     }

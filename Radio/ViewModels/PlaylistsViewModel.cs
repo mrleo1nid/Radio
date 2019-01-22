@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using Radio.Models;
 using Radio.Workers;
-using Un4seen.Bass;
 
 namespace Radio.ViewModels
 {
@@ -17,17 +11,21 @@ namespace Radio.ViewModels
     {
         private BassEngine bassEngine;
         private string PlayedTrack;
+        private MainViewModel mainViewModel;
 
 
-        public PlaylistsViewModel()
+        public PlaylistsViewModel(MainViewModel mainViewModel)
+
         {
+
+            this.mainViewModel = mainViewModel;
             if (!PlaylistDownloader.CheckForInternetConnection())
             {
                var res = MessageBox.Show("Отсуствует соединение с сервером. Попробывать ещё раз?", "Ошибка");
             }
             else
             {
-                bassEngine = MainViewModel.BassEngine;
+                bassEngine = BassEngine.Instance;
                 var downloader = new PlaylistDownloader();
                 Playlists = downloader.LoadPlaylists();
                 Action calledMethod = LoadIconsFromUIThread;

@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Interactivity;
 using Radio.ViewModels;
+using Radio.Workers;
 using WPFSoundVisualizationLib;
 
 namespace Radio.Behaviors
@@ -29,35 +30,13 @@ namespace Radio.Behaviors
         private void AssociatedObject_Initialized(object sender, EventArgs e)
         {
             var associatedObject = sender as SpectrumAnalyzer;
-            associatedObject.RegisterSoundPlayer(MainViewModel.BassEngine);
-            if (MainViewModel.Settings.ShovSpectumAnalizer)
-            {
-                associatedObject.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                associatedObject.Visibility = Visibility.Collapsed;
-            }
+            associatedObject.RegisterSoundPlayer(BassEngine.Instance);
         }
 
         protected override void OnAttached()
         {
             base.OnAttached();
             AssociatedObject.Initialized += AssociatedObject_Initialized;
-            AssociatedObject.TargetUpdated += AssociatedObjectOnTargetUpdated;
-        }
-
-        private void AssociatedObjectOnTargetUpdated(object sender, DataTransferEventArgs dataTransferEventArgs)
-        {
-            var associatedObject = sender as SpectrumAnalyzer;
-            if (MainViewModel.Settings.ShovSpectumAnalizer)
-            {
-                associatedObject.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                associatedObject.Visibility = Visibility.Collapsed;
-            }
         }
 
         protected override void OnDetaching()

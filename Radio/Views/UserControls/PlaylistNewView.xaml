@@ -8,9 +8,6 @@
              xmlns:behaviors="clr-namespace:Radio.Behaviors"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d">
-    <UserControl.DataContext>
-        <viewModels:PlaylistsViewModel/>
-    </UserControl.DataContext>
     <Grid>
         <mah:HamburgerMenu ItemsSource="{Binding Playlists}"
                  SelectedItem="{Binding SelectedPlaylist,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
