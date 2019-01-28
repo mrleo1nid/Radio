@@ -15,9 +15,8 @@ namespace Radio.ViewModels
 
 
         public PlaylistsViewModel(MainViewModel mainViewModel)
-
         {
-
+            Storage.VmStorage["PlaylistsViewModel"] = this;
             this.mainViewModel = mainViewModel;
             if (!PlaylistDownloader.CheckForInternetConnection())
             {

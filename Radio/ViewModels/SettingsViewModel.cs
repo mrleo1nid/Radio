@@ -1,4 +1,5 @@
 ﻿using Radio.Models;
+using Radio.Views;
 
 namespace Radio.ViewModels
 {
@@ -7,6 +8,7 @@ namespace Radio.ViewModels
         private MainViewModel mainViewModel;
         public SettingsViewModel(MainViewModel mainViewModel)
         {
+           Storage.VmStorage["SettingsViewModel"] = this;
            this.mainViewModel = mainViewModel;
            this.mainViewModel.Settings = Settings.LoadSettings();
         }
@@ -18,13 +20,15 @@ namespace Radio.ViewModels
 
         private void SaveSettingsFunc()
         {
+            SettingsWindow settingsWindow = Storage.WindowStorage["SettingsWindow"] as SettingsWindow;
             Models.Settings.SaveSettings(this.mainViewModel.Settings);
             this.mainViewModel.Settings = Settings.LoadSettings();
-            this.mainViewModel.SettingsWindow.Close();
+            settingsWindow.Close();
         }
         private void CancelSettingsWindowFunc()
         {
-            this.mainViewModel.SettingsWindow.Close();
+            SettingsWindow settingsWindow = Storage.WindowStorage["SettingsWindow"] as SettingsWindow;
+            settingsWindow.Close();
         }
 
     }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interactivity;
 using Hardcodet.Wpf.TaskbarNotification;
+using Radio.Models;
 using Radio.ViewModels;
 using WPFSoundVisualizationLib;
 
@@ -40,6 +41,16 @@ namespace Radio.Behaviors
 
         private void AssociatedObjectOnTrayMouseDoubleClick(object sender, RoutedEventArgs routedEventArgs)
         {
+            MainWindow mainWindow = Storage.WindowStorage["MainWindow"] as MainWindow;
+            if (mainWindow.IsVisible)
+            {
+                mainWindow.Hide();
+            }
+            else
+            {
+                mainWindow.Show();
+                mainWindow.Activate();
+            }
         }
 
         protected override void OnDetaching()

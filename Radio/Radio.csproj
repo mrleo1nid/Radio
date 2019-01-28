@@ -119,6 +119,7 @@
     <Compile Include="Behaviors\PlaylistBehavior.cs" />
     <Compile Include="Behaviors\SpectrumAnalyzerBehavior.cs" />
     <Compile Include="Models\Settings.cs" />
+    <Compile Include="Models\Storage.cs" />
     <Compile Include="Models\ViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\PlaylistsViewModel.cs" />

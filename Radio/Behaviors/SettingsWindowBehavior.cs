@@ -7,26 +7,30 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interactivity;
+using System.Windows.Media;
 using Radio.Models;
 using Radio.ViewModels;
-using Radio.Workers;
-using WPFSoundVisualizationLib;
+using Radio.Views;
 
 namespace Radio.Behaviors
 {
-    class MainWindowBehavior : Behavior<MainWindow>
+    class SettingsWindowBehavior : Behavior<SettingsWindow>
     {
 
-        public static readonly DependencyProperty MainWindowBehaviorProperty =
+        public static readonly DependencyProperty SettingsWindowBehaviorProperty =
             DependencyProperty.Register(
-                nameof(MainWindowBehavior),
+                nameof(SettingsWindowBehavior),
                 typeof(string),
-                typeof(MainWindowBehavior));
+                typeof(SettingsWindowBehavior));
+
+        public string SettingsWindowFieldBehavior
+        {
+            get { return (string)GetValue(SettingsWindowBehaviorProperty); }
+            set { SetValue(SettingsWindowBehaviorProperty, value); }
+        }
 
         private void AssociatedObject_Initialized(object sender, EventArgs e)
         {
-            MainWindow wind = sender as MainWindow;
-            Storage.WindowStorage["MainWindow"]= wind;
         }
 
         protected override void OnAttached()
@@ -36,15 +40,9 @@ namespace Radio.Behaviors
             AssociatedObject.Closing += AssociatedObjectOnClosing;
         }
 
-        private void AssociatedObjectOnClosing(object sender, CancelEventArgs e)
+        private void AssociatedObjectOnClosing(object sender, CancelEventArgs cancelEventArgs)
         {
-            MainWindow window = AssociatedObject as MainWindow;
-            MainViewModel mainViewModel = Storage.VmStorage["MainViewModel"] as MainViewModel;
-            if (!mainViewModel.CanClose)
-            {
-                e.Cancel = true;
-                window.Hide();
-            }
+            Storage.WindowStorage.Remove("SettingsWindow");
         }
 
         protected override void OnDetaching()

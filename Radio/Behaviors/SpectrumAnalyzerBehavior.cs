@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Interactivity;
+using Radio.Models;
 using Radio.ViewModels;
 using Radio.Workers;
 using WPFSoundVisualizationLib;
@@ -29,7 +30,16 @@ namespace Radio.Behaviors
 
         private void AssociatedObject_Initialized(object sender, EventArgs e)
         {
+            MainViewModel mainViewModel = Storage.VmStorage["MainViewModel"] as MainViewModel;
             var associatedObject = sender as SpectrumAnalyzer;
+            if (mainViewModel.Settings.ShovSpectumAnalizer)
+            {
+                associatedObject.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                associatedObject.Visibility = Visibility.Collapsed;
+            }
             associatedObject.RegisterSoundPlayer(BassEngine.Instance);
         }
 

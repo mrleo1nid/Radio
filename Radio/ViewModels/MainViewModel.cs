@@ -8,17 +8,12 @@ namespace Radio.ViewModels
     {
         public MainViewModel()
         {
+            Storage.VmStorage["MainViewModel"]= this;
             PlaylistsVM = new PlaylistsViewModel(this);
             SettingsVM = new SettingsViewModel(this);
         }
-
-
-        public  MainWindow MainWindow { get; set; }
         public  PlaylistsViewModel PlaylistsVM { get; set; }
         public SettingsViewModel SettingsVM { get; set; }
-        public  BassEngine  BassEngine { get; set; }
-        public  SettingsWindow SettingsWindow { get; set; }
-
 
         public  bool CanClose { get; set; }
         private  Settings settings;
@@ -42,27 +37,31 @@ namespace Radio.ViewModels
 
         private void OpenSettingsWindow()
         {
-            SettingsWindow = new SettingsWindow();
-            SettingsWindow.Owner = MainWindow;
+            MainWindow mainWindow = Storage.WindowStorage["MainWindow"] as MainWindow;
+            SettingsWindow SettingsWindow = new SettingsWindow();
+            SettingsWindow.Owner = mainWindow;
+            Storage.WindowStorage["SettingsWindow"] = SettingsWindow;
             SettingsWindow.Show();
         }
 
     
         private void CloseProgrammFunc()
         {
+            MainWindow mainWindow = Storage.WindowStorage["MainWindow"] as MainWindow;
             CanClose = true;
-            MainWindow.Close();
+            mainWindow.Close();
         }
         private void ShowHideMainWindFunc()
         {
-            if (MainWindow.IsVisible)
+            MainWindow mainWindow = Storage.WindowStorage["MainWindow"] as MainWindow;
+            if (mainWindow.IsVisible)
             {
-                    MainWindow.Hide();
+                mainWindow.Hide();
             }
             else
             {
-                MainWindow.Show();
-                MainWindow.Activate();
+                mainWindow.Show();
+                mainWindow.Activate();
             }
         }
 

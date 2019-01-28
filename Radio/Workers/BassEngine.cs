@@ -30,11 +30,9 @@ namespace Radio.Workers
         private bool canStop;
         private double channelLength;
         private double currentChannelPosition;
-        private float[] fullLevelData;
         private bool inChannelSet;
         private bool inChannelTimerUpdate;
         private int repeatSyncId;
-        private string pendingWaveformPath;
         private TimeSpan repeatStart;
         private TimeSpan repeatStop;
         private bool inRepeatSet;
