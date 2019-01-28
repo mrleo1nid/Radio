@@ -8,7 +8,11 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:behaviors="clr-namespace:Radio.Behaviors"
         xmlns:wpfSoundVisualizationLib="clr-namespace:WPFSoundVisualizationLib;assembly=WPFSoundVisualizationLib"
+        xmlns:models="clr-namespace:Radio.Models"
         mc:Ignorable="d">
+    <UserControl.Resources>
+        <models:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    </UserControl.Resources>
     <Grid>
         <tb:TaskbarIcon  ToolTipText="Radio">
             <i:Interaction.Behaviors>
@@ -80,7 +84,8 @@
                                 Width="180"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center" />
-                            <wpfSoundVisualizationLib:SpectrumAnalyzer Grid.Row="1" Margin="5" BarCount="30" Visibility="{Binding PlaylistsVM.SpectrumVisibility, UpdateSourceTrigger=PropertyChanged}">
+                            <wpfSoundVisualizationLib:SpectrumAnalyzer Grid.Row="1" BarCount="30" 
+                             Visibility="{Binding Settings.ShovSpectumAnalizer , Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}">
                                 <i:Interaction.Behaviors>
                                     <behaviors:SpectrumAnalyzerBehavior />
                                 </i:Interaction.Behaviors>

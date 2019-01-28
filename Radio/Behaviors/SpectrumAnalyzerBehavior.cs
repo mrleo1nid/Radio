@@ -30,16 +30,7 @@ namespace Radio.Behaviors
 
         private void AssociatedObject_Initialized(object sender, EventArgs e)
         {
-            MainViewModel mainViewModel = Storage.VmStorage["MainViewModel"] as MainViewModel;
             var associatedObject = sender as SpectrumAnalyzer;
-            if (mainViewModel.Settings.ShovSpectumAnalizer)
-            {
-                associatedObject.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                associatedObject.Visibility = Visibility.Collapsed;
-            }
             associatedObject.RegisterSoundPlayer(BassEngine.Instance);
         }
 

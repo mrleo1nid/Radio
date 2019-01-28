@@ -11,13 +11,13 @@ namespace Radio.ViewModels
     {
         private BassEngine bassEngine;
         private string PlayedTrack;
-        public MainViewModel MainViewModel;
+        public MainViewModel mainViewModel { get; set; }
 
 
         public PlaylistsViewModel(MainViewModel mainViewModel)
         {
             Storage.VmStorage["PlaylistsViewModel"] = this;
-            this.MainViewModel = mainViewModel;
+            this.mainViewModel = mainViewModel;
             bassEngine = BassEngine.Instance;
             var downloader = new PlaylistDownloader();
             Playlists = downloader.LoadPlaylists();
@@ -50,7 +50,7 @@ namespace Radio.ViewModels
                 VolumeChanged();
             }
         }
-
+      
         private void LoadIconsFromUIThread()
         {
             var downloader = new PlaylistDownloader();
