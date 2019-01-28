@@ -17,7 +17,7 @@ namespace Radio.Views.UserControls
     /// <summary>
     /// Логика взаимодействия для NotConectionControl.xaml
     /// </summary>
-    public partial class NotConectionControl : Window
+    public partial class NotConectionControl : UserControl
     {
         public NotConectionControl()
         {

@@ -26,7 +26,7 @@ namespace Radio.Behaviors
         private void AssociatedObject_Initialized(object sender, EventArgs e)
         {
             MainWindow wind = sender as MainWindow;
-            Storage.WindowStorage["MainWindow"]= wind;
+            Storage.WindowStorage["MainWindow"]= wind;     
         }
 
         protected override void OnAttached()

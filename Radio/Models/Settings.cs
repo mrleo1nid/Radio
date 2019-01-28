@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Configuration;
+using System.Runtime.CompilerServices;
 
 namespace Radio.Models
 {
@@ -16,6 +18,7 @@ namespace Radio.Models
             set
             {
                 shovSpectumAnalizer = value;
+                OnPropertyChanged(nameof(ShovSpectumAnalizer));
             }
         }
 
@@ -26,6 +29,7 @@ namespace Radio.Models
             set
             {
                 minimizeToTrayOnClose = value;
+                OnPropertyChanged(nameof(MinimizeToTrayOnClose));
             }
         }
 
@@ -36,6 +40,7 @@ namespace Radio.Models
             set
             {
                 downoloadTrackLocal = value;
+                OnPropertyChanged(nameof(DownoloadTrackLocal));
             }
         }
         private bool autoPlayTracks;
@@ -45,6 +50,7 @@ namespace Radio.Models
             set
             {
                 autoPlayTracks = value;
+                OnPropertyChanged(nameof(AutoPlayTracks));
             }
         }
         private bool showPoppup;
@@ -54,7 +60,14 @@ namespace Radio.Models
             set
             {
                 showPoppup = value;
+                OnPropertyChanged(nameof(ShowPoppup));
             }
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged([CallerMemberName]string prop = "")
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
         }
 
         public static Settings LoadSettings()

@@ -5,12 +5,12 @@ namespace Radio.ViewModels
 {
     public class SettingsViewModel : ViewModel
     {
-        private MainViewModel mainViewModel;
+        public MainViewModel mainViewModel;
         public SettingsViewModel(MainViewModel mainViewModel)
         {
            Storage.VmStorage["SettingsViewModel"] = this;
            this.mainViewModel = mainViewModel;
-           this.mainViewModel.Settings = Settings.LoadSettings();
+           Settings = Settings.LoadSettings();
         }
 
         private RelayCommand _saveSettingsCommand;
@@ -21,7 +21,7 @@ namespace Radio.ViewModels
         private void SaveSettingsFunc()
         {
             SettingsWindow settingsWindow = Storage.WindowStorage["SettingsWindow"] as SettingsWindow;
-            Models.Settings.SaveSettings(this.mainViewModel.Settings);
+            Settings.SaveSettings(Settings);
             this.mainViewModel.Settings = Settings.LoadSettings();
             settingsWindow.Close();
         }
@@ -29,6 +29,16 @@ namespace Radio.ViewModels
         {
             SettingsWindow settingsWindow = Storage.WindowStorage["SettingsWindow"] as SettingsWindow;
             settingsWindow.Close();
+        }
+        private Settings settings;
+        public Settings Settings
+        {
+            get { return settings; }
+            set
+            {
+                settings = value;
+                OnPropertyChanged(nameof(Settings));
+            }
         }
 
     }

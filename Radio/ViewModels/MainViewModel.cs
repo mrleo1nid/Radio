@@ -9,13 +9,20 @@ namespace Radio.ViewModels
         public MainViewModel()
         {
             Storage.VmStorage["MainViewModel"]= this;
-            PlaylistsVM = new PlaylistsViewModel(this);
-            SettingsVM = new SettingsViewModel(this);
+            Conected = PlaylistDownloader.CheckForInternetConnection();
+            if (Conected)
+            {
+                PlaylistsVM = new PlaylistsViewModel(this);
+                SettingsVM = new SettingsViewModel(this);
+                Settings = Settings.LoadSettings();
+            }
         }
         public  PlaylistsViewModel PlaylistsVM { get; set; }
         public SettingsViewModel SettingsVM { get; set; }
 
         public  bool CanClose { get; set; }
+        public bool Conected { get; set; }
+
         private  Settings settings;
         public Settings Settings
         {
@@ -39,8 +46,8 @@ namespace Radio.ViewModels
         {
             MainWindow mainWindow = Storage.WindowStorage["MainWindow"] as MainWindow;
             SettingsWindow SettingsWindow = new SettingsWindow();
+            SettingsWindow.DataContext = SettingsVM;
             SettingsWindow.Owner = mainWindow;
-            Storage.WindowStorage["SettingsWindow"] = SettingsWindow;
             SettingsWindow.Show();
         }
 

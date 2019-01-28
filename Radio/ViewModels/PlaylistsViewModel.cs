@@ -11,26 +11,19 @@ namespace Radio.ViewModels
     {
         private BassEngine bassEngine;
         private string PlayedTrack;
-        private MainViewModel mainViewModel;
+        public MainViewModel MainViewModel;
 
 
         public PlaylistsViewModel(MainViewModel mainViewModel)
         {
             Storage.VmStorage["PlaylistsViewModel"] = this;
-            this.mainViewModel = mainViewModel;
-            if (!PlaylistDownloader.CheckForInternetConnection())
-            {
-               var res = MessageBox.Show("Отсуствует соединение с сервером. Попробывать ещё раз?", "Ошибка");
-            }
-            else
-            {
-                bassEngine = BassEngine.Instance;
-                var downloader = new PlaylistDownloader();
-                Playlists = downloader.LoadPlaylists();
-                Action calledMethod = LoadIconsFromUIThread;
-                Application.Current.Dispatcher.BeginInvoke(calledMethod);
-                Volume = 50;
-            }
+            this.MainViewModel = mainViewModel;
+            bassEngine = BassEngine.Instance;
+            var downloader = new PlaylistDownloader();
+            Playlists = downloader.LoadPlaylists();
+            Action calledMethod = LoadIconsFromUIThread;
+            Application.Current.Dispatcher.BeginInvoke(calledMethod);
+            Volume = 50;
         }
 
         private Playlist _selectedPlaylist;
@@ -57,6 +50,7 @@ namespace Radio.ViewModels
                 VolumeChanged();
             }
         }
+
         private void LoadIconsFromUIThread()
         {
             var downloader = new PlaylistDownloader();
