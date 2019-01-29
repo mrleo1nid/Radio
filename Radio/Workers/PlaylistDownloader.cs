@@ -85,19 +85,28 @@ namespace Radio.Workers
 
         private static string[] GetUrlArrayFromRequest(string targetUrl)
         {
-            string[] result;
-            var req = (HttpWebRequest)WebRequest.Create(targetUrl);
-            using (var resp = (HttpWebResponse)req.GetResponse())
+            try
             {
-                string response;
-                using (var stream = new StreamReader(resp.GetResponseStream(), Encoding.UTF8))
+                string[] result;
+                var req = (HttpWebRequest)WebRequest.Create(targetUrl);
+                using (var resp = (HttpWebResponse)req.GetResponse())
                 {
-                    response = stream.ReadToEnd();
+                    string response;
+                    using (var stream = new StreamReader(resp.GetResponseStream(), Encoding.UTF8))
+                    {
+                        response = stream.ReadToEnd();
+                    }
+                    result = JsonConvert.DeserializeObject<string[]>(response);
                 }
-                result = JsonConvert.DeserializeObject<string[]>(response);
+                return result;
             }
+            catch (Exception e)
+            {
+                return null;
+            }
+           
 
-            return result;
+           
         }
 
         private static void DownloadFile(string url, FileInfo savePath)

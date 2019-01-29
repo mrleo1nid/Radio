@@ -20,9 +20,13 @@ namespace Radio.ViewModels
             this.mainViewModel = mainViewModel;
             bassEngine = BassEngine.Instance;
             var downloader = new PlaylistDownloader();
-            Playlists = downloader.LoadPlaylists();
-            Action calledMethod = LoadIconsFromUIThread;
-            Application.Current.Dispatcher.BeginInvoke(calledMethod);
+            if (mainViewModel.Conected)
+            {
+                Playlists = downloader.LoadPlaylists();
+                SelectedPlaylist = Playlists.FirstOrDefault();
+                Action calledMethod = LoadIconsFromUIThread;
+                Application.Current.Dispatcher.BeginInvoke(calledMethod);
+            }
             Volume = 50;
         }
 

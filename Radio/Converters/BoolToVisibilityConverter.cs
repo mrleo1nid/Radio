@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 
-namespace Radio.Models
+namespace Radio.Converters
 {
     public sealed  class BoolToVisibilityConverter : IValueConverter
     {

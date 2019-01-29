@@ -2,10 +2,16 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:converters="clr-namespace:Radio.Converters"
              mc:Ignorable="d"
              d:DesignHeight="400"
-             d:DesignWidth="600">
+             d:DesignWidth="600"
+             Background="DimGray">
+    <UserControl.Resources>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <converters:ReconnectTimerConverter x:Key="ReconnectTimerConverter" />
+    </UserControl.Resources>
     <Grid Grid.Column="1">
         <Grid.Width>
             <Binding Path="ActualWidth" 
@@ -15,6 +21,6 @@
             <Binding Path="ActualHeight" 
                      RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type ScrollContentPresenter}}" />
         </Grid.Height>
-        <TextBlock Text="Отсуствует соединение с сервером!" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+        <TextBlock Text="{Binding SecondToReconnect, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ReconnectTimerConverter}}" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
     </Grid>
 </UserControl>

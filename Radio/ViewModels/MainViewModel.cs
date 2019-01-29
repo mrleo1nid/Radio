@@ -1,4 +1,5 @@
-﻿using Radio.Models;
+﻿using System.Threading.Tasks;
+using Radio.Models;
 using Radio.Views;
 using Radio.Workers;
 
@@ -9,19 +10,16 @@ namespace Radio.ViewModels
         public MainViewModel()
         {
             Storage.VmStorage["MainViewModel"]= this;
-            Conected = PlaylistDownloader.CheckForInternetConnection();
-            if (Conected)
-            {
-                PlaylistsVM = new PlaylistsViewModel(this);
-                SettingsVM = new SettingsViewModel(this);
-                Settings = Settings.LoadSettings();
-            }
+            NotConnectedVM = new NotConectionControlViewModel(this);
+            PlaylistsVM = new PlaylistsViewModel(this);
+            SettingsVM = new SettingsViewModel(this);
+            Settings = Settings.LoadSettings();
         }
         public  PlaylistsViewModel PlaylistsVM { get; set; }
         public SettingsViewModel SettingsVM { get; set; }
+        public NotConectionControlViewModel NotConnectedVM { get; set; }
 
         public  bool CanClose { get; set; }
-        public bool Conected { get; set; }
 
         private  Settings settings;
         public Settings Settings
@@ -32,6 +30,16 @@ namespace Radio.ViewModels
                 settings = value;
                 CanClose = !settings.MinimizeToTrayOnClose;
                 OnPropertyChanged(nameof(Settings));
+            }
+        }
+        private bool conected;
+        public bool Conected
+        {
+            get { return conected; }
+            set
+            {
+                conected = value;
+                OnPropertyChanged(nameof(Conected));
             }
         }
 

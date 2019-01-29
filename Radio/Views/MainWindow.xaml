@@ -10,10 +10,7 @@
         xmlns:view="clr-namespace:Radio.ViewModels"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:behaviors="clr-namespace:Radio.Behaviors"
-        xmlns:tb="clr-namespace:Hardcodet.Wpf.TaskbarNotification;assembly=Hardcodet.Wpf.TaskbarNotification"
-        xmlns:wpfSoundVisualizationLib="clr-namespace:WPFSoundVisualizationLib;assembly=WPFSoundVisualizationLib"
-        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-        xmlns:mugen="clr-namespace:MugenMvvmToolkit;assembly=MugenMvvmToolkit"
+        xmlns:converters="clr-namespace:Radio.Converters"
         mc:Ignorable="d"
         Title="Radio" Height="450" Width="800">
     <Window.Background>
@@ -22,6 +19,9 @@
     <Window.DataContext>
         <view:MainViewModel/>
     </Window.DataContext>
+    <Window.Resources>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    </Window.Resources>
     <i:Interaction.Behaviors>
         <behaviors:MainWindowBehavior />
     </i:Interaction.Behaviors>
@@ -31,11 +31,18 @@
             <ColumnDefinition Width="600*" />
         </Grid.ColumnDefinitions>
         <user:TaskbarView/>
-        <Grid Grid.Column="0">
-            <user:PlaylistNewView DataContext="{Binding PlaylistsVM}"/>
-        </Grid>
-        <Grid Grid.Column="1">
-            <user:PlayerView DataContext="{Binding PlaylistsVM}"/>
-        </Grid>
+        <user:NotConectionControl Grid.Column="0" Grid.ColumnSpan="2"
+            DataContext="{Binding NotConnectedVM}"
+            Visibility="{Binding NotConectedVisibility,
+            UpdateSourceTrigger=PropertyChanged,
+            Converter={StaticResource BoolToVisibilityConverter}}" />
+        <user:PlaylistNewView Grid.Column="0" DataContext="{Binding PlaylistsVM}"
+            Visibility="{Binding mainViewModel.Conected,
+            UpdateSourceTrigger=PropertyChanged,
+            Converter={StaticResource BoolToVisibilityConverter}}"/>
+        <user:PlayerView Grid.Column="1" DataContext="{Binding PlaylistsVM}"
+            Visibility="{Binding mainViewModel.Conected,
+            UpdateSourceTrigger=PropertyChanged,
+            Converter={StaticResource BoolToVisibilityConverter}}"/>
     </Grid>
 </Window>

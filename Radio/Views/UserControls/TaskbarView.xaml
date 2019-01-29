@@ -8,10 +8,10 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:behaviors="clr-namespace:Radio.Behaviors"
         xmlns:wpfSoundVisualizationLib="clr-namespace:WPFSoundVisualizationLib;assembly=WPFSoundVisualizationLib"
-        xmlns:models="clr-namespace:Radio.Models"
+        xmlns:converters="clr-namespace:Radio.Converters"
         mc:Ignorable="d">
     <UserControl.Resources>
-        <models:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     </UserControl.Resources>
     <Grid>
         <tb:TaskbarIcon  ToolTipText="Radio">

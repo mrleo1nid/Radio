@@ -9,12 +9,12 @@
              xmlns:mah="clr-namespace:MahApps;assembly=MahApps.Metro.IconPacks.Material"
              xmlns:wpfSoundVisualizationLib="clr-namespace:WPFSoundVisualizationLib;assembly=WPFSoundVisualizationLib"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-             xmlns:models="clr-namespace:Radio.Models"
+             xmlns:converters="clr-namespace:Radio.Converters"
              mc:Ignorable="d"
              d:DesignHeight="400"
              d:DesignWidth="600">
     <UserControl.Resources>
-        <models:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     </UserControl.Resources>
     <Grid Grid.Column="1">
         <Grid.Width>

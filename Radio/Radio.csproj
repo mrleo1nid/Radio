@@ -119,7 +119,8 @@
     <Compile Include="Behaviors\PlaylistBehavior.cs" />
     <Compile Include="Behaviors\SettingsWindowBehavior.cs" />
     <Compile Include="Behaviors\SpectrumAnalyzerBehavior.cs" />
-    <Compile Include="Models\BoolToVisibilityConverter.cs" />
+    <Compile Include="Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Converters\ReconnectTimerConverter.cs" />
     <Compile Include="Models\Settings.cs" />
     <Compile Include="Models\Storage.cs" />
     <Compile Include="Models\ViewModel.cs" />
