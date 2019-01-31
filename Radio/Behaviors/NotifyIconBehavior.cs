@@ -50,6 +50,7 @@ namespace Radio.Behaviors
             {
                 mainWindow.Show();
                 mainWindow.Activate();
+                mainWindow.Focus();
             }
         }
 

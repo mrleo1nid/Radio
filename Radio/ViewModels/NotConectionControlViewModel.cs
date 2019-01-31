@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Windows.Threading;
 using Radio.Models;
 using Radio.Workers;
 
@@ -18,14 +19,13 @@ namespace Radio.ViewModels
             this.mainViewModel = main;
             mainViewModel.Conected = PlaylistDownloader.CheckForInternetConnection();
             NotConectedVisibility = !mainViewModel.Conected;
-            TimerCallback tm = new TimerCallback(CheckTimerConnect);
-            Timer timer = new Timer(tm, null, 0, 60000);
+            SecondToReconnect = 30;
             if (NotConectedVisibility)
             {
                 StartReconnectTimer();
             }
         }
-        private int _secondToReconnect = 30;
+        private int _secondToReconnect;
         public int SecondToReconnect
         {
             get { return _secondToReconnect; }
@@ -49,14 +49,13 @@ namespace Radio.ViewModels
         private void Reconnect(object obj)
         {
             SecondToReconnect -= 1;
-            if (SecondToReconnect==0)
+            if (SecondToReconnect<=0)
             {
-                CheckTimerConnect(null);
                 SecondToReconnect = 30;
+                ReconnectClick();
             }
         }
-
-        private void CheckTimerConnect(object obj)
+        private void ReconnectClick()
         {
             mainViewModel.Conected = PlaylistDownloader.CheckForInternetConnection();
             NotConectedVisibility = !mainViewModel.Conected;
@@ -67,14 +66,16 @@ namespace Radio.ViewModels
             }
             else
             {
-                mainViewModel.PlaylistsVM = new PlaylistsViewModel(mainViewModel);
+                mainViewModel.PlaylistsVM.ReloadWithReconnect();
             }
         }
-
         private void StartReconnectTimer()
         {
-                TimerCallback tm = new TimerCallback(Reconnect);
-                ReconnectTimer = new Timer(tm, null, 0, 1000);
+            TimerCallback tm = new TimerCallback(Reconnect);
+            ReconnectTimer = new Timer(tm, null, 0, 1000);
         }
+
+        private RelayCommand _reconnectCommand;
+        public RelayCommand ReconnectCommand => _reconnectCommand ?? (_reconnectCommand = new RelayCommand(ReconnectClick));
     }
 }

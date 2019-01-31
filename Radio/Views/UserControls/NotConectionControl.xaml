@@ -12,7 +12,7 @@
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
         <converters:ReconnectTimerConverter x:Key="ReconnectTimerConverter" />
     </UserControl.Resources>
-    <Grid Grid.Column="1">
+    <Grid>
         <Grid.Width>
             <Binding Path="ActualWidth" 
                      RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type ScrollContentPresenter}}" />
@@ -21,6 +21,11 @@
             <Binding Path="ActualHeight" 
                      RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type ScrollContentPresenter}}" />
         </Grid.Height>
-        <TextBlock Text="{Binding SecondToReconnect, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ReconnectTimerConverter}}" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Text="{Binding SecondToReconnect, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ReconnectTimerConverter}}" VerticalAlignment="Bottom" HorizontalAlignment="Center"></TextBlock>
+        <Button Grid.Row="1" Command="{Binding ReconnectCommand}" Content="Переподключиться" Width="150" Height="50"></Button >
     </Grid>
 </UserControl>

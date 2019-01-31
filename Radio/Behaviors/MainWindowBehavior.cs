@@ -26,7 +26,9 @@ namespace Radio.Behaviors
         private void AssociatedObject_Initialized(object sender, EventArgs e)
         {
             MainWindow wind = sender as MainWindow;
-            Storage.WindowStorage["MainWindow"]= wind;     
+            Storage.WindowStorage["MainWindow"]= wind;
+            Settings settings = Settings.LoadSettings();
+            ChangeWindowStyle(settings.WindowStyle, wind);
         }
 
         protected override void OnAttached()
@@ -44,6 +46,22 @@ namespace Radio.Behaviors
             {
                 e.Cancel = true;
                 window.Hide();
+            }
+        }
+
+        private void ChangeWindowStyle(int style, MainWindow window)
+        {
+            switch (style)
+            {
+                case 1:
+                    window.WindowState = WindowState.Maximized;
+                    break;
+                case 2:
+                    window.WindowState = WindowState.Maximized;
+                    window.WindowStyle = WindowStyle.None;
+                    break;
+                default:
+                    break;
             }
         }
 

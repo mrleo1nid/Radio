@@ -11,7 +11,10 @@
     <Grid>
         <mah:HamburgerMenu ItemsSource="{Binding Playlists}"
                  SelectedItem="{Binding SelectedPlaylist,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                 ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                 DisplayMode="Inline"
+                 CompactPaneLength="50"
+                 OpenPaneLength="200">
             <i:Interaction.Behaviors>
                 <behaviors:HamburgerBehavior />
             </i:Interaction.Behaviors>

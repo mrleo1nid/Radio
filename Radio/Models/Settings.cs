@@ -63,6 +63,17 @@ namespace Radio.Models
                 OnPropertyChanged(nameof(ShowPoppup));
             }
         }
+        private int windowStyle;
+        public int WindowStyle
+        {
+            get { return windowStyle; }
+            set
+            {
+                windowStyle = value;
+                OnPropertyChanged(nameof(WindowStyle));
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")
         {
@@ -78,6 +89,7 @@ namespace Radio.Models
             settings.ShovSpectumAnalizer = Properties.Settings.Default.ShovSpectumAnalizer;
             settings.AutoPlayTracks = Properties.Settings.Default.AutoPlayTracks;
             settings.ShowPoppup = Properties.Settings.Default.ShowPoppup;
+            settings.WindowStyle = Properties.Settings.Default.WindowStyle;
             return settings;
         }
 
@@ -88,6 +100,7 @@ namespace Radio.Models
             Properties.Settings.Default.ShovSpectumAnalizer = settings.ShovSpectumAnalizer;
             Properties.Settings.Default.AutoPlayTracks = settings.AutoPlayTracks;
             Properties.Settings.Default.ShowPoppup = settings.ShowPoppup;
+            Properties.Settings.Default.WindowStyle = settings.WindowStyle;
             Properties.Settings.Default.Save();
         }
     }

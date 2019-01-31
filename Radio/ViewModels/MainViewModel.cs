@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using System.Windows;
 using Radio.Models;
 using Radio.Views;
 using Radio.Workers;
@@ -10,11 +11,14 @@ namespace Radio.ViewModels
         public MainViewModel()
         {
             Storage.VmStorage["MainViewModel"]= this;
+            Conected = PlaylistDownloader.CheckForInternetConnection();
+            Settings = Settings.LoadSettings();
+            ChangeElementVisibility();
             NotConnectedVM = new NotConectionControlViewModel(this);
             PlaylistsVM = new PlaylistsViewModel(this);
             SettingsVM = new SettingsViewModel(this);
-            Settings = Settings.LoadSettings();
         }
+
         public  PlaylistsViewModel PlaylistsVM { get; set; }
         public SettingsViewModel SettingsVM { get; set; }
         public NotConectionControlViewModel NotConnectedVM { get; set; }
@@ -40,6 +44,16 @@ namespace Radio.ViewModels
             {
                 conected = value;
                 OnPropertyChanged(nameof(Conected));
+            }
+        }
+        private Visibility exitButtVisibilyty;
+        public Visibility ExitButtVisibilyty
+        {
+            get { return exitButtVisibilyty; }
+            set
+            {
+                exitButtVisibilyty = value;
+                OnPropertyChanged(nameof(ExitButtVisibilyty));
             }
         }
 
@@ -77,6 +91,17 @@ namespace Radio.ViewModels
             {
                 mainWindow.Show();
                 mainWindow.Activate();
+            }
+        }
+        private void ChangeElementVisibility()
+        {
+            if (Settings.WindowStyle == 2)
+            {
+                exitButtVisibilyty = Visibility.Visible;
+            }
+            else
+            {
+                exitButtVisibilyty = Visibility.Collapsed;
             }
         }
 

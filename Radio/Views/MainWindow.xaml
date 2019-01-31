@@ -27,8 +27,8 @@
     </i:Interaction.Behaviors>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="150*" />
-            <ColumnDefinition Width="600*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="750*" />
         </Grid.ColumnDefinitions>
         <user:TaskbarView/>
         <user:NotConectionControl Grid.Column="0" Grid.ColumnSpan="2"

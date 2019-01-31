@@ -82,5 +82,17 @@ namespace Radio.Properties {
                 this["ShowPoppup"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int WindowStyle {
+            get {
+                return ((int)(this["WindowStyle"]));
+            }
+            set {
+                this["WindowStyle"] = value;
+            }
+        }
     }
 }

@@ -27,10 +27,13 @@ namespace Radio.Workers
         {
             var playlists = new ObservableCollection<Playlist>();
             var playlistsUrlArray = GetUrlArrayFromRequest(playlistsUrl);
-            foreach (var url in playlistsUrlArray)
+            if (playlistsUrlArray!=null)
             {
-                var playlist = FillPlaylistProperties(url);
-                playlists.Add(playlist);
+                foreach (var url in playlistsUrlArray)
+                {
+                    var playlist = FillPlaylistProperties(url);
+                    playlists.Add(playlist);
+                }
             }
             return playlists;
         }
