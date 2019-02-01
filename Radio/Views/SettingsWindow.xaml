@@ -1,4 +1,4 @@
-﻿<Window x:Class="Radio.Views.SettingsWindow"
+﻿<mah:MetroWindow x:Class="Radio.Views.SettingsWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,6 +7,7 @@
         xmlns:viewModels="clr-namespace:Radio.ViewModels"
         xmlns:behaviors="clr-namespace:Radio.Behaviors"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         mc:Ignorable="d"
         Title="Настройки" Height="300" Width="530">
     <i:Interaction.Behaviors>
@@ -49,5 +50,7 @@
         <Button Content="Сохранить" Command="{Binding SaveSettingsCommand}" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="5"></Button>
         <Button Content="Отмена" Command="{Binding CancelSettingsWindowCommand}" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="5"></Button>
     </Grid>
-</Window>
+</mah:MetroWindow>
+
+
 

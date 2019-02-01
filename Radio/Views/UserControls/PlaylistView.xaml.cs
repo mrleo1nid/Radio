@@ -12,16 +12,15 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using MahApps.Metro.Controls;
 
-namespace Radio
+namespace Radio.Views.UserControls
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Логика взаимодействия для PlaylistView.xaml
     /// </summary>
-    public partial class MainWindow : MetroWindow
+    public partial class PlaylistView : UserControl
     {
-        public MainWindow()
+        public PlaylistView()
         {
             InitializeComponent();
         }

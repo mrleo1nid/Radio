@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using MahApps.Metro.Controls;
 using Microsoft.Win32;
 using Radio.ViewModels;
 using Radio.Workers;
@@ -22,7 +23,7 @@ namespace Radio.Views
     /// <summary>
     /// Логика взаимодействия для DopWindow.xaml
     /// </summary>
-    public partial class SettingsWindow : Window
+    public partial class SettingsWindow : MetroWindow
     {
         public SettingsWindow()
         {

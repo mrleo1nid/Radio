@@ -19,7 +19,7 @@ namespace Radio.Behaviors
                 typeof(string),
                 typeof(HamburgerBehavior));
 
-        public string GifPlayerFieldBehavior
+        public string HamburgerFieldBehavior
         {
             get { return (string)GetValue(HamburgerBehaviorProperty); }
             set { SetValue(HamburgerBehaviorProperty, value); }
@@ -28,12 +28,20 @@ namespace Radio.Behaviors
         private void AssociatedObject_Initialized(object sender, EventArgs e)
         {
             var associatedObject = sender as HamburgerMenu;
+            associatedObject.Name = "";
         }
 
         protected override void OnAttached()
         {
             base.OnAttached();
             AssociatedObject.Initialized += AssociatedObject_Initialized;
+            AssociatedObject.Loaded += AssociatedObjectOnLoaded;
+        }
+
+        private void AssociatedObjectOnLoaded(object sender, RoutedEventArgs routedEventArgs)
+        {
+            var associatedObject = sender as HamburgerMenu;
+
         }
 
         protected override void OnDetaching()
