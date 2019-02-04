@@ -38,6 +38,7 @@ namespace Radio.ViewModels
             {
                 _selectedPlaylist = value;
                 OnPropertyChanged(nameof(SelectedPlaylist));
+                SelectedPlaylistChange();
             }
         }
         private int volume;
@@ -120,6 +121,12 @@ namespace Radio.ViewModels
             }   
         }
 
+        private void SelectedPlaylistChange()
+        {
+            bassEngine.OpenUrl(SelectedPlaylist.PlayedTrack);
+            PlayedTrack = SelectedPlaylist.PlayedTrack;
+            bassEngine.Play();
+        }
         public void ReloadWithReconnect()
         {
             var downloader = new PlaylistDownloader();

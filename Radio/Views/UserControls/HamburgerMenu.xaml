@@ -11,18 +11,20 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal" Background="Gray">
+        <StackPanel Orientation="Horizontal" Background="Gray" Height="50" Width="50" HorizontalAlignment="Left">
             <Button x:Name="HamburgerButton"
                     FontFamily="Segoe MDL2 Assets" FontSize="36"
                     Content="&#xE700;"
                     Background="Gray"
+                    Height="50"
+                    Width="50"
+                    HorizontalAlignment="Left"
                     Command="{Binding OpenHamburgMenu}"/>
-            <TextBlock Text="Плейлисты" Background="Gray"
-                       FontSize="28" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" />
         </StackPanel>
         <mah:SplitView Grid.Row="1" OpenPaneLength="200"
                        CompactPaneLength="50"
-                       IsPaneOpen="{Binding IspaneOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                       IsPaneOpen="{Binding IspaneOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                       DisplayMode="CompactInline">
             <mah:SplitView.Pane>
                 <ListBox SelectionMode="Single"
                          Background="Gray"
@@ -35,13 +37,14 @@
                                 <Grid x:Name="IconPart"
                                       Width="50"
                                       DockPanel.Dock="Left">
-                                    <Image Margin="12"
-                                           HorizontalAlignment="Center"
+                                    <Image Width="50" Height="50"
+                                           HorizontalAlignment="Left"
                                            VerticalAlignment="Center"
                                            Source="{Binding ImagePath, UpdateSourceTrigger=PropertyChanged}"
                                            Stretch="UniformToFill" />
                                 </Grid>
                                 <TextBlock x:Name="TextPart"
+                                           Width="50"
                                            VerticalAlignment="Center"
                                            FontSize="16"
                                            Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
