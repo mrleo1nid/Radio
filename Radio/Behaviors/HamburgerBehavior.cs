@@ -7,10 +7,12 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interactivity;
 using MahApps.Metro.Controls;
+using Radio.Models;
+using Radio.ViewModels;
 
 namespace Radio.Behaviors
 {
-    class HamburgerBehavior : Behavior<HamburgerMenu>
+    class HamburgerBehavior : Behavior<ListBox>
     {
 
         public static readonly DependencyProperty HamburgerBehaviorProperty =
@@ -27,7 +29,7 @@ namespace Radio.Behaviors
 
         private void AssociatedObject_Initialized(object sender, EventArgs e)
         {
-            var associatedObject = sender as HamburgerMenu;
+            var associatedObject = sender as ListBox;
             associatedObject.Name = "";
         }
 
@@ -36,12 +38,24 @@ namespace Radio.Behaviors
             base.OnAttached();
             AssociatedObject.Initialized += AssociatedObject_Initialized;
             AssociatedObject.Loaded += AssociatedObjectOnLoaded;
+            AssociatedObject.SelectionChanged += AssociatedObjectOnSelectionChanged;
+        }
+
+        private void AssociatedObjectOnSelectionChanged(object sender, SelectionChangedEventArgs selectionChangedEventArgs)
+        {
+            var associatedObject = sender as ListBox;
+            var index = associatedObject.SelectedIndex;
+            if (index==0)
+            {
+                PlaylistsViewModel playlistsViewModel = Storage.VmStorage["PlaylistsViewModel"] as PlaylistsViewModel;
+                playlistsViewModel.IspaneOpen = !playlistsViewModel.IspaneOpen;
+                associatedObject.SelectedItem = selectionChangedEventArgs.RemovedItems[0];
+            }
         }
 
         private void AssociatedObjectOnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
-            var associatedObject = sender as HamburgerMenu;
-
+            var associatedObject = sender as ListBox;
         }
 
         protected override void OnDetaching()

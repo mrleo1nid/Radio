@@ -211,6 +211,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Resources\favicon.ico" />
+    <Content Include="Resources\menu.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="WPFSoundVisualizationLib.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

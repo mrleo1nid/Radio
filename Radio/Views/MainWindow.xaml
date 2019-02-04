@@ -29,7 +29,7 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="750*" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <user:TaskbarView/>
         <user:NotConectionControl Grid.Column="0" Grid.ColumnSpan="2"

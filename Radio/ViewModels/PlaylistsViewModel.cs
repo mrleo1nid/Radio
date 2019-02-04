@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using Radio.Models;
@@ -70,8 +71,8 @@ namespace Radio.ViewModels
             {
                 Playlists[i] = downloader.LoadIcon(Playlists[i]);
             }
-
             SelectedPlaylist = Playlists.FirstOrDefault();
+            AddHamburgMenuButton();
         }
 
         #region Actions
@@ -146,6 +147,14 @@ namespace Radio.ViewModels
         {
             float newvalue = (float) Volume / 100;
             bassEngine.ChangeValue(newvalue);
+        }
+
+        private void AddHamburgMenuButton()
+        {
+            Playlist menyPlaylist = new Playlist();
+            menyPlaylist.Name = "Меню";
+            menyPlaylist.ImagePath = Environment.CurrentDirectory+ "\\Resources\\menu.gif";
+            Playlists.Insert(0,menyPlaylist);
         }
         #endregion
 
