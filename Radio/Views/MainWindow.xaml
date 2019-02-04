@@ -37,7 +37,7 @@
             Visibility="{Binding NotConectedVisibility,
             UpdateSourceTrigger=PropertyChanged,
             Converter={StaticResource BoolToVisibilityConverter}}" />
-        <user:PlaylistView Grid.Column="0" DataContext="{Binding PlaylistsVM}"
+        <user:HamburgerMenu Grid.Column="0" DataContext="{Binding PlaylistsVM}"
             Visibility="{Binding mainViewModel.Conected,
             UpdateSourceTrigger=PropertyChanged,
             Converter={StaticResource BoolToVisibilityConverter}}"/>

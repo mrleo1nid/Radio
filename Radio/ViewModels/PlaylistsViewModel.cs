@@ -51,7 +51,17 @@ namespace Radio.ViewModels
                 VolumeChanged();
             }
         }
-      
+        private bool ispaneOpen;
+        public bool IspaneOpen
+        {
+            get { return ispaneOpen; }
+            set
+            {
+                ispaneOpen = value;
+                OnPropertyChanged(nameof(IspaneOpen));
+            }
+        }
+
         private void LoadIconsFromUIThread()
         {
             var downloader = new PlaylistDownloader();
@@ -120,6 +130,11 @@ namespace Radio.ViewModels
             Volume = 50;
         }
 
+        private void OpenGamburgerMenu()
+        {
+            IspaneOpen = !IspaneOpen;
+        }
+
         private void VolumeChanged()
         {
             float newvalue = (float) Volume / 100;
@@ -153,6 +168,15 @@ namespace Radio.ViewModels
             {
                 return previousCommand ??
                        (previousCommand = new RelayCommand(Previous));
+            }
+        }
+        private RelayCommand openHamburgMenu;
+        public RelayCommand OpenHamburgMenu
+        {
+            get
+            {
+                return openHamburgMenu ??
+                       (openHamburgMenu = new RelayCommand(OpenGamburgerMenu));
             }
         }
         #endregion

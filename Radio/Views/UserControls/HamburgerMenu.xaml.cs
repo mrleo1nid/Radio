@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Radio.Views.UserControls
 {
     /// <summary>
-    /// Логика взаимодействия для PlaylistView.xaml
+    /// Логика взаимодействия для HamburgerMenu.xaml
     /// </summary>
-    public partial class PlaylistView : UserControl
+    public partial class HamburgerMenu : UserControl
     {
-        public PlaylistView()
+        public HamburgerMenu()
         {
             InitializeComponent();
         }

@@ -116,7 +116,6 @@
     <Compile Include="Behaviors\HamburgerBehavior.cs" />
     <Compile Include="Behaviors\MainWindowBehavior.cs" />
     <Compile Include="Behaviors\NotifyIconBehavior.cs" />
-    <Compile Include="Behaviors\PlaylistBehavior.cs" />
     <Compile Include="Behaviors\SettingsWindowBehavior.cs" />
     <Compile Include="Behaviors\SpectrumAnalyzerBehavior.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
@@ -131,17 +130,14 @@
     <Compile Include="Views\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\UserControls\HamburgerMenu.xaml.cs">
+      <DependentUpon>HamburgerMenu.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\UserControls\NotConectionControl.xaml.cs">
       <DependentUpon>NotConectionControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UserControls\PlayerView.xaml.cs">
       <DependentUpon>PlayerView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\UserControls\PlaylistNewView.xaml.cs">
-      <DependentUpon>PlaylistNewView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\UserControls\PlaylistView.xaml.cs">
-      <DependentUpon>PlaylistView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UserControls\TaskbarView.xaml.cs">
       <DependentUpon>TaskbarView.xaml</DependentUpon>
@@ -164,19 +160,15 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\UserControls\HamburgerMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\UserControls\NotConectionControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\UserControls\PlayerView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\UserControls\PlaylistNewView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\UserControls\PlaylistView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
