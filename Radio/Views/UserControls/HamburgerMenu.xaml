@@ -14,47 +14,54 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <mah:SplitView Grid.Row="1" OpenPaneLength="200"
-                       CompactPaneLength="50"
+                       CompactPaneLength="55"
                        HorizontalAlignment="Left"
                        IsPaneOpen="{Binding IspaneOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                        DisplayMode="CompactInline">
             <mah:SplitView.Pane>
-                <ListBox SelectionMode="Single"
+                <StackPanel Orientation="Vertical"
+                            Background="Gray">
+                    <Button Height="50" Width="50" FontFamily="Segoe MDL2 Assets" 
+                            Command="{Binding OpenHamburgMenu,UpdateSourceTrigger=PropertyChanged}"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Background="Gray"
+                            Margin="5,0,0,0">
+                        <Viewbox Width="50" Height="50"
+                                 VerticalAlignment="Center"
+                                 HorizontalAlignment="Center">
+                            <Canvas Width="24" Height="24">
+                                <Path Data="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" Fill="Black" />
+                            </Canvas>
+                        </Viewbox>
+                    </Button>
+                    <ListBox SelectionMode="Single"
                          Background="Gray"
                          ItemsSource="{Binding Playlists}"
                          SelectedItem="{Binding SelectedPlaylist,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                          ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                    <i:Interaction.Behaviors>
-                        <behaviors:HamburgerBehavior />
-                    </i:Interaction.Behaviors>
-                    <ListBox.ItemTemplate>
-                        <DataTemplate DataType="{x:Type mah:HamburgerMenuGlyphItem}">
-                            <DockPanel Height="50" LastChildFill="True" Background="Gray">
-                                <Grid x:Name="IconPart"
-                                      Width="50"
-                                      DockPanel.Dock="Left">
+                        <i:Interaction.Behaviors>
+                            <behaviors:HamburgerBehavior />
+                        </i:Interaction.Behaviors>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate DataType="{x:Type mah:HamburgerMenuGlyphItem}">
+                                <StackPanel Height="50" Background="Gray" Orientation="Horizontal">
                                     <Image Width="50" Height="50"
                                            HorizontalAlignment="Left"
                                            VerticalAlignment="Center"
                                            Source="{Binding ImagePath, UpdateSourceTrigger=PropertyChanged}"
                                            Stretch="UniformToFill" />
-                                </Grid>
-                                <TextBlock x:Name="TextPart"
+                                    <TextBlock x:Name="TextPart"
                                            Width="50"
                                            VerticalAlignment="Center"
                                            HorizontalAlignment="Left"
                                            FontSize="16"
                                            Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
-                            </DockPanel>
-                            <DataTemplate.Triggers>
-                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:HamburgerMenu}}, Path=PanePlacement}" Value="Right">
-                                    <Setter TargetName="IconPart" Property="DockPanel.Dock" Value="Right" />
-                                    <Setter TargetName="TextPart" Property="Margin" Value="8 0 0 0" />
-                                </DataTrigger>
-                            </DataTemplate.Triggers>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
             </mah:SplitView.Pane>
             <mah:SplitView.Content>
                 <Frame />

@@ -29,35 +29,13 @@ namespace Radio.Behaviors
 
         private void AssociatedObject_Initialized(object sender, EventArgs e)
         {
-            var associatedObject = sender as ListBox;
-            associatedObject.Name = "";
         }
 
         protected override void OnAttached()
         {
             base.OnAttached();
             AssociatedObject.Initialized += AssociatedObject_Initialized;
-            AssociatedObject.Loaded += AssociatedObjectOnLoaded;
-            AssociatedObject.SelectionChanged += AssociatedObjectOnSelectionChanged;
         }
-
-        private void AssociatedObjectOnSelectionChanged(object sender, SelectionChangedEventArgs selectionChangedEventArgs)
-        {
-            var associatedObject = sender as ListBox;
-            var index = associatedObject.SelectedIndex;
-            if (index==0)
-            {
-                PlaylistsViewModel playlistsViewModel = Storage.VmStorage["PlaylistsViewModel"] as PlaylistsViewModel;
-                playlistsViewModel.IspaneOpen = !playlistsViewModel.IspaneOpen;
-                associatedObject.SelectedItem = selectionChangedEventArgs.RemovedItems[0];
-            }
-        }
-
-        private void AssociatedObjectOnLoaded(object sender, RoutedEventArgs routedEventArgs)
-        {
-            var associatedObject = sender as ListBox;
-        }
-
         protected override void OnDetaching()
         {
             base.OnDetaching();

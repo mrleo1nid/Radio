@@ -37,9 +37,15 @@ namespace Radio.ViewModels
             get { return _selectedPlaylist; }
             set
             {
-                _selectedPlaylist = value;
-                OnPropertyChanged(nameof(SelectedPlaylist));
-                SelectedPlaylistChange();
+                if (value.Url!=null)
+                {
+                    if (_selectedPlaylist != value)
+                    {
+                        _selectedPlaylist = value;
+                        OnPropertyChanged(nameof(SelectedPlaylist));
+                        SelectedPlaylistChange();
+                    }
+                }
             }
         }
         private int volume;
@@ -72,7 +78,6 @@ namespace Radio.ViewModels
                 Playlists[i] = downloader.LoadIcon(Playlists[i]);
             }
             SelectedPlaylist = Playlists.FirstOrDefault();
-            AddHamburgMenuButton();
         }
 
         #region Actions
@@ -147,14 +152,6 @@ namespace Radio.ViewModels
         {
             float newvalue = (float) Volume / 100;
             bassEngine.ChangeValue(newvalue);
-        }
-
-        private void AddHamburgMenuButton()
-        {
-            Playlist menyPlaylist = new Playlist();
-            menyPlaylist.Name = "Меню";
-            menyPlaylist.ImagePath = Environment.CurrentDirectory+ "\\Resources\\menu.gif";
-            Playlists.Insert(0,menyPlaylist);
         }
         #endregion
 
