@@ -113,7 +113,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Behaviors\GifPlayerBehavior.cs" />
-    <Compile Include="Behaviors\HamburgerBehavior.cs" />
     <Compile Include="Behaviors\MainWindowBehavior.cs" />
     <Compile Include="Behaviors\NotifyIconBehavior.cs" />
     <Compile Include="Behaviors\SettingsWindowBehavior.cs" />

@@ -45,9 +45,6 @@
                          ItemsSource="{Binding Playlists}"
                          SelectedItem="{Binding SelectedPlaylist,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                          ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                        <i:Interaction.Behaviors>
-                            <behaviors:HamburgerBehavior />
-                        </i:Interaction.Behaviors>
                         <ListBox.ItemTemplate>
                             <DataTemplate DataType="{x:Type mah:HamburgerMenuGlyphItem}">
                                 <StackPanel Height="50" Background="Gray" Orientation="Horizontal">
