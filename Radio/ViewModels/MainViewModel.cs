@@ -49,16 +49,7 @@ namespace Radio.ViewModels
                 OnPropertyChanged(nameof(Conected));
             }
         }
-        private Visibility exitButtVisibilyty;
-        public Visibility ExitButtVisibilyty
-        {
-            get { return exitButtVisibilyty; }
-            set
-            {
-                exitButtVisibilyty = value;
-                OnPropertyChanged(nameof(ExitButtVisibilyty));
-            }
-        }
+       
 
         #region Size
         private int oneColumnWidth;
@@ -94,8 +85,7 @@ namespace Radio.ViewModels
         }
         #endregion
 
-
-
+        #region Commands
         private RelayCommand _openDopWindow;
         public RelayCommand OpenDopWindowCommand => _openDopWindow ?? (_openDopWindow = new RelayCommand(OpenSettingsWindow));
         private RelayCommand _closeProgrammCommand;
@@ -112,7 +102,7 @@ namespace Radio.ViewModels
             SettingsWindow.Show();
         }
 
-    
+
         private void CloseProgrammFunc()
         {
             MainWindow mainWindow = Storage.WindowStorage["MainWindow"] as MainWindow;
@@ -132,6 +122,9 @@ namespace Radio.ViewModels
                 mainWindow.Activate();
             }
         }
+        #endregion
+
+        #region Visibility
         private void ChangeElementVisibility()
         {
             if (Settings.WindowStyle == 2)
@@ -143,6 +136,17 @@ namespace Radio.ViewModels
                 exitButtVisibilyty = Visibility.Collapsed;
             }
         }
+        private Visibility exitButtVisibilyty;
+        public Visibility ExitButtVisibilyty
+        {
+            get { return exitButtVisibilyty; }
+            set
+            {
+                exitButtVisibilyty = value;
+                OnPropertyChanged(nameof(ExitButtVisibilyty));
+            }
+        }
+        #endregion
 
     }
 }

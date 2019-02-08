@@ -206,11 +206,11 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bass.dll">
+    <Content Include="Lib\bass.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Resources\favicon.ico" />
-    <Content Include="WPFSoundVisualizationLib.dll">
+    <Content Include="Lib\WPFSoundVisualizationLib.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
