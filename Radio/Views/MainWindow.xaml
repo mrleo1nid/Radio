@@ -13,7 +13,7 @@
         xmlns:converters="clr-namespace:Radio.Converters"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         mc:Ignorable="d"
-        Title="Radio" Height="450" Width="800">
+        Title="Radio" Height="450" Width="{Binding MainWindowWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
     <Window.Background>
         <ImageBrush ImageSource="{Binding PlaylistsVM.SelectedPlaylist.BackgroundImagePath}"/>
     </Window.Background>
@@ -28,8 +28,8 @@
     </i:Interaction.Behaviors>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="{Binding OneColumnWidth, UpdateSourceTrigger=PropertyChanged}" />
+            <ColumnDefinition Width="{Binding TwoColumnWidth, UpdateSourceTrigger=PropertyChanged}" />
         </Grid.ColumnDefinitions>
         <user:TaskbarView/>
         <user:NotConectionControl Grid.Column="0" Grid.ColumnSpan="2"

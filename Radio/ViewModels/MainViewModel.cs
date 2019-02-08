@@ -10,6 +10,9 @@ namespace Radio.ViewModels
     {
         public MainViewModel()
         {
+            OneColumnWidth = 55;
+            twoColumnWidth = 745;
+            MainWindowWidth = 800;
             Storage.VmStorage["MainViewModel"]= this;
             Conected = PlaylistDownloader.CheckForInternetConnection();
             Settings = Settings.LoadSettings();
@@ -56,6 +59,42 @@ namespace Radio.ViewModels
                 OnPropertyChanged(nameof(ExitButtVisibilyty));
             }
         }
+
+        #region Size
+        private int oneColumnWidth;
+        public int OneColumnWidth
+        {
+            get { return oneColumnWidth; }
+            set
+            {
+                oneColumnWidth = value;
+                TwoColumnWidth = MainWindowWidth - value;
+                OnPropertyChanged(nameof(OneColumnWidth));
+            }
+        }
+        private int twoColumnWidth;
+        public int TwoColumnWidth
+        {
+            get { return twoColumnWidth; }
+            set
+            {
+                twoColumnWidth = value;
+                OnPropertyChanged(nameof(TwoColumnWidth));
+            }
+        }
+        private int mainWindowWidth;
+        public int MainWindowWidth
+        {
+            get { return mainWindowWidth; }
+            set
+            {
+                mainWindowWidth = value;
+                OnPropertyChanged(nameof(MainWindowWidth));
+            }
+        }
+        #endregion
+
+
 
         private RelayCommand _openDopWindow;
         public RelayCommand OpenDopWindowCommand => _openDopWindow ?? (_openDopWindow = new RelayCommand(OpenSettingsWindow));

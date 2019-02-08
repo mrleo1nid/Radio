@@ -146,6 +146,14 @@ namespace Radio.ViewModels
         private void OpenGamburgerMenu()
         {
             IspaneOpen = !IspaneOpen;
+            if (!IspaneOpen)
+            {
+                mainViewModel.OneColumnWidth = 55;
+            }
+            else
+            {
+                mainViewModel.OneColumnWidth = 160;
+            }
         }
 
         private void VolumeChanged()

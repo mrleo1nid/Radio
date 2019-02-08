@@ -17,24 +17,29 @@
                        CompactPaneLength="55"
                        HorizontalAlignment="Left"
                        IsPaneOpen="{Binding IspaneOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                       DisplayMode="CompactInline">
+                       DisplayMode="CompactInline"
+                       Background="Transparent"
+                       PaneBackground="Transparent">
             <mah:SplitView.Pane>
                 <StackPanel Orientation="Vertical"
                             Background="Gray">
-                    <Button Height="50" Width="50" FontFamily="Segoe MDL2 Assets" 
-                            Command="{Binding OpenHamburgMenu,UpdateSourceTrigger=PropertyChanged}"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            Background="Gray"
-                            Margin="5,0,0,0">
-                        <Viewbox Width="50" Height="50"
-                                 VerticalAlignment="Center"
-                                 HorizontalAlignment="Center">
-                            <Canvas Width="24" Height="24">
-                                <Path Data="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" Fill="Black" />
-                            </Canvas>
-                        </Viewbox>
-                    </Button>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Height="50" Width="50" FontFamily="Segoe MDL2 Assets" 
+                                Command="{Binding OpenHamburgMenu,UpdateSourceTrigger=PropertyChanged}"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Background="Gray"
+                                Margin="5,0,0,0">
+                            <Viewbox Width="50" Height="50"
+                                     VerticalAlignment="Center"
+                                     HorizontalAlignment="Center">
+                                <Canvas Width="24" Height="24">
+                                    <Path Data="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" Fill="Black" />
+                                </Canvas>
+                            </Viewbox>
+                        </Button>
+                        <TextBlock Text="Плейлисты"> </TextBlock>
+                    </StackPanel>
                     <ListBox SelectionMode="Single"
                          Background="Gray"
                          ItemsSource="{Binding Playlists}"
