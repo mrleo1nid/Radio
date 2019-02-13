@@ -48,8 +48,7 @@ namespace Radio.ViewModels
                 OnPropertyChanged(nameof(Conected));
             }
         }
-       
-
+      
         #region Size
         private int oneColumnWidth;
         public int OneColumnWidth

@@ -9,7 +9,7 @@ namespace Radio.ViewModels
 {
     public class PlaylistsViewModel : ViewModel
     {
-        private BassEngine bassEngine;
+        private NAudioEngine Engine;
         private string PlayedTrack;
         public MainViewModel mainViewModel { get; set; }
 
@@ -18,7 +18,7 @@ namespace Radio.ViewModels
         {
             Storage.VmStorage["PlaylistsViewModel"] = this;
             this.mainViewModel = mainViewModel;
-            bassEngine = BassEngine.Instance;
+            Engine = NAudioEngine.Instance;
             var downloader = new PlaylistDownloader();
             Playlists = downloader.LoadPlaylists();
             SelectedPlaylist = Playlists.FirstOrDefault();
@@ -84,19 +84,19 @@ namespace Radio.ViewModels
         {
             if (PlayedTrack!=SelectedPlaylist.PlayedTrack)
             {
-                bassEngine.OpenUrl(SelectedPlaylist.PlayedTrack);
+                Engine.OpenUrl(SelectedPlaylist.PlayedTrack);
                 PlayedTrack = SelectedPlaylist.PlayedTrack;
-                bassEngine.Play();
+                Engine.Play();
             }
             else
             {
-                if (bassEngine.IsPlaying)
+                if (Engine.IsPlaying)
                 {
-                    bassEngine.Pause();
+                    Engine.Pause();
                 }
                 else
                 {
-                    bassEngine.Play();
+                    Engine.Play();
                 }
             }
         }
@@ -105,9 +105,9 @@ namespace Radio.ViewModels
             SelectedPlaylist.PreviousTracks.Add(SelectedPlaylist.PlayedTrack);
             SelectedPlaylist.PreviousGif.Add(SelectedPlaylist.PlayedGif);
             SelectedPlaylist = PlaylistDownloader.GenerateNewPlayed(SelectedPlaylist);
-            bassEngine.OpenUrl(SelectedPlaylist.PlayedTrack);
+            Engine.OpenUrl(SelectedPlaylist.PlayedTrack);
             PlayedTrack = SelectedPlaylist.PlayedTrack;
-            bassEngine.Play();
+            Engine.Play();
         }
         private void Previous()
         {
@@ -120,17 +120,17 @@ namespace Radio.ViewModels
                 SelectedPlaylist.PlayedGif = prevGif;
                 SelectedPlaylist.PreviousTracks.Remove(prevTrack);
                 SelectedPlaylist.PreviousGif.Remove(prevGif);
-                bassEngine.OpenUrl(SelectedPlaylist.PlayedTrack);
+                Engine.OpenUrl(SelectedPlaylist.PlayedTrack);
                 PlayedTrack = SelectedPlaylist.PlayedTrack;
-                bassEngine.Play();
+                Engine.Play();
             }   
         }
 
         private void SelectedPlaylistChange()
         {
-            bassEngine.OpenUrl(SelectedPlaylist.PlayedTrack);
+            Engine.OpenUrl(SelectedPlaylist.PlayedTrack);
             PlayedTrack = SelectedPlaylist.PlayedTrack;
-            bassEngine.Play();
+            Engine.Play();
         }
         public void ReloadWithReconnect()
         {
@@ -158,7 +158,7 @@ namespace Radio.ViewModels
         private void VolumeChanged()
         {
             float newvalue = (float) Volume / 100;
-            bassEngine.ChangeValue(newvalue);
+            Engine.ChangeValue(newvalue);
         }
         #endregion
 

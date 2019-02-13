@@ -75,6 +75,9 @@
     <Reference Include="MahApps.Metro.IconPacks.Material, Version=2.3.0.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.IconPacks.Material.2.3.0\lib\net46\MahApps.Metro.IconPacks.Material.dll</HintPath>
     </Reference>
+    <Reference Include="NAudio, Version=1.8.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NAudio.1.8.5\lib\net35\NAudio.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -100,8 +103,8 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="WPFSoundVisualizationLib">
-      <HintPath>.\WPFSoundVisualizationLib.dll</HintPath>
+    <Reference Include="WPFSoundVisualizationLib, Version=0.3.4442.43191, Culture=neutral, PublicKeyToken=eb44ed7102b4fcc1, processorArchitecture=MSIL">
+      <HintPath>..\packages\WPFSVL.1.0.0\lib\net40\WPFSoundVisualizationLib.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -116,6 +119,7 @@
     <Compile Include="Behaviors\SpectrumAnalyzerBehavior.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\ReconnectTimerConverter.cs" />
+    <Compile Include="Models\SampleAggregator.cs" />
     <Compile Include="Models\Settings.cs" />
     <Compile Include="Models\Storage.cs" />
     <Compile Include="Models\ViewModel.cs" />
@@ -138,7 +142,7 @@
     <Compile Include="Views\UserControls\TaskbarView.xaml.cs">
       <DependentUpon>TaskbarView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Workers\BassEngine.cs" />
+    <Compile Include="Workers\NAudioEngine.cs" />
     <Compile Include="Workers\PlaylistDownloader.cs" />
     <Page Include="Views\SettingsWindow.xaml">
       <SubType>Designer</SubType>
@@ -203,13 +207,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Lib\bass.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <None Include="Resources\favicon.ico" />
-    <Content Include="Lib\WPFSoundVisualizationLib.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

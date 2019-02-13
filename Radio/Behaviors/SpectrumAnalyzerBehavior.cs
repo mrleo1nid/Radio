@@ -24,7 +24,7 @@ namespace Radio.Behaviors
         private void AssociatedObject_Initialized(object sender, EventArgs e)
         {
             var associatedObject = sender as SpectrumAnalyzer;
-            associatedObject.RegisterSoundPlayer(BassEngine.Instance);
+            associatedObject.RegisterSoundPlayer(NAudioEngine.Instance);
         }
 
         protected override void OnAttached()
