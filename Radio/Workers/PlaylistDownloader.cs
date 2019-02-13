@@ -1,20 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using Radio.Models;
+using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Radio.Models;
-using Radio.ViewModels;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.Windows;
-using ImageMagick;
 
 namespace Radio.Workers
 {
@@ -126,14 +117,6 @@ namespace Radio.Workers
             playlist.PlayedGif = siteUrl + playlist.GifList[gifind];
             playlist.PlayedTrack = siteUrl + playlist.MusicList[trackind];
             return playlist;
-        }
-
-        private static void ChangeImageResolution(string filepath)
-        {
-            FileInfo file = new FileInfo(filepath);
-            MagickImage image = new MagickImage(file);
-            image.Resize(128,128);
-            image.Write(file);
         }
         public static bool CheckForInternetConnection()
         {

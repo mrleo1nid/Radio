@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Windows.Threading;
-using Radio.Models;
+﻿using Radio.Models;
 using Radio.Workers;
+using System.Threading;
 
 namespace Radio.ViewModels
 {
-   public class NotConectionControlViewModel : ViewModel
+    public class NotConectionControlViewModel : ViewModel
     {
         private MainViewModel mainViewModel { get; set; }
         private Timer ReconnectTimer = null;

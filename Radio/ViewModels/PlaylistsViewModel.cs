@@ -1,10 +1,9 @@
-﻿using System;
+﻿using Radio.Models;
+using Radio.Workers;
+using System;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
 using System.Windows;
-using Radio.Models;
-using Radio.Workers;
 
 namespace Radio.ViewModels
 {

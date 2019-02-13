@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Interactivity;
-using Radio.Models;
+﻿using Radio.Models;
 using Radio.ViewModels;
-using Radio.Workers;
-using WPFSoundVisualizationLib;
+using System;
+using System.ComponentModel;
+using System.Windows;
+using System.Windows.Interactivity;
 
 namespace Radio.Behaviors
 {

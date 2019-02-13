@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Hardcodet.Wpf.TaskbarNotification;
+using Radio.Models;
+using System;
 using System.Windows;
 using System.Windows.Interactivity;
-using Hardcodet.Wpf.TaskbarNotification;
-using Radio.Models;
-using Radio.ViewModels;
-using WPFSoundVisualizationLib;
 
 namespace Radio.Behaviors
 {

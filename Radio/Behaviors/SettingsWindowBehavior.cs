@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Interactivity;
-using System.Windows.Media;
-using Radio.Models;
-using Radio.ViewModels;
+﻿using Radio.Models;
 using Radio.Views;
+using System;
+using System.Windows;
+using System.Windows.Interactivity;
 
 namespace Radio.Behaviors
 {

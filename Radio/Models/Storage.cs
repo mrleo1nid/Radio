@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Radio.Models
 {
-   public static class Storage
+    public static class Storage
    {
        private static Dictionary<string,object> windowStorage = new Dictionary<string, object>();
        public static Dictionary<string, object> WindowStorage

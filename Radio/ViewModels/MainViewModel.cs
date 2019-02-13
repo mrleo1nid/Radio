@@ -1,12 +1,11 @@
-﻿using System.Threading.Tasks;
-using System.Windows;
-using Radio.Models;
+﻿using Radio.Models;
 using Radio.Views;
 using Radio.Workers;
+using System.Windows;
 
 namespace Radio.ViewModels
 {
-   public class MainViewModel : ViewModel
+    public class MainViewModel : ViewModel
     {
         public MainViewModel()
         {

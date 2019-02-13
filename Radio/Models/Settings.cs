@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Configuration;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace Radio.Models
 {
-   public class Settings
+    public class Settings
     {
         private bool shovSpectumAnalizer;
         public bool ShovSpectumAnalizer
