@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -51,8 +52,8 @@ namespace Radio.Models
             }
         }
 
-        private List<string> musicList;
-        public List<string> MusicList
+        private ObservableCollection<Track> musicList;
+        public ObservableCollection<Track> MusicList
         {
             get { return musicList; }
             set
@@ -62,8 +63,8 @@ namespace Radio.Models
             }
         }
 
-        private List<string> gifList;
-        public List<string> GifList
+        private ObservableCollection<Gif> gifList;
+        public ObservableCollection<Gif> GifList
         {
             get { return gifList; }
             set
@@ -73,8 +74,8 @@ namespace Radio.Models
             }
         }
 
-        private string playedTrack;
-        public string PlayedTrack
+        private Track playedTrack;
+        public Track PlayedTrack
         {
             get { return playedTrack; }
             set
@@ -83,8 +84,8 @@ namespace Radio.Models
                 OnPropertyChanged("PlayedTrack");
             }
         }
-        private List<string> previousTracks = new List<string>();
-        public List<string> PreviousTracks
+        private List<Track> previousTracks = new List<Track>();
+        public List<Track> PreviousTracks
         {
             get { return previousTracks; }
             set
@@ -94,8 +95,8 @@ namespace Radio.Models
             }
         }
 
-        private string playedGif;
-        public string PlayedGif
+        private Gif playedGif;
+        public Gif PlayedGif
         {
             get
             { return playedGif;}
@@ -105,8 +106,8 @@ namespace Radio.Models
                 OnPropertyChanged("PlayedGif");
             }
         }
-        private List<string> previousGif = new List<string>();
-        public List<string> PreviousGif
+        private List<Gif> previousGif = new List<Gif>();
+        public List<Gif> PreviousGif
         {
             get { return previousGif; }
             set

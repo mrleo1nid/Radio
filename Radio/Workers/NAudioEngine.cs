@@ -1,18 +1,17 @@
-﻿using System;
+﻿using NAudio.Wave;
+using Radio.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Net;
 using System.Windows.Threading;
-using NAudio.Wave;
-using Radio.Models;
-using Un4seen.Bass;
 using WPFSoundVisualizationLib;
 
 namespace Radio.Workers
 {
-   public class NAudioEngine : INotifyPropertyChanged, ISpectrumPlayer, IWaveformPlayer, IDisposable
+    public class NAudioEngine : INotifyPropertyChanged, ISpectrumPlayer, IWaveformPlayer, IDisposable
     {
         #region Fields
         private static NAudioEngine instance;
@@ -383,29 +382,26 @@ namespace Radio.Workers
             }
 
             StopAndCloseStream();
-
-            if (true)
+            try
             {
-                try
+                waveOutDevice = new WaveOut()
                 {
-                    waveOutDevice = new WaveOut()
-                    {
-                        DesiredLatency = 100
-                    };
-                    ActiveStream = new MediaFoundationReader(url);
-                    inputStream = new WaveChannel32(ActiveStream);
-                    sampleAggregator = new SampleAggregator(fftDataSize);
-                    inputStream.Sample += inputStream_Sample;
-                    waveOutDevice.Init(inputStream);
-                    ChannelLength = inputStream.TotalTime.TotalSeconds;
-                    GenerateWaveformData(url);
-                    CanPlay = true;
-                }
-                catch
-                {
-                    ActiveStream = null;
-                    CanPlay = false;
-                }
+                    DesiredLatency = 100
+                };
+                
+                ActiveStream = new MediaFoundationReader(url);
+                inputStream = new WaveChannel32(ActiveStream);
+                sampleAggregator = new SampleAggregator(fftDataSize);
+                inputStream.Sample += inputStream_Sample;
+                waveOutDevice.Init(inputStream);
+                ChannelLength = inputStream.TotalTime.TotalSeconds;
+                GenerateWaveformData(url);
+                CanPlay = true;
+            }
+            catch
+            {
+                ActiveStream = null;
+                CanPlay = false;
             }
         }
         #endregion
@@ -503,8 +499,12 @@ namespace Radio.Workers
         #endregion
         public void ChangeValue(float value)
         {
-            inputStream.Volume = value;
+            if (inputStream!=null)
+            {
+                inputStream.Volume = value;
+            }
         }
+
     }
 }
 

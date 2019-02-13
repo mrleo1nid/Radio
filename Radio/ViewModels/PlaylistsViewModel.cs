@@ -10,7 +10,7 @@ namespace Radio.ViewModels
     public class PlaylistsViewModel : ViewModel
     {
         private NAudioEngine Engine;
-        private string PlayedTrack;
+        private Track PlayedTrack;
         public MainViewModel mainViewModel { get; set; }
 
 
@@ -84,7 +84,7 @@ namespace Radio.ViewModels
         {
             if (PlayedTrack!=SelectedPlaylist.PlayedTrack)
             {
-                Engine.OpenUrl(SelectedPlaylist.PlayedTrack);
+                Engine.OpenUrl(SelectedPlaylist.PlayedTrack.Url);
                 PlayedTrack = SelectedPlaylist.PlayedTrack;
                 Engine.Play();
             }
@@ -105,7 +105,7 @@ namespace Radio.ViewModels
             SelectedPlaylist.PreviousTracks.Add(SelectedPlaylist.PlayedTrack);
             SelectedPlaylist.PreviousGif.Add(SelectedPlaylist.PlayedGif);
             SelectedPlaylist = PlaylistDownloader.GenerateNewPlayed(SelectedPlaylist);
-            Engine.OpenUrl(SelectedPlaylist.PlayedTrack);
+            Engine.OpenUrl(SelectedPlaylist.PlayedTrack.Url);
             PlayedTrack = SelectedPlaylist.PlayedTrack;
             Engine.Play();
         }
@@ -120,7 +120,7 @@ namespace Radio.ViewModels
                 SelectedPlaylist.PlayedGif = prevGif;
                 SelectedPlaylist.PreviousTracks.Remove(prevTrack);
                 SelectedPlaylist.PreviousGif.Remove(prevGif);
-                Engine.OpenUrl(SelectedPlaylist.PlayedTrack);
+                Engine.OpenUrl(SelectedPlaylist.PlayedTrack.Url);
                 PlayedTrack = SelectedPlaylist.PlayedTrack;
                 Engine.Play();
             }   
@@ -128,7 +128,7 @@ namespace Radio.ViewModels
 
         private void SelectedPlaylistChange()
         {
-            Engine.OpenUrl(SelectedPlaylist.PlayedTrack);
+            Engine.OpenUrl(SelectedPlaylist.PlayedTrack.Url);
             PlayedTrack = SelectedPlaylist.PlayedTrack;
             Engine.Play();
         }

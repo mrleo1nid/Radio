@@ -32,7 +32,7 @@
                 <RowDefinition Height="37*"/>
             </Grid.RowDefinitions>
             <MediaElement Grid.Row="0" Margin="30,30,30,30" 
-                          Source="{Binding SelectedPlaylist.PlayedGif, UpdateSourceTrigger=PropertyChanged}" 
+                          Source="{Binding SelectedPlaylist.PlayedGif.Url, UpdateSourceTrigger=PropertyChanged}" 
                           LoadedBehavior="Manual">
                 <i:Interaction.Behaviors>
                     <behaviors:GifPlayerBehavior />

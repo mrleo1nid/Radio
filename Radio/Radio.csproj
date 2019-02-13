@@ -60,9 +60,6 @@
     <ApplicationIcon>Resources\favicon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Bass.Net, Version=2.4.10.3, Culture=neutral, PublicKeyToken=b7566c273e6ef480, processorArchitecture=MSIL">
-      <HintPath>..\packages\Bass.Net.1.0.0\lib\Bass.Net.dll</HintPath>
-    </Reference>
     <Reference Include="ControlzEx, Version=3.0.2.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ControlzEx.3.0.2.4\lib\net45\ControlzEx.dll</HintPath>
     </Reference>
@@ -119,9 +116,11 @@
     <Compile Include="Behaviors\SpectrumAnalyzerBehavior.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\ReconnectTimerConverter.cs" />
+    <Compile Include="Models\Gif.cs" />
     <Compile Include="Models\SampleAggregator.cs" />
     <Compile Include="Models\Settings.cs" />
     <Compile Include="Models\Storage.cs" />
+    <Compile Include="Models\Track.cs" />
     <Compile Include="Models\ViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\NotConectionControlViewModel.cs" />

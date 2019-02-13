@@ -71,8 +71,8 @@ namespace Radio.Workers
                 Name = elem,
                 Url = $"{siteUrl}/{elem}/"
             };
-            playlist.GifList = GetUrlArrayFromRequest(playlist.Url + "gifs").ToList();
-            playlist.MusicList = GetUrlArrayFromRequest(playlist.Url + "music").ToList();
+            playlist.GifList = LoadGifList(playlist.Url);
+            playlist.MusicList = LoadTrackList(playlist.Url);
             playlist = GenerateNewPlayed(playlist);
             return playlist;
         }
@@ -97,25 +97,57 @@ namespace Radio.Workers
             catch (Exception e)
             {
                 return null;
-            }
-           
-
-           
+            }  
         }
+        private ObservableCollection<Track> LoadTrackList(string playlistUrl)
+        {
+            string trackUrl = playlistUrl + "music";
+            var urlarray = GetUrlArrayFromRequest(trackUrl);
+            ObservableCollection<Track> tracks = new ObservableCollection<Track>();
+            foreach (var url in urlarray)
+            {
+                Track track = new Track();
+                track.Url =siteUrl+ url;
+                track.Name = url.Split('/').LastOrDefault();
+                tracks.Add(track);
+            }
 
+            return tracks;
+        }
+        private ObservableCollection<Gif> LoadGifList(string playlistUrl)
+        {
+            string gifkUrl = playlistUrl + "gifs";
+            var urlarray = GetUrlArrayFromRequest(gifkUrl);
+            ObservableCollection<Gif> gifs = new ObservableCollection<Gif>();
+            foreach (var url in urlarray)
+            {
+                Gif gif = new Gif();
+                gif.Url = siteUrl+ url;
+                gifs.Add(gif);
+            }
+            return gifs;
+        }
         private static void DownloadFile(string url, FileInfo savePath)
         {
-            WebClient webClient = new WebClient();
-            webClient.DownloadFile(url, savePath.FullName);
+            try
+            {
+                WebClient webClient = new WebClient();
+                webClient.DownloadFile(url, savePath.FullName);
+            }
+            catch (Exception e)
+            {
+             return;
+            }
         }
+       
 
         public static Playlist GenerateNewPlayed(Playlist playlist)
         {
             Random rnd = new Random();
             int gifind = rnd.Next(playlist.GifList.Count);
             int trackind = rnd.Next(playlist.MusicList.Count);
-            playlist.PlayedGif = siteUrl + playlist.GifList[gifind];
-            playlist.PlayedTrack = siteUrl + playlist.MusicList[trackind];
+            playlist.PlayedGif = playlist.GifList[gifind];
+            playlist.PlayedTrack = playlist.MusicList[trackind];
             return playlist;
         }
         public static bool CheckForInternetConnection()
