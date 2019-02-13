@@ -13,6 +13,7 @@ namespace Radio.ViewModels
             twoColumnWidth = 745;
             MainWindowWidth = 800;
             Storage.VmStorage["MainViewModel"]= this;
+            Engine = NAudioEngine.Instance;
             Conected = PlaylistDownloader.CheckForInternetConnection();
             Settings = Settings.LoadSettings();
             ChangeElementVisibility();
@@ -26,6 +27,8 @@ namespace Radio.ViewModels
         public NotConectionControlViewModel NotConnectedVM { get; set; }
 
         public  bool CanClose { get; set; }
+
+        public NAudioEngine Engine { get; set; }
 
         private  Settings settings;
         public Settings Settings
@@ -90,6 +93,19 @@ namespace Radio.ViewModels
         public RelayCommand CloseProgrammCommand => _closeProgrammCommand ?? (_closeProgrammCommand = new RelayCommand(CloseProgrammFunc));
         private RelayCommand _showHideMainWindCommand;
         public RelayCommand ShowHideMainWindCommand => _showHideMainWindCommand ?? (_showHideMainWindCommand = new RelayCommand(ShowHideMainWindFunc));
+
+        private RelayCommand _openTestWindowCommand;
+        public RelayCommand OpenTestWindowCommand => _openTestWindowCommand ?? (_openTestWindowCommand = new RelayCommand(OpenTestWindow));
+
+        private void OpenTestWindow()
+        {
+            MainWindow mainWindow = Storage.WindowStorage["MainWindow"] as MainWindow;
+            TestView TestView = new TestView(this);
+            TestView.DataContext = SettingsVM;
+            TestView.Owner = mainWindow;
+            TestView.Show();
+        }
+
 
         private void OpenSettingsWindow()
         {

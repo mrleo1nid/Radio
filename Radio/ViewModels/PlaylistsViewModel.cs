@@ -18,7 +18,7 @@ namespace Radio.ViewModels
         {
             Storage.VmStorage["PlaylistsViewModel"] = this;
             this.mainViewModel = mainViewModel;
-            Engine = NAudioEngine.Instance;
+            Engine = mainViewModel.Engine;
             var downloader = new PlaylistDownloader();
             Playlists = downloader.LoadPlaylists();
             SelectedPlaylist = Playlists.FirstOrDefault();

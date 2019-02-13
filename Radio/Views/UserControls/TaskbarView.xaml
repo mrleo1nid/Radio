@@ -42,6 +42,12 @@
                               Command="{Binding OpenDopWindowCommand}"
                               CommandParameter="{Binding}">
                     </MenuItem>
+                    <Separator />
+                    <MenuItem Header="Test"
+                              Command="{Binding OpenTestWindowCommand}"
+                              CommandParameter="{Binding}">
+                    </MenuItem>
+                    <Separator />
                     <MenuItem Header="Выход"
                               Command="{Binding CloseProgrammCommand}"
                               CommandParameter="{Binding}">

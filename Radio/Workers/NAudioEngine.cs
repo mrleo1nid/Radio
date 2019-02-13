@@ -12,7 +12,7 @@ using WPFSoundVisualizationLib;
 
 namespace Radio.Workers
 {
-    class NAudioEngine : INotifyPropertyChanged, ISpectrumPlayer, IWaveformPlayer, IDisposable
+   public class NAudioEngine : INotifyPropertyChanged, ISpectrumPlayer, IWaveformPlayer, IDisposable
     {
         #region Fields
         private static NAudioEngine instance;
@@ -36,7 +36,6 @@ namespace Radio.Workers
         private string pendingWaveformPath;
         private float[] fullLevelData;
         private float[] waveformData;
-        private TagLib.File fileTag;
         private TimeSpan repeatStart;
         private TimeSpan repeatStop;
         private bool inRepeatSet;
@@ -412,17 +411,6 @@ namespace Radio.Workers
         #endregion
 
         #region Public Properties
-        public TagLib.File FileTag
-        {
-            get { return fileTag; }
-            set
-            {
-                TagLib.File oldValue = fileTag;
-                fileTag = value;
-                if (oldValue != fileTag)
-                    NotifyPropertyChanged("FileTag");
-            }
-        }
 
         public WaveStream ActiveStream
         {
