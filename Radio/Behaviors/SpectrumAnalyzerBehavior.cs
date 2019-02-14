@@ -1,7 +1,7 @@
-﻿using Radio.Workers;
-using System;
+﻿using System;
 using System.Windows;
 using System.Windows.Interactivity;
+using Radio.Helpers;
 using WPFSoundVisualizationLib;
 
 namespace Radio.Behaviors

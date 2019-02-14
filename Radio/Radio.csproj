@@ -115,7 +115,10 @@
     <Compile Include="Behaviors\SettingsWindowBehavior.cs" />
     <Compile Include="Behaviors\SpectrumAnalyzerBehavior.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Converters\GifPathConverter.cs" />
     <Compile Include="Converters\ReconnectTimerConverter.cs" />
+    <Compile Include="Helpers\LocalDownoloadHelper.cs" />
+    <Compile Include="Models\Content.cs" />
     <Compile Include="Models\Gif.cs" />
     <Compile Include="Models\SampleAggregator.cs" />
     <Compile Include="Models\Settings.cs" />
@@ -144,8 +147,8 @@
     <Compile Include="Views\UserControls\TaskbarView.xaml.cs">
       <DependentUpon>TaskbarView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Workers\NAudioEngine.cs" />
-    <Compile Include="Workers\PlaylistDownloader.cs" />
+    <Compile Include="Helpers\NAudioEngine.cs" />
+    <Compile Include="Helpers\PlaylistDownloader.cs" />
     <Page Include="Views\SettingsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

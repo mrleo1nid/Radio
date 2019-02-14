@@ -3,36 +3,26 @@ using System.Runtime.CompilerServices;
 
 namespace Radio.Models
 {
-    public class Gif
+    public class Content
     {
-        private string url;
-        public string Url
+        private Track track;
+        public Track Track
         {
-            get { return url; }
+            get { return track; }
             set
             {
-                url = value;
-                OnPropertyChanged("Url");
+                track = value;
+                OnPropertyChanged("Track");
             }
         }
-        private string localPath;
-        public string LocalPath
+        private Gif gif;
+        public Gif Gif
         {
-            get { return localPath; }
+            get { return gif; }
             set
             {
-                localPath = value;
-                OnPropertyChanged("LocalPath");
-            }
-        }
-        private bool haveLocalPath;
-        public bool HaveLocalPath
-        {
-            get { return haveLocalPath; }
-            set
-            {
-                haveLocalPath = value;
-                OnPropertyChanged("HaveLocalPath");
+                gif = value;
+                OnPropertyChanged("Gif");
             }
         }
         private Playlist ownerPlaylist;
@@ -45,8 +35,6 @@ namespace Radio.Models
                 OnPropertyChanged("OwnerPlaylist");
             }
         }
-
-
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")
         {

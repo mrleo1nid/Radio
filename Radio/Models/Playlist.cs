@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -73,47 +72,24 @@ namespace Radio.Models
                 OnPropertyChanged("GifList");
             }
         }
-
-        private Track playedTrack;
-        public Track PlayedTrack
+        private ObservableCollection<Content> contentCollection;
+        public ObservableCollection<Content> ContentCollection
         {
-            get { return playedTrack; }
+            get { return contentCollection; }
             set
             {
-                playedTrack = value;
-                OnPropertyChanged("PlayedTrack");
+                contentCollection = value;
+                OnPropertyChanged("ContentCollection");
             }
         }
-        private List<Track> previousTracks = new List<Track>();
-        public List<Track> PreviousTracks
+        private Content playedContent;
+        public Content PlayedContent
         {
-            get { return previousTracks; }
+            get { return playedContent; }
             set
             {
-                previousTracks = value;
-                OnPropertyChanged("PreviousTracks");
-            }
-        }
-
-        private Gif playedGif;
-        public Gif PlayedGif
-        {
-            get
-            { return playedGif;}
-            set
-            {
-                playedGif = value;
-                OnPropertyChanged("PlayedGif");
-            }
-        }
-        private List<Gif> previousGif = new List<Gif>();
-        public List<Gif> PreviousGif
-        {
-            get { return previousGif; }
-            set
-            {
-                previousGif = value;
-                OnPropertyChanged("PreviousGif");
+                playedContent = value;
+                OnPropertyChanged("PlayedContent");
             }
         }
 

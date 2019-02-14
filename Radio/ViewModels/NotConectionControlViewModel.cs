@@ -1,5 +1,5 @@
-﻿using Radio.Models;
-using Radio.Workers;
+﻿using Radio.Helpers;
+using Radio.Models;
 using System.Threading;
 
 namespace Radio.ViewModels

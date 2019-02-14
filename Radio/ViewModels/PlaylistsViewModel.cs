@@ -1,5 +1,5 @@
-﻿using Radio.Models;
-using Radio.Workers;
+﻿using Radio.Helpers;
+using Radio.Models;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -10,15 +10,16 @@ namespace Radio.ViewModels
     public class PlaylistsViewModel : ViewModel
     {
         private NAudioEngine Engine;
-        private Track PlayedTrack;
         public MainViewModel mainViewModel { get; set; }
 
+        private LocalDownoloadHelper downoloadHelper = new LocalDownoloadHelper();
 
         public PlaylistsViewModel(MainViewModel mainViewModel)
         {
             Storage.VmStorage["PlaylistsViewModel"] = this;
             this.mainViewModel = mainViewModel;
             Engine = mainViewModel.Engine;
+            downoloadHelper.InitWorkers();
             var downloader = new PlaylistDownloader();
             Playlists = downloader.LoadPlaylists();
             SelectedPlaylist = Playlists.FirstOrDefault();
@@ -27,10 +28,9 @@ namespace Radio.ViewModels
             Volume = 50;
         }
 
-        private Playlist _selectedPlaylist;
-
         public ObservableCollection<Playlist> Playlists { get; set; }
 
+        private Playlist _selectedPlaylist;
         public Playlist SelectedPlaylist
         {
             get { return _selectedPlaylist; }
@@ -47,6 +47,18 @@ namespace Radio.ViewModels
                 }
             }
         }
+        private Content playedContent;
+        public Content PlayedContent
+        {
+            get { return playedContent; }
+            set
+            {
+                playedContent = value;
+                OnPropertyChanged(nameof(PlayedContent));
+                PlayedContentChanged();
+            }
+        }
+
         private int volume;
         public int Volume
         {
@@ -82,14 +94,6 @@ namespace Radio.ViewModels
         #region Actions
         private void Play()
         {
-            if (PlayedTrack!=SelectedPlaylist.PlayedTrack)
-            {
-                Engine.OpenUrl(SelectedPlaylist.PlayedTrack.Url);
-                PlayedTrack = SelectedPlaylist.PlayedTrack;
-                Engine.Play();
-            }
-            else
-            {
                 if (Engine.IsPlaying)
                 {
                     Engine.Pause();
@@ -98,39 +102,15 @@ namespace Radio.ViewModels
                 {
                     Engine.Play();
                 }
-            }
         }
         private void Next()
         {
-            SelectedPlaylist.PreviousTracks.Add(SelectedPlaylist.PlayedTrack);
-            SelectedPlaylist.PreviousGif.Add(SelectedPlaylist.PlayedGif);
             SelectedPlaylist = PlaylistDownloader.GenerateNewPlayed(SelectedPlaylist);
-            Engine.OpenUrl(SelectedPlaylist.PlayedTrack.Url);
-            PlayedTrack = SelectedPlaylist.PlayedTrack;
-            Engine.Play();
+            PlayedContent = SelectedPlaylist.PlayedContent;
         }
-        private void Previous()
-        {
-            var prevTrack = SelectedPlaylist.PreviousTracks.LastOrDefault();
-            var prevGif = SelectedPlaylist.PreviousGif.LastOrDefault();
-            if (prevTrack != null && prevGif != null)
-            {
-                SelectedPlaylist = PlaylistDownloader.GenerateNewPlayed(SelectedPlaylist);
-                SelectedPlaylist.PlayedTrack = prevTrack;
-                SelectedPlaylist.PlayedGif = prevGif;
-                SelectedPlaylist.PreviousTracks.Remove(prevTrack);
-                SelectedPlaylist.PreviousGif.Remove(prevGif);
-                Engine.OpenUrl(SelectedPlaylist.PlayedTrack.Url);
-                PlayedTrack = SelectedPlaylist.PlayedTrack;
-                Engine.Play();
-            }   
-        }
-
         private void SelectedPlaylistChange()
         {
-            Engine.OpenUrl(SelectedPlaylist.PlayedTrack.Url);
-            PlayedTrack = SelectedPlaylist.PlayedTrack;
-            Engine.Play();
+            PlayedContent = SelectedPlaylist.PlayedContent;
         }
         public void ReloadWithReconnect()
         {
@@ -160,6 +140,19 @@ namespace Radio.ViewModels
             float newvalue = (float) Volume / 100;
             Engine.ChangeValue(newvalue);
         }
+        private void PlayedContentChanged()
+        {
+            if (Settings.LoadSettings().DownoloadTrackLocal)
+            {
+                downoloadHelper.DownoloadContentLocal(SelectedPlaylist.PlayedContent.Track, SelectedPlaylist.PlayedContent.Gif);
+            }
+            SelectedPlaylist.PlayedContent.Track.HaveLocalPath =
+                downoloadHelper.CheckLocalPath(SelectedPlaylist.PlayedContent.Track.LocalPath);
+            SelectedPlaylist.PlayedContent.Gif.HaveLocalPath =
+                downoloadHelper.CheckLocalPath(SelectedPlaylist.PlayedContent.Gif.LocalPath);
+            Engine.OpenFileAndUrl(PlayedContent.Track);
+            Engine.Play();
+        }
         #endregion
 
         #region Command
@@ -179,15 +172,6 @@ namespace Radio.ViewModels
             {
                 return nextCommand ??
                        (nextCommand = new RelayCommand(Next));
-            }
-        }
-        private RelayCommand previousCommand;
-        public RelayCommand PreviousCommand
-        {
-            get
-            {
-                return previousCommand ??
-                       (previousCommand = new RelayCommand(Previous));
             }
         }
         private RelayCommand openHamburgMenu;

@@ -3,13 +3,10 @@ using Radio.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Net;
 using System.Windows.Threading;
 using WPFSoundVisualizationLib;
 
-namespace Radio.Workers
+namespace Radio.Helpers
 {
     public class NAudioEngine : INotifyPropertyChanged, ISpectrumPlayer, IWaveformPlayer, IDisposable
     {
@@ -38,6 +35,7 @@ namespace Radio.Workers
         private TimeSpan repeatStart;
         private TimeSpan repeatStop;
         private bool inRepeatSet;
+        private TagLib.File fileTag;
         #endregion
 
         #region Constants
@@ -166,6 +164,17 @@ namespace Radio.Workers
                     NotifyPropertyChanged("ChannelLength");
             }
         }
+        public TagLib.File FileTag
+        {
+            get { return fileTag; }
+            set
+            {
+                TagLib.File oldValue = fileTag;
+                fileTag = value;
+                if (oldValue != fileTag)
+                    NotifyPropertyChanged("FileTag");
+            }
+        }
 
         public double ChannelPosition
         {
@@ -262,39 +271,46 @@ namespace Radio.Workers
             int readCount = 0;
             while (currentPointIndex * 2 < waveformParams.Points)
             {
-                waveformInputStream.Read(readBuffer, 0, readBuffer.Length);
-
-                waveformData.Add(waveformAggregator.LeftMaxVolume);
-                waveformData.Add(waveformAggregator.RightMaxVolume);
-
-                if (waveformAggregator.LeftMaxVolume > maxLeftPointLevel)
-                    maxLeftPointLevel = waveformAggregator.LeftMaxVolume;
-                if (waveformAggregator.RightMaxVolume > maxRightPointLevel)
-                    maxRightPointLevel = waveformAggregator.RightMaxVolume;
-
-                if (readCount > waveMaxPointIndexes[currentPointIndex])
+                try
                 {
-                    waveformCompressedPoints[(currentPointIndex * 2)] = maxLeftPointLevel;
-                    waveformCompressedPoints[(currentPointIndex * 2) + 1] = maxRightPointLevel;
-                    maxLeftPointLevel = float.MinValue;
-                    maxRightPointLevel = float.MinValue;
-                    currentPointIndex++;
-                }
-                if (readCount % 3000 == 0)
-                {
-                    float[] clonedData = (float[])waveformCompressedPoints.Clone();
-                    App.Current.Dispatcher.Invoke(new Action(() =>
+                    waveformInputStream.Read(readBuffer, 0, readBuffer.Length);
+
+                    waveformData.Add(waveformAggregator.LeftMaxVolume);
+                    waveformData.Add(waveformAggregator.RightMaxVolume);
+
+                    if (waveformAggregator.LeftMaxVolume > maxLeftPointLevel)
+                        maxLeftPointLevel = waveformAggregator.LeftMaxVolume;
+                    if (waveformAggregator.RightMaxVolume > maxRightPointLevel)
+                        maxRightPointLevel = waveformAggregator.RightMaxVolume;
+
+                    if (readCount > waveMaxPointIndexes[currentPointIndex])
                     {
-                        WaveformData = clonedData;
-                    }));
-                }
+                        waveformCompressedPoints[(currentPointIndex * 2)] = maxLeftPointLevel;
+                        waveformCompressedPoints[(currentPointIndex * 2) + 1] = maxRightPointLevel;
+                        maxLeftPointLevel = float.MinValue;
+                        maxRightPointLevel = float.MinValue;
+                        currentPointIndex++;
+                    }
+                    if (readCount % 3000 == 0)
+                    {
+                        float[] clonedData = (float[])waveformCompressedPoints.Clone();
+                        App.Current.Dispatcher.Invoke(new Action(() =>
+                        {
+                            WaveformData = clonedData;
+                        }));
+                    }
 
-                if (waveformGenerateWorker.CancellationPending)
-                {
-                    e.Cancel = true;
-                    break;
+                    if (waveformGenerateWorker.CancellationPending)
+                    {
+                        e.Cancel = true;
+                        break;
+                    }
+                    readCount++;
                 }
-                readCount++;
+                catch (Exception)
+                {
+                   return;
+                }
             }
 
             float[] finalClonedData = (float[])waveformCompressedPoints.Clone();
@@ -370,6 +386,18 @@ namespace Radio.Workers
             }
         }
 
+        public void OpenFileAndUrl(Track track)
+        {
+            if (track.HaveLocalPath)
+            {
+                OpenFile(track.LocalPath);
+            }
+            else
+            {
+                OpenUrl(track.Url);
+            }
+        }
+
         public void OpenUrl(string url)
         {
             Stop();
@@ -402,6 +430,44 @@ namespace Radio.Workers
             {
                 ActiveStream = null;
                 CanPlay = false;
+            }
+        }
+        public void OpenFile(string path)
+        {
+            Stop();
+
+            if (ActiveStream != null)
+            {
+                SelectionBegin = TimeSpan.Zero;
+                SelectionEnd = TimeSpan.Zero;
+                ChannelPosition = 0;
+            }
+
+            StopAndCloseStream();
+
+            if (System.IO.File.Exists(path))
+            {
+                try
+                {
+                    waveOutDevice = new WaveOut()
+                    {
+                        DesiredLatency = 100
+                    };
+                    ActiveStream = new Mp3FileReader(path);
+                    inputStream = new WaveChannel32(ActiveStream);
+                    sampleAggregator = new SampleAggregator(fftDataSize);
+                    inputStream.Sample += inputStream_Sample;
+                    waveOutDevice.Init(inputStream);
+                    ChannelLength = inputStream.TotalTime.TotalSeconds;
+                    FileTag = TagLib.File.Create(path);
+                    GenerateWaveformData(path);
+                    CanPlay = true;
+                }
+                catch
+                {
+                    ActiveStream = null;
+                    CanPlay = false;
+                }
             }
         }
         #endregion

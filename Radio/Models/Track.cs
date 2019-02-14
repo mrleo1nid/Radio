@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace Radio.Models
 {
-   public class Track
+    public class Track
     {
         private string name;
         public string Name
@@ -44,6 +44,16 @@ namespace Radio.Models
             {
                 haveLocalPath = value;
                 OnPropertyChanged("HaveLocalPath");
+            }
+        }
+        private Playlist ownerPlaylist;
+        public Playlist OwnerPlaylist
+        {
+            get { return ownerPlaylist; }
+            set
+            {
+                ownerPlaylist = value;
+                OnPropertyChanged("OwnerPlaylist");
             }
         }
 

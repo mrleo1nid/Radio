@@ -7,7 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 
-namespace Radio.Workers
+namespace Radio.Helpers
 {
     public class PlaylistDownloader
     {
@@ -53,7 +53,6 @@ namespace Radio.Workers
             if (!fileCover.Exists)
             {
                 DownloadFile(playlist.ImagePath, fileCover);
-                //  ChangeImageResolution(fileCover.FullName);
                 playlist.ImagePath = fileCover.FullName;
             }
             else
@@ -71,8 +70,9 @@ namespace Radio.Workers
                 Name = elem,
                 Url = $"{siteUrl}/{elem}/"
             };
-            playlist.GifList = LoadGifList(playlist.Url);
-            playlist.MusicList = LoadTrackList(playlist.Url);
+            playlist.GifList = LoadGifList(playlist);
+            playlist.MusicList = LoadTrackList(playlist);
+            playlist = GenerateContantList(playlist);
             playlist = GenerateNewPlayed(playlist);
             return playlist;
         }
@@ -99,30 +99,38 @@ namespace Radio.Workers
                 return null;
             }  
         }
-        private ObservableCollection<Track> LoadTrackList(string playlistUrl)
+        private ObservableCollection<Track> LoadTrackList(Playlist playlist)
         {
-            string trackUrl = playlistUrl + "music";
+            string trackUrl = playlist.Url + "music";
             var urlarray = GetUrlArrayFromRequest(trackUrl);
             ObservableCollection<Track> tracks = new ObservableCollection<Track>();
             foreach (var url in urlarray)
             {
                 Track track = new Track();
                 track.Url =siteUrl+ url;
+                track.OwnerPlaylist = playlist;
                 track.Name = url.Split('/').LastOrDefault();
+                track.LocalPath = GenerateLocalPath(track);
+                FileInfo info = new FileInfo(track.LocalPath);
+                track.HaveLocalPath = info.Exists;
                 tracks.Add(track);
             }
 
             return tracks;
         }
-        private ObservableCollection<Gif> LoadGifList(string playlistUrl)
+        private ObservableCollection<Gif> LoadGifList(Playlist playlist)
         {
-            string gifkUrl = playlistUrl + "gifs";
+            string gifkUrl = playlist.Url + "gifs";
             var urlarray = GetUrlArrayFromRequest(gifkUrl);
             ObservableCollection<Gif> gifs = new ObservableCollection<Gif>();
             foreach (var url in urlarray)
             {
                 Gif gif = new Gif();
                 gif.Url = siteUrl+ url;
+                gif.OwnerPlaylist = playlist;
+                gif.LocalPath = GenerateLocalPath(gif);
+                FileInfo info = new FileInfo(gif.LocalPath);
+                gif.HaveLocalPath = info.Exists;
                 gifs.Add(gif);
             }
             return gifs;
@@ -144,11 +152,35 @@ namespace Radio.Workers
         public static Playlist GenerateNewPlayed(Playlist playlist)
         {
             Random rnd = new Random();
-            int gifind = rnd.Next(playlist.GifList.Count);
-            int trackind = rnd.Next(playlist.MusicList.Count);
-            playlist.PlayedGif = playlist.GifList[gifind];
-            playlist.PlayedTrack = playlist.MusicList[trackind];
+            int index = rnd.Next(playlist.ContentCollection.Count);
+            playlist.PlayedContent = playlist.ContentCollection[index];
             return playlist;
+        }
+        public static Playlist GenerateContantList(Playlist playlist)
+        {
+            Random rnd = new Random();
+            playlist.ContentCollection = new ObservableCollection<Content>();
+            foreach (var track in playlist.MusicList)
+            {
+              Content content = new Content();
+              content.Track = track;
+              content.Gif = playlist.GifList[rnd.Next(0, playlist.GifList.Count)];
+              content.OwnerPlaylist = playlist;
+              playlist.ContentCollection.Add(content);
+            }
+            Shuffle(playlist.ContentCollection);
+            return playlist;
+        }
+        static void Shuffle<T>(ObservableCollection<T> a)
+        {
+            Random rand = new Random();
+            for (int i = a.Count - 1; i > 0; i--)
+            {
+                int j = rand.Next(0, i + 1);
+                T tmp = a[i];
+                a[i] = a[j];
+                a[j] = tmp;
+            }
         }
         public static bool CheckForInternetConnection()
         {
@@ -164,6 +196,19 @@ namespace Radio.Workers
             {
                 return false;
             }
+        }
+
+        public string GenerateLocalPath(Track track)
+        {
+            string localPath = Environment.CurrentDirectory + "\\Downoload\\Music";
+            localPath += $"\\{track.OwnerPlaylist.Name}\\{track.Name}";
+            return localPath;
+        }
+        public string GenerateLocalPath(Gif gif)
+        {
+            string localPath = Environment.CurrentDirectory + "\\Downoload\\Gif";
+            localPath += $"\\{gif.OwnerPlaylist.Name}\\{gif.Url.Split('/').LastOrDefault()}";
+            return localPath;
         }
     }
 }
