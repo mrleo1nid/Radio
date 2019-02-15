@@ -14,14 +14,15 @@ namespace Radio.ViewModels
 
         private LocalDownoloadHelper downoloadHelper = new LocalDownoloadHelper();
 
+        PlaylistDownloader playlistDownloader  = new PlaylistDownloader();
+
         public PlaylistsViewModel(MainViewModel mainViewModel)
         {
             Storage.VmStorage["PlaylistsViewModel"] = this;
             this.mainViewModel = mainViewModel;
             Engine = mainViewModel.Engine;
             downoloadHelper.InitWorkers();
-            var downloader = new PlaylistDownloader();
-            Playlists = downloader.LoadPlaylists();
+            Playlists = playlistDownloader.LoadPlaylists();
             SelectedPlaylist = Playlists.FirstOrDefault();
             Action calledMethod = LoadIconsFromUIThread;
             Application.Current.Dispatcher.BeginInvoke(calledMethod);
@@ -105,7 +106,12 @@ namespace Radio.ViewModels
         }
         private void Next()
         {
-            SelectedPlaylist = PlaylistDownloader.GenerateNewPlayed(SelectedPlaylist);
+            playlistDownloader.GenerateNextContant(SelectedPlaylist);
+            PlayedContent = SelectedPlaylist.PlayedContent;
+        }
+        private void Previus()
+        {
+            playlistDownloader.ReturnPrevius(SelectedPlaylist);
             PlayedContent = SelectedPlaylist.PlayedContent;
         }
         private void SelectedPlaylistChange()
@@ -172,6 +178,15 @@ namespace Radio.ViewModels
             {
                 return nextCommand ??
                        (nextCommand = new RelayCommand(Next));
+            }
+        }
+        private RelayCommand previusCommand;
+        public RelayCommand PreviusCommand
+        {
+            get
+            {
+                return previusCommand ??
+                       (previusCommand = new RelayCommand(Previus));
             }
         }
         private RelayCommand openHamburgMenu;

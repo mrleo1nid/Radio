@@ -34,7 +34,7 @@
                               CommandParameter="{Binding}">
                     </MenuItem>
                     <MenuItem Header="Предыдущий"
-                              Command="{Binding PlaylistsVM.PreviousCommand}"
+                              Command="{Binding PlaylistsVM.PreviusCommand}"
                               CommandParameter="{Binding}">
                     </MenuItem>
                     <Separator />

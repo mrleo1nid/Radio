@@ -72,8 +72,8 @@ namespace Radio.Helpers
             };
             playlist.GifList = LoadGifList(playlist);
             playlist.MusicList = LoadTrackList(playlist);
-            playlist = GenerateContantList(playlist);
-            playlist = GenerateNewPlayed(playlist);
+            playlist.ContentCollection = new ObservableCollection<Content>();
+            GenerateNextContant(playlist);
             return playlist;
         }
 
@@ -147,41 +147,29 @@ namespace Radio.Helpers
              return;
             }
         }
-       
+        public void GenerateNextContant(Playlist playlist)
+        {
+            Random rnd = new Random();
+            Content content = new Content();
+            content.Track = playlist.MusicList[rnd.Next(0, playlist.MusicList.Count)]; ;
+            content.Gif = playlist.GifList[rnd.Next(0, playlist.GifList.Count)];
+            content.OwnerPlaylist = playlist;
+            playlist.ContentCollection.Add(content);
+            playlist.PlayedContent = content;
+            if (playlist.ContentCollection.Count>=50)
+            {
+                playlist.ContentCollection.RemoveAt(0);
+            }
+        }
+        public void ReturnPrevius(Playlist playlist)
+        {
+            int index = playlist.ContentCollection.IndexOf(playlist.PlayedContent);
+            if (index>0)
+            {
+                playlist.PlayedContent = playlist.ContentCollection[index - 1];
+            }
+        }
 
-        public static Playlist GenerateNewPlayed(Playlist playlist)
-        {
-            Random rnd = new Random();
-            int index = rnd.Next(playlist.ContentCollection.Count);
-            playlist.PlayedContent = playlist.ContentCollection[index];
-            return playlist;
-        }
-        public static Playlist GenerateContantList(Playlist playlist)
-        {
-            Random rnd = new Random();
-            playlist.ContentCollection = new ObservableCollection<Content>();
-            foreach (var track in playlist.MusicList)
-            {
-              Content content = new Content();
-              content.Track = track;
-              content.Gif = playlist.GifList[rnd.Next(0, playlist.GifList.Count)];
-              content.OwnerPlaylist = playlist;
-              playlist.ContentCollection.Add(content);
-            }
-            Shuffle(playlist.ContentCollection);
-            return playlist;
-        }
-        static void Shuffle<T>(ObservableCollection<T> a)
-        {
-            Random rand = new Random();
-            for (int i = a.Count - 1; i > 0; i--)
-            {
-                int j = rand.Next(0, i + 1);
-                T tmp = a[i];
-                a[i] = a[j];
-                a[j] = tmp;
-            }
-        }
         public static bool CheckForInternetConnection()
         {
             try
