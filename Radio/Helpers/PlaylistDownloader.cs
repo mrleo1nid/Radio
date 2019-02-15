@@ -150,9 +150,12 @@ namespace Radio.Helpers
         public void GenerateNextContant(Playlist playlist)
         {
             int index = playlist.ContentCollection.IndexOf(playlist.PlayedContent);
-            if (index == playlist.ContentCollection.Count)
+            if (index < playlist.ContentCollection.Count-1)
             {
-
+                playlist.PlayedContent = playlist.ContentCollection[index + 1];
+            }
+            else
+            {
                 Random rnd = new Random();
                 Content content = new Content();
                 content.Track = playlist.MusicList[rnd.Next(0, playlist.MusicList.Count)]; ;
@@ -165,10 +168,6 @@ namespace Radio.Helpers
                 {
                     playlist.ContentCollection.RemoveAt(0);
                 }
-            }
-            else
-            {
-                playlist.PlayedContent = playlist.ContentCollection[index+1];
             }
         }
         public void ReturnPrevius(Playlist playlist)
