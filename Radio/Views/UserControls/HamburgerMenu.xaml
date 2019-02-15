@@ -14,7 +14,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <mah:SplitView Grid.Row="1" OpenPaneLength="200"
-                       CompactPaneLength="55"
+                       CompactPaneLength="50"
                        HorizontalAlignment="Left"
                        IsPaneOpen="{Binding IspaneOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                        DisplayMode="CompactInline"
@@ -29,7 +29,7 @@
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 Background="Gray"
-                                Margin="5,0,0,0">
+                                Margin="0,0,0,0">
                             <Viewbox Width="50" Height="50"
                                      VerticalAlignment="Center"
                                      HorizontalAlignment="Center">
@@ -62,6 +62,11 @@
                                 </StackPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
+                        <ListBox.Resources>
+                            <Style TargetType="{x:Type ListBoxItem}">
+                                <Setter Property="Margin" Value="-5,0,0,0"></Setter>
+                            </Style>
+                        </ListBox.Resources>
                     </ListBox>
                 </StackPanel>
             </mah:SplitView.Pane>
