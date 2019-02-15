@@ -149,16 +149,26 @@ namespace Radio.Helpers
         }
         public void GenerateNextContant(Playlist playlist)
         {
-            Random rnd = new Random();
-            Content content = new Content();
-            content.Track = playlist.MusicList[rnd.Next(0, playlist.MusicList.Count)]; ;
-            content.Gif = playlist.GifList[rnd.Next(0, playlist.GifList.Count)];
-            content.OwnerPlaylist = playlist;
-            playlist.ContentCollection.Add(content);
-            playlist.PlayedContent = content;
-            if (playlist.ContentCollection.Count>=50)
+            int index = playlist.ContentCollection.IndexOf(playlist.PlayedContent);
+            if (index == playlist.ContentCollection.Count)
             {
-                playlist.ContentCollection.RemoveAt(0);
+
+                Random rnd = new Random();
+                Content content = new Content();
+                content.Track = playlist.MusicList[rnd.Next(0, playlist.MusicList.Count)]; ;
+                content.Gif = playlist.GifList[rnd.Next(0, playlist.GifList.Count)];
+                content.OwnerPlaylist = playlist;
+                content.Id = Guid.NewGuid();
+                playlist.ContentCollection.Add(content);
+                playlist.PlayedContent = content;
+                if (playlist.ContentCollection.Count >= 50)
+                {
+                    playlist.ContentCollection.RemoveAt(0);
+                }
+            }
+            else
+            {
+                playlist.PlayedContent = playlist.ContentCollection[index+1];
             }
         }
         public void ReturnPrevius(Playlist playlist)

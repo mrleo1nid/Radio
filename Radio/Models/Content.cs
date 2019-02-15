@@ -1,10 +1,22 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace Radio.Models
 {
     public class Content
     {
+        private Guid id;
+        public Guid Id
+        {
+            get { return id; }
+            set
+            {
+                id = value;
+                OnPropertyChanged("Id");
+            }
+        }
+
         private Track track;
         public Track Track
         {

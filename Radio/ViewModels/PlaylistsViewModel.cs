@@ -95,6 +95,8 @@ namespace Radio.ViewModels
         #region Actions
         private void Play()
         {
+            if (SelectedPlaylist.PlayedContent == PlayedContent)
+            {
                 if (Engine.IsPlaying)
                 {
                     Engine.Pause();
@@ -103,6 +105,7 @@ namespace Radio.ViewModels
                 {
                     Engine.Play();
                 }
+            }
         }
         private void Next()
         {

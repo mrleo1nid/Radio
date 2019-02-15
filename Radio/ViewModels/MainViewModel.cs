@@ -10,7 +10,7 @@ namespace Radio.ViewModels
         public MainViewModel()
         {
             OneColumnWidth = 50;
-            twoColumnWidth = 750;
+            twoColumnWidth = 750; 
             MainWindowWidth = 800;
             Storage.VmStorage["MainViewModel"]= this;
             Engine = NAudioEngine.Instance;
