@@ -9,7 +9,7 @@ namespace Radio.Helpers
     public class LocalDownoloadHelper
     {
         private readonly BackgroundWorker downoloadBackgroundWorker = new BackgroundWorker();
-        private DownoloadWorkerParams pendingDownoloadWorkerParams;
+        private Content pendingDownoloadWorkerContent;
         public int GifProgress;
         public int TrackProgress;
 
@@ -26,7 +26,7 @@ namespace Radio.Helpers
         }
         private void downoloadBackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            DownoloadWorkerParams Params = e.Argument as DownoloadWorkerParams;
+            Content Params = e.Argument as Content;
             FileInfo giFileInfo = new FileInfo(Params.Gif.LocalPath);
             FileInfo trackFileInfo = new FileInfo(Params.Track.LocalPath);
             if (!giFileInfo.Exists)
@@ -43,20 +43,20 @@ namespace Radio.Helpers
             if (e.Cancelled)
             {
                 if (!downoloadBackgroundWorker.IsBusy)
-                    downoloadBackgroundWorker.RunWorkerAsync(pendingDownoloadWorkerParams);
+                    downoloadBackgroundWorker.RunWorkerAsync(pendingDownoloadWorkerContent);
             }
         }
-        public void DownoloadContentLocal(Track track, Gif gif)
+        public void DownoloadContentLocal(Content content)
         {
             if (downoloadBackgroundWorker.IsBusy)
             {
-                pendingDownoloadWorkerParams = new DownoloadWorkerParams(track,gif);
+                pendingDownoloadWorkerContent = content;
                 downoloadBackgroundWorker.CancelAsync();
                 return;
             }
             else
             {
-                downoloadBackgroundWorker.RunWorkerAsync(new DownoloadWorkerParams(track, gif));
+                downoloadBackgroundWorker.RunWorkerAsync(content);
             }      
         }
 
@@ -77,17 +77,5 @@ namespace Radio.Helpers
                 return;
             }
         }
-
-        class DownoloadWorkerParams
-        {
-            public DownoloadWorkerParams(Track track, Gif gif)
-            {
-                Track = track;
-                Gif = gif;
-            }
-            public Track Track { get; protected set; }
-            public Gif Gif { get; protected set; }
-        }
-
     }
 }

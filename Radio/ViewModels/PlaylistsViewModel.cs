@@ -150,7 +150,7 @@ namespace Radio.ViewModels
         {
             if (Settings.LoadSettings().DownoloadTrackLocal)
             {
-                downoloadHelper.DownoloadContentLocal(SelectedPlaylist.PlayedContent.Track, SelectedPlaylist.PlayedContent.Gif);
+                downoloadHelper.DownoloadContentLocal(SelectedPlaylist.PlayedContent);
             }
             SelectedPlaylist.PlayedContent.Track.HaveLocalPath =
                 downoloadHelper.CheckLocalPath(SelectedPlaylist.PlayedContent.Track.LocalPath);
